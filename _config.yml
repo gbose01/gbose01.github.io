@@ -1,0 +1,18 @@
+title: Gaurab Bose
+description: Personal website and blog
+baseurl: "/gbose01"
+url: "https://gbose01.github.io"
+twitter_username: gbose95
+github_username: gbose01
+
+markdown: kramdown
+theme: minima
+plugins:
+  - jekyll-feed
+
+exclude:
+  - README.md
+  - CUSTOMIZATION.md
+  - DEPLOYMENT.md
+  - QUICK_REFERENCE.md
+  - REFACTOR_SUMMARY.md
