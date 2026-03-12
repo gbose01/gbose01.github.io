@@ -13,13 +13,13 @@ html {
 }
 
 :root {
-    --bg: #050505;
-    --bg-elevated: #0F0F0F;
-    --text: #FAFAFA;
+    --bg: #FFFFFF;
+    --bg-elevated: #F8F9FA;
+    --text: #111111;
     --text-muted: #6B6B6B;
     --accent: #3B82F6;
-    --accent-dim: rgba(59, 130, 246, 0.15);
-    --border: rgba(255, 255, 255, 0.06);
+    --accent-dim: rgba(59, 130, 246, 0.1);
+    --border: rgba(0, 0, 0, 0.06);
 }
 
 body {
@@ -28,20 +28,6 @@ body {
     color: var(--text);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
-}
-
-body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-        radial-gradient(ellipse 100% 80% at 20% 0%, rgba(59, 130, 246, 0.08), transparent 50%),
-        radial-gradient(ellipse 60% 50% at 80% 100%, rgba(59, 130, 246, 0.04), transparent 40%);
-    pointer-events: none;
-    z-index: -1;
 }
 
 /* Main layout with sidebar */
@@ -79,10 +65,6 @@ h1 {
     line-height: 1.15;
     color: var(--text);
     margin-bottom: 20px;
-    background: linear-gradient(135deg, #FAFAFA 0%, #A1A1A1 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
 }
 
 .subtitle {
@@ -132,7 +114,7 @@ a:hover {
 .bio p {
     font-size: 15px;
     line-height: 1.75;
-    color: #C0C0C0;
+    color: #444444;
     margin-bottom: 14px;
 }
 

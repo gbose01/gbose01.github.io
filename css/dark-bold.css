@@ -1,0 +1,331 @@
+/* ========================================
+   DARK MODE - BOLD Portfolio
+   ======================================== */
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+:root {
+    --bg: #050505;
+    --bg-elevated: #0F0F0F;
+    --text: #FAFAFA;
+    --text-muted: #6B6B6B;
+    --accent: #3B82F6;  /* Electric blue - pops */
+    --accent-dim: rgba(59, 130, 246, 0.15);
+    --border: rgba(255, 255, 255, 0.06);
+}
+
+body {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Bold background texture */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(ellipse 100% 80% at 20% 0%, rgba(59, 130, 246, 0.08), transparent 50%),
+        radial-gradient(ellipse 60% 50% at 80% 100%, rgba(59, 130, 246, 0.04), transparent 40%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 120px 24px;
+}
+
+@media (max-width: 768px) {
+    .container { padding: 80px 20px; }
+}
+
+/* HERO - Bigger, bolder */
+.hero {
+    padding: 0 0 100px;
+}
+
+h1 {
+    font-size: 56px;
+    font-weight: 600;
+    letter-spacing: -2px;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 24px;
+    background: linear-gradient(135deg, #FAFAFA 0%, #A1A1A1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle {
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--text-muted);
+    margin-bottom: 40px;
+    max-width: 480px;
+    line-height: 1.5;
+}
+
+.subtitle .accent {
+    color: var(--accent);
+    font-weight: 500;
+}
+
+/* Links - more visible */
+a {
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: var(--accent);
+}
+
+.link {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent-dim);
+    padding-bottom: 2px;
+    transition: all 0.2s ease;
+}
+
+.link:hover {
+    border-bottom-color: var(--accent);
+    background: var(--accent-dim);
+}
+
+/* Bio */
+.bio {
+    margin: 48px 0 56px;
+    border-left: 2px solid var(--accent);
+    padding-left: 24px;
+}
+
+.bio p {
+    font-size: 16px;
+    line-height: 1.75;
+    color: #C0C0C0;
+    margin-bottom: 16px;
+}
+
+.bio p:last-child { margin-bottom: 0; }
+
+.bio p strong {
+    color: var(--text);
+    font-weight: 500;
+}
+
+/* Navigation */
+.nav-main {
+    display: flex;
+    gap: 36px;
+    flex-wrap: wrap;
+    margin-top: 48px;
+    font-size: 15px;
+}
+
+.nav-main a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 500;
+    position: relative;
+    transition: color 0.2s ease;
+}
+
+.nav-main a::before {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 20px;
+    height: 1px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.nav-main a:hover {
+    color: var(--text);
+}
+
+.nav-main a:hover::before {
+    transform: scaleX(1);
+}
+
+/* Sections */
+.section {
+    padding: 80px 0;
+    border-top: 1px solid var(--border);
+}
+
+h2 {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    margin-bottom: 48px;
+}
+
+/* Projects - card style */
+.projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.project {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    padding: 28px 32px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.project::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.project:hover {
+    border-color: rgba(255, 107, 107, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.project:hover::before {
+    opacity: 1;
+}
+
+.project h3 {
+    font-size: 19px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.project h3 a {
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.project h3 a:hover {
+    color: var(--accent);
+}
+
+.project > p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+}
+
+.meta {
+    font-size: 11px;
+    color: var(--accent);
+    display: inline-block;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: var(--accent-dim);
+    padding: 4px 10px;
+    border-radius: 4px;
+}
+
+/* Footer */
+.footer {
+    margin-top: 120px;
+    padding-top: 60px;
+    border-top: 1px solid var(--border);
+    padding-bottom: 40px;
+    text-align: center;
+}
+
+.footer-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.footer-email {
+    font-size: 15px;
+    color: var(--text-muted);
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    flex-wrap: wrap;
+    font-size: 14px;
+}
+
+.social-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.social-links a:hover {
+    color: var(--accent);
+}
+
+.footer-credit {
+    font-size: 12px;
+    color: #3A3A3A;
+    margin-top: 24px;
+}
+
+/* Animations */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-inner {
+    animation: slideUp 0.8s ease-out;
+}
+
+.project {
+    animation: slideUp 0.6s ease-out backwards;
+}
+
+.project:nth-child(1) { animation-delay: 0.1s; }
+.project:nth-child(2) { animation-delay: 0.2s; }
+.project:nth-child(3) { animation-delay: 0.3s; }
+.project:nth-child(4) { animation-delay: 0.4s; }
