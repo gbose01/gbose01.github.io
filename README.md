@@ -1,6 +1,6 @@
 # Gaurab Bose — Minimalist Portfolio
 
-A minimal, text-focused portfolio inspired by [shud.in](https://shud.in). Clean, fast, and focused on content over design.
+A minimal, text-focused portfolio. Clean, fast, and focused on content over design.
 
 ## Design Philosophy
 
@@ -76,10 +76,6 @@ python -m http.server 8000
 - **Minified JS**: ~350 bytes
 - **Total page size**: <10KB (without images)
 - **Load time**: <100ms on modern networks
-
-## Inspiration
-
-Design inspired by [shud.in](https://shud.in) (Shu Ding's portfolio) — minimalist, content-focused, and beautiful in its simplicity.
 
 ## Deployment
 
