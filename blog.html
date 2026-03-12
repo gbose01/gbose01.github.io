@@ -1,17 +1,56 @@
----
-layout: default
-title: Blog
----
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Gaurab Bose</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.min.css">
+    <style>
+        .post-list { list-style: none; padding: 0; }
+        .post-list li { margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid #eee; }
+        .post-date { color: #666; font-size: 14px; }
+        .post-title { font-size: 20px; margin: 8px 0; }
+        .post-title a { color: #333; text-decoration: none; }
+        .post-title a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section class="hero">
+            <div class="hero-inner">
+                <h1>Blog</h1>
+                <p class="subtitle">Thoughts on AI, product, and technology</p>
+                <nav class="nav-main">
+                    <a href="/gbose01/#projects">Projects</a>
+                    <a href="/gbose01/blog/">Blog</a>
+                    <a href="https://github.com" target="_blank">GitHub</a>
+                    <a href="https://twitter.com" target="_blank">Twitter</a>
+                    <a href="https://linkedin.com/in/gbose" target="_blank">LinkedIn</a>
+                </nav>
+            </div>
+        </section>
 
-<section class="section">
-    <h2>Blog</h2>
-    
-    <ul class="post-list">
-    {% for post in site.posts %}
-        <li>
-            <span class="post-date">{{ post.date | date: "%B %-d, %Y" }}</span>
-            <a href="{{ post.url }}">{{ post.title }}</a>
-        </li>
-    {% endfor %}
-    </ul>
-</section>
+        <section class="section">
+            <ul class="post-list">
+                <li>
+                    <span class="post-date">March 9, 2026</span>
+                    <h2 class="post-title"><a href="/gbose01/blog/openclaw-docker-journey/">Building My Personal AI Assistant: OpenClaw on Docker</a></h2>
+                    <p>How I set up OpenClaw on Docker and configured my personal AI assistant</p>
+                </li>
+            </ul>
+        </section>
+
+        <footer class="footer">
+            <div class="footer-inner">
+                <nav class="social-links">
+                    <a href="https://github.com/gbose" target="_blank">GitHub</a>
+                    <a href="https://twitter.com/gbose" target="_blank">Twitter</a>
+                    <a href="https://linkedin.com/in/gbose" target="_blank">LinkedIn</a>
+                </nav>
+                <p class="footer-credit">&copy; 2026 Gaurab Bose.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="How I set up OpenClaw on Docker and configured my personal AI assistant">
+    <title>Building My Personal AI Assistant: OpenClaw on Docker - Gaurab Bose</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.min.css">
+    <style>
+        .post-header { margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid #eee; }
+        .post-meta { color: #666; }
+        .post-content { line-height: 1.8; }
+        .post-content h2 { margin-top: 32px; }
+        .post-content code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; }
+        .post-content pre { background: #f4f4f4; padding: 16px; border-radius: 6px; overflow-x: auto; }
+        .back-link { margin-bottom: 24px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section class="hero">
+            <div class="hero-inner">
+                <nav class="nav-main">
+                    <a href="/gbose01/#projects">Projects</a>
+                    <a href="/gbose01/blog/">Blog</a>
+                    <a href="https://github.com" target="_blank">GitHub</a>
+                    <a href="https://twitter.com" target="_blank">Twitter</a>
+                    <a href="https://linkedin.com/in/gbose" target="_blank">LinkedIn</a>
+                </nav>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="post-header">
+                <p class="post-meta">March 9, 2026</p>
+                <h1>Building My Personal AI Assistant: OpenClaw on Docker</h1>
+            </div>
+
+            <div class="post-content">
+<p>I've always been curious about self-hosted AI assistants. As a PM at Google working on Search AI Mode, I spend my days thinking about how people interact with AI. But I wanted something for <em>my</em> personal use. Something that lived on my machine, connected to the apps I already use.</p>
+
+<p>That's where OpenClaw comes in.</p>
+
+<p>For those who haven't seen it — OpenClaw is a self-hosted gateway that bridges chat apps (Discord, Telegram, WhatsApp, iMessage) to AI agents. You message an AI from anywhere and it actually <em>does</em> things. Runs code. Checks calendar. Controls smart home devices.</p>
+
+<p>This is how I got it running on Windows via Docker, and the decisions I made along the way.</p>
+
+<h2>The Setup</h2>
+
+<p>OpenClaw on Windows + Docker. The docs are solid, and they recommend <code>openclaw onboard</code> for guided setup. But I wanted something more interactive.</p>
+
+<p>So I used Claude Code (Anthropic's CLI agent) to help spin up the Docker Compose environment. Honestly? Game-changer. Instead of manually editing YAML and hoping for the best, I just talked through what I wanted with an AI that could actually execute commands.</p>
+
+<p><strong>Why Docker Compose?</strong> Portability and isolation. If something breaks, I nuke the container and start fresh without touching my system. Plus, all the config stays in one place.</p>
+
+<h2>Security and File Isolation</h2>
+
+<p>One thing that made me pause early on: OpenClaw needs a workspace directory for config, memory, sessions. By default this lives inside the container. But I wanted it on my host so I could actually read and edit the files.</p>
+
+<p>The solution was volume mounting the workspace:</p>
+
+<pre><code>volumes:
+  - ./workspace:/home/node/.openclaw/workspace
+</code></pre>
+
+<p>Here's the thing — if you're mounting volumes, know what you're exposing. The workspace can contain API keys and session history. I set up a separate <code>.env</code> file outside the repo (added to <code>.gitignore</code>) and passed secrets via environment variables, not hardcoded in config.</p>
+
+<h2>The Gateway UI</h2>
+
+<p>First time I started the gateway, I had no idea what was going on. Logs streaming, processes running, but no visible feedback.</p>
+
+<p>Then I discovered the Control UI. Run <code>openclaw web</code> and it spins up a local dashboard at <code>http://localhost:8080</code>. This is where you can:</p>
+
+<ul>
+<li>See active sessions</li>
+<li>Chat directly with your agent</li>
+<li>Edit config in real-time</li>
+<li>Check what's running</li>
+</ul>
+
+<p>Sounds small, but it was crucial for debugging.</p>
+
+<h2>The Agent Architecture Question</h2>
+
+<p>OpenClaw supports multiple patterns:</p>
+
+<ul>
+<li><strong>Single agent</strong> — one "Jeeves" handling everything</li>
+<li><strong>Multiple agents</strong> — different agents for different purposes</li>
+<li><strong>Sub-agents</strong> — spawning isolated sessions for specific tasks</li>
+</ul>
+
+<p>For my use case (personal assistant for coding, writing, random tasks), I went with a single main agent with sub-agent capability for heavy-lifting tasks.</p>
+
+<h2>Model Selection</h2>
+
+<table>
+<tr><th>Model</th><th>Quality</th><th>Speed</th><th>Cost</th><th>When to use</th></tr>
+<tr><td>Haiku 3.5</td><td>Good enough</td><td>Fast</td><td>Cheap</td><td>Simple queries</td></tr>
+<tr><td>Sonnet 4</td><td>Solid</td><td>Moderate</td><td>Moderate</td><td>Daily driver</td></tr>
+<tr><td>Opus 4</td><td>Best</td><td>Slower</td><td>Expensive</td><td>Complex reasoning</td></tr>
+</table>
+
+<p><strong>My setup:</strong> Default to Sonnet 4 for daily use. Switch to Opus 4 for writing or complex tasks.</p>
+
+<h2>What I Learned</h2>
+
+<ul>
+<li><strong>The tools are ready.</strong> Self-hosted AI assistants aren't science fiction anymore.</li>
+<li><strong>The real work is configuration.</strong> 90% of the time is deciding how you want it to behave.</li>
+<li><strong>Context is everything.</strong> Be deliberate about what stays in the context window.</li>
+<li><strong>Windows + Docker is fine.</strong> Once it's running, it Just Works.</li>
+</ul>
+
+<p><em>Next up: actually using this thing. More on that soon.</em></p>
+
+<p>— Gaurab</p>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="footer-inner">
+                <nav class="social-links">
+                    <a href="https://github.com/gbose" target="_blank">GitHub</a>
+                    <a href="https://twitter.com/gbose" target="_blank">Twitter</a>
+                    <a href="https://linkedin.com/in/gbose" target="_blank">LinkedIn</a>
+                </nav>
+                <p class="footer-credit">&copy; 2026 Gaurab Bose.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
