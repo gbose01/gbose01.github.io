@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Gaurab Bose—Building high-quality Gen AI experiences at Google.">
-    <meta name="theme-color" content="#FAFAFA">
+    <meta name="theme-color" content="#050505">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Gaurab Bose">
     <meta property="og:description" content="Building high-quality Gen AI experiences at Google.">
@@ -12,103 +12,117 @@
     <title>Gaurab Bose</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.min.css">
+    <link rel="stylesheet" href="css/dark-sidebar.css">
 </head>
 <body>
-    <div class="container">
-        <!-- Hero / Intro -->
-        <section class="hero">
-            <div class="hero-inner">
-                <h1>Gaurab Bose</h1>
-                <p class="subtitle">Product Manager at Google • Building high-quality Gen AI experiences</p>
-                
-                <div class="bio">
-                    <p>I lead product initiatives in Search AI Mode and AI Overviews at Google. I'm passionate about AI, product strategy, and open source.</p>
-                    <p><strong>Education:</strong> MBA, Stanford Graduate School of Business • BS Statistics & Economics, University of Chicago</p>
-                    <p><strong>Previously:</strong> Senior Analyst at PayPal • Board Member at <a href="#" class="link">Science is Elementary</a> • Co-founder of <a href="#" class="link">Impact NFT</a> • GCP Engineer Certified</p>
+    <div class="layout">
+        <main>
+            <section class="hero">
+                <div class="hero-inner">
+                    <h1>Gaurab Bose</h1>
+                    <p class="subtitle">Product Manager at Google • <span class="accent">Building high-quality Gen AI experiences</span></p>
+                    
+                    <div class="bio">
+                        <p>I lead product initiatives in Search AI Mode and AI Overviews at Google. I'm passionate about AI, product strategy, and open source.</p>
+                        <p><strong>Education:</strong> MBA, Stanford Graduate School of Business • BS Statistics & Economics, University of Chicago</p>
+                        <p><strong>Previously:</strong> Senior Analyst at PayPal • Board Member at <a href="#" class="link">Science is Elementary</a> • Co-founder of <a href="#" class="link">Impact NFT</a> • GCP Engineer Certified</p>
+                    </div>
+
+                    <nav class="nav-main">
+                        <a href="#projects">Projects</a>
+                        <a href="/gbose01/blog.html">Blog</a>
+                        <a href="https://github.com" target="_blank" rel="noopener">GitHub</a>
+                        <a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a>
+                        <a href="https://linkedin.com/in/gbose" target="_blank" rel="noopener">LinkedIn</a>
+                    </nav>
                 </div>
+            </section>
 
-                <nav class="nav-main">
-                    <a href="/gbose01/#projects">Projects</a>
-                    <a href="/gbose01/blog.html">Blog</a>
-                    <a href="https://github.com" target="_blank" rel="noopener">GitHub</a>
-                    <a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a>
-                    <a href="https://linkedin.com/in/gbose" target="_blank" rel="noopener">LinkedIn</a>
-                </nav>
+            <section class="section" id="projects">
+                <h2>Projects</h2>
+                
+                <div class="projects-list">
+                    <article class="project">
+                        <h3><a href="https://github.com/gbose01/gbose01" class="link">gbose01</a></h3>
+                        <p>Personal website and portfolio</p>
+                        <span class="meta">HTML • Web Dev</span>
+                    </article>
+
+                    <article class="project">
+                        <h3><a href="https://github.com/gbose01/mynt-nft" class="link">mynt-nft</a></h3>
+                        <p>Minting NFTs for startups</p>
+                        <span class="meta">NFT • Blockchain</span>
+                    </article>
+
+                    <article class="project">
+                        <h3><a href="https://github.com/gbose01/rag-paper-summarizer" class="link">rag-paper-summarizer</a></h3>
+                        <p>Use RAG to summarize academic papers</p>
+                        <span class="meta">RAG • NLP • AI</span>
+                    </article>
+
+                    <article class="project">
+                        <h3><a href="https://github.com/gbose01/InvestAI" class="link">InvestAI</a></h3>
+                        <p>K-Means Clustering for ETF identification</p>
+                        <span class="meta">ML • Finance</span>
+                    </article>
+
+                    <article class="project">
+                        <h3><a href="https://github.com/gbose01/Fraud-Detection" class="link">Fraud-Detection</a></h3>
+                        <p>Detecting fraudulent ad clicks with XGBoost</p>
+                        <span class="meta">XGBoost • Security</span>
+                    </article>
+
+                    <article class="project">
+                        <h3><a href="https://github.com/gbose01/First-Game" class="link">First-Game</a></h3>
+                        <p>2D game developed in Godot</p>
+                        <span class="meta">Godot • Game Dev</span>
+                    </article>
+                </div>
+            </section>
+
+            <footer class="footer">
+                <div class="footer-inner">
+                    <p class="footer-email">hello@gaurab.dev</p>
+                    <nav class="social-links">
+                        <a href="https://github.com/gbose" target="_blank" rel="noopener noreferrer">GitHub</a>
+                        <a href="https://twitter.com/gbose" target="_blank" rel="noopener noreferrer">Twitter</a>
+                        <a href="https://linkedin.com/in/gbose" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                        <a href="mailto:hello@gaurab.dev">Email</a>
+                    </nav>
+                    <p class="footer-credit">© 2026 Gaurab Bose</p>
+                </div>
+            </footer>
+        </main>
+        
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Writing</h3>
+                <div class="sidebar-list">
+                    <div class="sidebar-item">
+                        <a href="/gbose01/blog/openclaw-docker-journey.html">Building My Personal AI Assistant</a>
+                        <span>Mar 2026</span>
+                    </div>
+                </div>
             </div>
-        </section>
-
-
-
-        <!-- Projects -->
-        <section class="section" id="projects">
-            <h2>Projects</h2>
             
-            <div class="projects-list">
-                <article class="project">
-                    <h3><a href="https://github.com/gbose01/gbose01" class="link">gbose01</a></h3>
-                    <p>Personal website and portfolio</p>
-                    <span class="meta">HTML • Web Development • Personal</span>
-                </article>
-
-                <article class="project">
-                    <h3><a href="https://github.com/gbose01/mynt-nft" class="link">mynt-nft</a></h3>
-                    <p>Minting NFTs for startups</p>
-                    <span class="meta">NFT • Blockchain • JavaScript</span>
-                </article>
-
-                <article class="project">
-                    <h3><a href="https://github.com/gbose01/rag-paper-summarizer" class="link">rag-paper-summarizer</a></h3>
-                    <p>Use RAG to summarize academic papers</p>
-                    <span class="meta">RAG • NLP • AI</span>
-                </article>
-
-                <article class="project">
-                    <h3><a href="https://github.com/gbose01/InvestAI" class="link">InvestAI</a></h3>
-                    <p>K-Means Clustering for ETF identification</p>
-                    <span class="meta">Machine Learning • Finance • Data Science</span>
-                </article>
-
-                <article class="project">
-                    <h3><a href="https://github.com/gbose01/Fraud-Detection" class="link">Fraud-Detection</a></h3>
-                    <p>Detecting fraudulent ad clicks with XGBoost</p>
-                    <span class="meta">XGBoost • Classification • Security</span>
-                </article>
-
-                <article class="project">
-                    <h3><a href="https://github.com/gbose01/First-Game" class="link">First-Game</a></h3>
-                    <p>2D game developed in Godot</p>
-                    <span class="meta">Godot • Game Development • Creative</span>
-                </article>
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Connect</h3>
+                <div class="sidebar-list">
+                    <div class="sidebar-item">
+                        <a href="https://github.com/gbose01" target="_blank">GitHub</a>
+                    </div>
+                    <div class="sidebar-item">
+                        <a href="https://twitter.com/gbose" target="_blank">Twitter</a>
+                    </div>
+                    <div class="sidebar-item">
+                        <a href="https://linkedin.com/in/gbose" target="_blank">LinkedIn</a>
+                    </div>
+                    <div class="sidebar-item">
+                        <a href="mailto:hello@gaurab.dev">Email</a>
+                    </div>
+                </div>
             </div>
-        </section>
-
-        <!-- Blog -->
-        <section class="section" id="blog">
-            <h2>Blog</h2>
-            
-            <div class="projects-list">
-                <article class="project">
-                    <h3><a href="/gbose01/blog/openclaw-docker-journey.html" class="link">Building My Personal AI Assistant: OpenClaw on Docker</a></h3>
-                    <p>How I set up OpenClaw on Docker and configured my personal AI assistant</p>
-                    <span class="meta">March 9, 2026</span>
-                </article>
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="footer-inner">
-                <p class="footer-email">hello@gaurab.dev</p>
-                <nav class="social-links">
-                    <a href="https://github.com/gbose" target="_blank" rel="noopener noreferrer" title="GitHub">GitHub</a>
-                    <a href="https://twitter.com/gbose" target="_blank" rel="noopener noreferrer" title="Twitter">Twitter</a>
-                    <a href="https://linkedin.com/in/gbose" target="_blank" rel="noopener noreferrer" title="LinkedIn">LinkedIn</a>
-                    <a href="mailto:hello@gaurab.dev" title="Email">Email</a>
-                </nav>
-                <p class="footer-credit">&copy; 2026 Gaurab Bose. Built with HTML & CSS.</p>
-            </div>
-        </footer>
+        </aside>
     </div>
 
     <script src="js/app.min.js"></script>

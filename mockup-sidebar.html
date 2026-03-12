@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaurab Bose - Sidebar Layout</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg: #050505;
+            --bg-elevated: #0F0F0F;
+            --text: #FAFAFA;
+            --text-muted: #6B6B6B;
+            --accent: #3B82F6;
+            --accent-dim: rgba(59, 130, 246, 0.15);
+            --border: rgba(255, 255, 255, 0.06);
+        }
+        
+        body {
+            font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+        
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                radial-gradient(ellipse 100% 80% at 20% 0%, rgba(59, 130, 246, 0.08), transparent 50%),
+                radial-gradient(ellipse 60% 50% at 80% 100%, rgba(59, 130, 246, 0.04), transparent 40%);
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .layout {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 60px;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 24px;
+        }
+        
+        @media (max-width: 850px) {
+            .layout { grid-template-columns: 1fr; gap: 50px; }
+        }
+        
+        .hero { padding: 0 0 60px; }
+        
+        h1 {
+            font-size: 44px;
+            font-weight: 600;
+            letter-spacing: -1.5px;
+            line-height: 1.15;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #FAFAFA 0%, #A1A1A1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle { font-size: 17px; color: var(--text-muted); margin-bottom: 32px; }
+        .subtitle .accent { color: var(--accent); font-weight: 500; }
+        
+        a { color: var(--text); text-decoration: none; transition: color 0.2s ease; }
+        a:hover { color: var(--accent); }
+        
+        .link { color: var(--accent); border-bottom: 1px solid var(--accent-dim); padding-bottom: 2px; }
+        .link:hover { border-bottom-color: var(--accent); background: var(--accent-dim); }
+        
+        .bio { margin: 36px 0 44px; border-left: 2px solid var(--accent); padding-left: 24px; }
+        .bio p { font-size: 15px; line-height: 1.75; color: #C0C0C0; margin-bottom: 12px; }
+        .bio p:last-child { margin-bottom: 0; }
+        .bio p strong { color: var(--text); font-weight: 500; }
+        
+        .nav-main { display: flex; gap: 28px; flex-wrap: wrap; margin-top: 36px; font-size: 14px; }
+        .nav-main a { color: var(--text-muted); font-weight: 500; position: relative; }
+        .nav-main a::before {
+            content: ""; position: absolute; bottom: -4px; left: 0;
+            width: 20px; height: 1px; background: var(--accent);
+            transform: scaleX(0); transition: transform 0.3s ease;
+        }
+        .nav-main a:hover { color: var(--text); }
+        .nav-main a:hover::before { transform: scaleX(1); }
+        
+        .section { padding: 50px 0; border-top: 1px solid var(--border); }
+        .section:first-of-type { border-top: none; padding-top: 0; }
+        
+        h2 {
+            font-size: 10px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 2px; color: var(--accent); margin-bottom: 28px;
+        }
+        
+        .projects-list { display: flex; flex-direction: column; gap: 16px; }
+        
+        .project {
+            background: var(--bg-elevated); border: 1px solid var(--border);
+            padding: 20px 24px; border-radius: 10px;
+            transition: all 0.3s ease; position: relative;
+        }
+        
+        .project::before {
+            content: ""; position: absolute; top: 0; left: 0;
+            width: 3px; height: 100%; background: var(--accent); opacity: 0;
+        }
+        
+        .project:hover {
+            border-color: rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .project:hover::before { opacity: 1; }
+        
+        .project h3 { font-size: 16px; font-weight: 500; margin-bottom: 4px; }
+        .project h3 a { color: var(--text); }
+        .project h3 a:hover { color: var(--accent); }
+        .project > p { font-size: 13px; color: var(--text-muted); margin-bottom: 10px; }
+        
+        .meta {
+            font-size: 10px; color: var(--accent); display: inline-block;
+            font-weight: 500; letter-spacing: 0.8px; text-transform: uppercase;
+            background: var(--accent-dim); padding: 3px 8px; border-radius: 4px;
+        }
+        
+        /* Sidebar */
+        .sidebar { position: sticky; top: 60px; height: fit-content; }
+        
+        .sidebar-section { margin-bottom: 40px; }
+        
+        .sidebar-title {
+            font-size: 10px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 2px; color: var(--accent); margin-bottom: 18px;
+            padding-bottom: 10px; border-bottom: 1px solid var(--border);
+        }
+        
+        .sidebar-list { display: flex; flex-direction: column; gap: 14px; }
+        
+        .sidebar-item { display: flex; flex-direction: column; gap: 3px; }
+        .sidebar-item a { font-size: 14px; font-weight: 500; color: var(--text); }
+        .sidebar-item a:hover { color: var(--accent); }
+        .sidebar-item span { font-size: 11px; color: var(--text-muted); }
+        
+        .footer {
+            margin-top: 60px; padding-top: 30px;
+            border-top: 1px solid var(--border); text-align: center;
+            grid-column: 1 / -1;
+        }
+        
+        .footer-inner { display: flex; flex-direction: column; gap: 14px; align-items: center; }
+        .footer-email { font-size: 14px; color: var(--text-muted); }
+        .social-links { display: flex; gap: 20px; font-size: 13px; }
+        .social-links a { color: var(--text-muted); }
+        .social-links a:hover { color: var(--accent); }
+        .footer-credit { font-size: 11px; color: #3A3A3A; margin-top: 14px; }
+        
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .hero-inner { animation: slideUp 0.6s ease-out; }
+        
+        .mockup-bar { position: fixed; top: 0; left: 0; right: 0; height: 32px; background: #111; border-bottom: 1px solid #222; display: flex; align-items: center; padding: 0 12px; gap: 6px; z-index: 100; }
+        .mockup-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot-red { background: #FF5F56; }
+        .dot-yellow { background: #FFBD2E; }
+        .dot-green { background: #27C93F; }
+        .mockup-url { margin-left: 12px; background: #222; padding: 4px 12px; border-radius: 4px; font-size: 12px; color: #666; }
+        body { padding-top: 32px; }
+    </style>
+</head>
+<body>
+    <div class="mockup-bar">
+        <div class="mockup-dot dot-red"></div>
+        <div class="mockup-dot dot-yellow"></div>
+        <div class="mockup-dot dot-green"></div>
+        <div class="mockup-url">gaurab.dev</div>
+    </div>
+    
+    <div class="layout">
+        <main>
+            <section class="hero">
+                <div class="hero-inner">
+                    <h1>Gaurab Bose</h1>
+                    <p class="subtitle">Product Manager at Google • <span class="accent">Building high-quality Gen AI experiences</span></p>
+                    
+                    <div class="bio">
+                        <p>I lead product initiatives in Search AI Mode and AI Overviews at Google. I'm passionate about AI, product strategy, and open source.</p>
+                        <p><strong>Education:</strong> MBA, Stanford GSB • BS Statistics & Economics, UChicago</p>
+                        <p><strong>Previously:</strong> PayPal, Science is Elementary, Impact NFT</p>
+                    </div>
+
+                    <nav class="nav-main">
+                        <a href="#projects">Projects</a>
+                        <a href="https://github.com" target="_blank">GitHub</a>
+                        <a href="https://twitter.com" target="_blank">Twitter</a>
+                        <a href="https://linkedin.com/in/gbose" target="_blank">LinkedIn</a>
+                    </nav>
+                </div>
+            </section>
+
+            <section class="section" id="projects">
+                <h2>Projects</h2>
+                
+                <div class="projects-list">
+                    <article class="project">
+                        <h3><a href="#" class="link">gbose01</a></h3>
+                        <p>Personal website and portfolio</p>
+                        <span class="meta">HTML • Web Dev</span>
+                    </article>
+
+                    <article class="project">
+                        <h3><a href="#" class="link">mynt-nft</a></h3>
+                        <p>Minting NFTs for startups</p>
+                        <span class="meta">NFT • Blockchain</span>
+                    </article>
+
+                    <article class="project">
+                        <h3><a href="#" class="link">rag-paper-summarizer</a></h3>
+                        <p>Use RAG to summarize academic papers</p>
+                        <span class="meta">RAG • NLP • AI</span>
+                    </article>
+
+                    <article class="project">
+                        <h3><a href="#" class="link">InvestAI</a></h3>
+                        <p>K-Means Clustering for ETF identification</p>
+                        <span class="meta">ML • Finance</span>
+                    </article>
+                </div>
+            </section>
+
+            <footer class="footer">
+                <div class="footer-inner">
+                    <p class="footer-email">hello@gaurab.dev</p>
+                    <nav class="social-links">
+                        <a href="#">GitHub</a>
+                        <a href="#">Twitter</a>
+                        <a href="#">LinkedIn</a>
+                        <a href="#">Email</a>
+                    </nav>
+                    <p class="footer-credit">© 2026 Gaurab Bose</p>
+                </div>
+            </footer>
+        </main>
+        
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Writing</h3>
+                <div class="sidebar-list">
+                    <div class="sidebar-item">
+                        <a href="#">The Future of AI Search</a>
+                        <span>Mar 2026</span>
+                    </div>
+                    <div class="sidebar-item">
+                        <a href="#">Building Products Users Love</a>
+                        <span>Feb 2026</span>
+                    </div>
+                    <div class="sidebar-item">
+                        <a href="#">Lessons from Stanford GSB</a>
+                        <span>Jan 2026</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Connect</h3>
+                <div class="sidebar-list">
+                    <div class="sidebar-item">
+                        <a href="#">GitHub</a>
+                    </div>
+                    <div class="sidebar-item">
+                        <a href="#">Twitter</a>
+                    </div>
+                    <div class="sidebar-item">
+                        <a href="#">LinkedIn</a>
+                    </div>
+                    <div class="sidebar-item">
+                        <a href="#">Email</a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+</body>
+</html>
