@@ -6,9 +6,6 @@ twitter_username: gbose95
 github_username: gbose01
 
 markdown: kramdown
-theme: minima
-plugins:
-  - jekyll-feed
 
 exclude:
   - README.md
