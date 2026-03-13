@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Building MYNT - Minting NFTs for Startups on Polygon">
+    <title>Building MYNT: Minting NFTs for Startups on Polygon - Gaurab Bose</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/sidebar.css">
+    <style>
+        .post-header { margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid #eee; }
+        .post-meta { color: #666; }
+        .post-content { line-height: 1.8; }
+        .post-content h2 { margin-top: 32px; }
+        .post-content code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; }
+        .post-content pre { background: #f4f4f4; padding: 16px; border-radius: 6px; overflow-x: auto; }
+        .back-link { margin-bottom: 24px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section class="hero">
+            <div class="hero-inner">
+                <nav class="nav-main">
+                    <a href="../../#projects">Projects</a>
+                    <a href="../../blog.html">Blog</a>
+                    <a href="https://github.com/gbose" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    <a href="https://twitter.com/gbose" target="_blank" rel="noopener noreferrer">Twitter</a>
+                    <a href="https://linkedin.com/in/gbose" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                </nav>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="post-header">
+                <p class="post-meta">June 1, 2022</p>
+                <h1>Building MYNT: Minting NFTs for Startups on Polygon</h1>
+            </div>
+
+            <div class="post-content">
+<p><strong>Summer 2021</strong> — NFT mania was at its peak. Every day, you'd hear about another digital artist making millions, Bored Apes selling for six figures, and every brand under the sun rushing to launch their own collections.</p>
+
+<p>I wanted in. Not just as a buyer — I wanted to understand the technology from the inside out. I wanted to <strong>issue</strong> my own NFTs and <strong>trade</strong> them myself. I wanted to learn exactly how an NFT works under the hood: the smart contracts, the metadata, the minting process, and the deployment to a live blockchain.</p>
+
+<p>That's how <strong>MYNT</strong> was born.</p>
+
+<h2>Why Polygon?</h2>
+
+<p>When deciding where to deploy, Ethereum mainnet was out of the question. Gas fees in summer 2021 were absolutely insane — $50, $100, sometimes $200+ just to mint a single NFT. For a learning project? No thanks.</p>
+
+<p><strong>Polygon</strong> (formerly Matic Network) was the obvious choice:</p>
+
+<ul>
+<li><strong>Near-zero gas fees</strong> — A fraction of a cent per transaction</li>
+<li><strong>Fast block times</strong> — ~2 seconds vs ~15 minutes on Ethereum</li>
+<li><strong>EVM compatible</strong> — Same tools, same smart contracts, just cheaper and faster</li>
+<li><strong>Alchemy support</strong> — Great infrastructure with reliable RPC endpoints</li>
+</ul>
+
+<p>Polygon let me iterate quickly without blowing through my savings.</p>
+
+<h2>The Tech Stack</h2>
+
+<ul>
+<li><strong>Hardhat</strong> — Development environment for compiling, testing, and deploying Solidity contracts</li>
+<li><strong>Alchemy</strong> — RPC provider for connecting to Polygon mainnet</li>
+<li><strong>OpenZeppelin</strong> — Battle-tested ERC-721 contract templates</li>
+<li><strong>IPFS</strong> — Decentralized storage for NFT metadata</li>
+</ul>
+
+<h3>The Smart Contract</h3>
+
+<p>The contract is a simple ERC-721 implementation using OpenZeppelin's battle-tested libraries:</p>
+
+<pre><code>contract MyNFT is ERC721, Ownable {
+  using Counters for Counters.Counter;
+  Counters.Counter private _tokenIds;
+  mapping (uint256 => string) private _tokenURIs;
+  
+  function mint(address recipient, string memory uri) public returns (uint256) {
+    _tokenIds.increment();
+    uint256 newItemId = _tokenIds.current();
+    _mint(recipient, newItemId);
+    _setTokenURI(newItemId, uri);
+    return newItemId;
+  }
+}
+</code></pre>
+
+<p>Only the owner can mint new tokens, and each token gets its own metadata URI pointing to IPFS.</p>
+
+<h2>What I Learned</h2>
+
+<ol>
+<li><strong>NFTs aren't just JPEGs</strong> — They're smart contracts with metadata pointers. The image is just one part.</li>
+<li><strong>Gas optimization matters</strong> — On mainnet, inefficient code costs real money. Polygon made experimentation affordable.</li>
+<li><strong>IPFS is essential</strong> — You can't store images on-chain affordably. IPFS + a pinning service is the standard approach.</li>
+<li><strong>Alchemy makes life easy</strong> — Their infrastructure handled the Polygon RPC reliably without me needing to run my own node.</li>
+</ol>
+
+<h2>The Result</h2>
+
+<p>MYNT lets founders create NFT representations of their startups — think of it as a digital "founder card" or startup equity tokenized as an NFT. Each startup gets:</p>
+
+<ul>
+<li>A tier (Gold, Silver, Platinum)</li>
+<li>A category</li>
+<li>Description and imagery stored on IPFS</li>
+</ul>
+
+<p>The contract is deployed to Polygon mainnet, and minting costs practically nothing.</p>
+
+<hr>
+
+<p><em>This was a summer 2021 learning project. The NFT space has evolved a lot since then, but the fundamentals remain the same.</em></p>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="footer-inner">
+                <nav class="social-links">
+                    <a href="https://github.com/gbose" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    <a href="http://linkedin.com/in/gbose" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                </nav>
+                <p class="footer-credit">&copy; 2022 Gaurab Bose.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
