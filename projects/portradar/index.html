@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PortRadar - Terminal port and process monitor with Docker support">
+    <title>PortRadar - Gaurab Bose</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/sidebar.css">
+    <style>
+        .project-header { margin-bottom: 32px; }
+        .project-header h1 { margin-bottom: 8px; }
+        .project-meta { color: #666; margin-bottom: 24px; }
+        .project-content { line-height: 1.8; }
+        .project-content h2 { margin-top: 32px; color: #333; }
+        .project-content pre { background: #1e1e1e; color: #d4d4d4; padding: 16px; border-radius: 6px; overflow-x: auto; }
+        .project-content code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; }
+        .tag { display: inline-block; background: #e0e7ff; color: #4338ca; padding: 4px 12px; border-radius: 16px; font-size: 14px; margin-right: 8px; }
+        .demo-box { background: #1e1e1e; color: #d4d4d4; padding: 24px; border-radius: 8px; font-family: monospace; margin: 24px 0; }
+        .demo-box .cyan { color: #56b6c2; }
+        .demo-box .yellow { color: #dcdcaa; }
+        .demo-box .green { color: #98c379; }
+        .demo-box .dim { color: #5c6370; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section class="hero">
+            <div class="hero-inner">
+                <nav class="nav-main">
+                    <a href="../../#projects">Projects</a>
+                    <a href="../../blog.html">Blog</a>
+                    <a href="https://github.com/gbose" target="_blank">GitHub</a>
+                    <a href="https://twitter.com/gbose" target="_blank">Twitter</a>
+                </nav>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="project-header">
+                <span class="tag">Node.js</span>
+                <span class="tag">TUI</span>
+                <span class="tag">Docker</span>
+                <span class="tag">Systems Programming</span>
+                <h1>PortRadar</h1>
+                <p class="project-meta">A terminal UI that shows both host processes AND Docker container ports in one unified view</p>
+            </div>
+
+            <div class="project-content">
+<h2>The Problem</h2>
+<p>Every developer knows this workflow: something's running on a port, you can't remember what, so you open a new terminal, type <code>ss -tulpn</code> (or worse, <code>lsof -i</code>), scroll through the output, realize it's a Docker container, then run <code>docker ps</code> to figure out which container owns that port.</p>
+
+<p>Two separate commands. Context switching. Annoying.</p>
+
+<p>I built PortRadar to fix that.</p>
+
+<h2>What It Does</h2>
+<div class="demo-box">
+<span class="cyan">FILTER:</span> [all] [host] [docker]        Search...    ↻ ON<br>
+<span class="dim">─────────────────────────────────────────────────────────</span><br>
+PID    PORT   PROTO  PROCESS           CONTAINER<br>
+<span class="dim">─────────────────────────────────────────────────────────</span><br>
+14     18789  TCP    openclaw-gatewa   -<br>
+<span class="yellow">-</span>     <span class="yellow">8080</span>   TCP/6  nginx            myweb<br>
+<span class="yellow">-</span>     <span class="yellow">5432</span>   TCP/6  postgres         db<br>
+<br>
+<span class="cyan">↑↓ Navigate</span>  [k] Kill  [d] Stop Container  [r] Refresh
+</div>
+
+<h2>How It Works</h2>
+
+<h3>Host Port Scanning</h3>
+<p>Instead of relying on external commands like <code>ss</code> or <code>netstat</code> (which often require elevated permissions), PortRadar reads directly from Linux's <code>/proc</code> filesystem:</p>
+
+<pre><code>/proc/net/tcp    # IPv4 TCP connections
+/proc/net/udp    # IPv4 UDP connections  
+/proc/net/tcp6   # IPv6 TCP connections
+/proc/net/udp6   # IPv6 UDP connections</code></pre>
+
+<p>Each line contains the local address (IP:port in hex), connection state, and inode number. The tricky part: mapping that inode back to a process. PortRadar iterates through <code>/proc/&lt;pid&gt;/fd</code> looking for socket symlinks that match the inode.</p>
+
+<h3>Docker Integration</h3>
+<p>The Docker client connects to the Docker Engine API (via the Docker socket or TCP) and fetches running containers. Each container's port mappings are extracted — both published ports (host:container) and internal-only ports.</p>
+
+<h3>Terminal UI</h3>
+<p>Built with <a href="https://github.com/chjj/blessed">blessed</a>, a ncurses-style TUI library for Node.js. It handles keyboard input, screen rendering, and interactive elements like the confirmation dialogs.</p>
+
+<h2>Key Features</h2>
+<ul>
+<li><strong>Unified View</strong> — Host processes and Docker containers in one table</li>
+<li><strong>Filtering</strong> — Press 1/2/3 or 'f' to cycle: All / Host / Docker</li>
+<li><strong>Search</strong> — '/' to focus search, filter by port or process name</li>
+<li><strong>Kill Process</strong> — Select a host process, press 'k', confirm with 'y'</li>
+<li><strong>Stop Container</strong> — Select a container, press 'd', confirm with 'y'</li>
+<li><strong>Auto-refresh</strong> — Toggle with 'r', updates every 3 seconds</li>
+</ul>
+
+<h2>Tech Stack</h2>
+<ul>
+<li><strong>Runtime:</strong> Node.js</li>
+<li><strong>TUI:</strong> Blessed</li>
+<li><strong>Docker:</strong> Dockerode</li>
+<li><strong>Platform:</strong> Linux (uses /proc)</li>
+</ul>
+
+<h2>Running It</h2>
+<pre><code>git clone https://github.com/gbose/portradar.git
+cd portradar
+npm install
+npm start</code></pre>
+
+<h2>What's Next</h2>
+<p>Potential improvements:</p>
+<ul>
+<li>Sort by column (click header or keyboard shortcut)</li>
+<li>Show process tree (parent/child relationships)</li>
+<li>Historical logging (track port usage over time)</li>
+<li>macOS support (parse <code>netstat</code> output instead of /proc)</li>
+</ul>
+
+<h2>Source Code</h2>
+<p><a href="https://github.com/gbose/portradar">View on GitHub →</a></p>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

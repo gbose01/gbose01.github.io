@@ -1,0 +1,17 @@
+{
+  "name": "portradar",
+  "version": "1.0.0",
+  "description": "Terminal port & process monitor with Docker support",
+  "main": "main.js",
+  "scripts": {
+    "start": "node views/main.js",
+    "test": "node main.js"
+  },
+  "keywords": ["tui", "terminal", "ports", "docker", "monitor"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "blessed": "^0.1.81",
+    "dockerode": "^4.0.9"
+  }
+}
