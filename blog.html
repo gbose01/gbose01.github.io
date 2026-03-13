@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog - Gaurab Bose</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/gbose01/css/style.min.css">
+    <link rel="stylesheet" href="css/sidebar.css">
     <style>
         .post-list { list-style: none; padding: 0; }
         .post-list li { margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid #eee; }
@@ -16,17 +16,18 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="layout">
+        <main>
         <section class="hero">
             <div class="hero-inner">
                 <h1>Blog</h1>
                 <p class="subtitle">Thoughts on AI, product, and technology</p>
                 <nav class="nav-main">
-                    <a href="/gbose01/#projects">Projects</a>
-                    <a href="/gbose01/blog/">Blog</a>
-                    <a href="https://github.com" target="_blank">GitHub</a>
-                    <a href="https://twitter.com" target="_blank">Twitter</a>
-                    <a href="https://linkedin.com/in/gbose" target="_blank">LinkedIn</a>
+                    <a href="./#projects">Projects</a>
+                    <a href="./blog.html">Blog</a>
+                    <a href="https://github.com/gbose" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    <a href="https://twitter.com/gbose" target="_blank" rel="noopener noreferrer">Twitter</a>
+                    <a href="https://linkedin.com/in/gbose" target="_blank" rel="noopener noreferrer">LinkedIn</a>
                 </nav>
             </div>
         </section>
@@ -35,7 +36,7 @@
             <ul class="post-list">
                 <li>
                     <span class="post-date">March 9, 2026</span>
-                    <h2 class="post-title"><a href="/gbose01/blog/openclaw-docker-journey/">Building My Personal AI Assistant: OpenClaw on Docker</a></h2>
+                    <h2 class="post-title"><a href="blog/openclaw-docker-journey/">Building My Personal AI Assistant: OpenClaw on Docker</a></h2>
                     <p>How I set up OpenClaw on Docker and configured my personal AI assistant</p>
                 </li>
             </ul>
@@ -44,13 +45,26 @@
         <footer class="footer">
             <div class="footer-inner">
                 <nav class="social-links">
-                    <a href="https://github.com/gbose" target="_blank">GitHub</a>
-                    <a href="https://twitter.com/gbose" target="_blank">Twitter</a>
-                    <a href="https://linkedin.com/in/gbose" target="_blank">LinkedIn</a>
+                    <a href="https://github.com/gbose" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    <a href="https://twitter.com/gbose" target="_blank" rel="noopener noreferrer">Twitter</a>
+                    <a href="https://linkedin.com/in/gbose" target="_blank" rel="noopener noreferrer">LinkedIn</a>
                 </nav>
                 <p class="footer-credit">&copy; 2026 Gaurab Bose.</p>
             </div>
         </footer>
+        </main>
+        
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Writing</h3>
+                <div class="sidebar-list">
+                    <div class="sidebar-item">
+                        <a href="blog/openclaw-docker-journey/">Building My Personal AI Assistant</a>
+                        <span>Mar 2026</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
     </div>
 </body>
 </html>
