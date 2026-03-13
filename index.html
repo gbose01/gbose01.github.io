@@ -48,32 +48,32 @@
                     </article>
 
                     <article class="project">
-                        <h3><a href="https://github.com/gbose01/mynt-nft" class="link">mynt-nft</a></h3>
-                        <p>Minting NFTs for startups</p>
+                        <h3>Mynt NFT</h3>
+                        <p><a href="https://github.com/gbose01/mynt-nft" class="link">mynt-nft</a> — A platform for minting NFTs tailored for startups looking to enter the blockchain space.</p>
                         <span class="meta">NFT • Blockchain</span>
                     </article>
 
                     <article class="project">
-                        <h3><a href="https://github.com/gbose01/rag-paper-summarizer" class="link">rag-paper-summarizer</a></h3>
-                        <p>Use RAG to summarize academic papers</p>
+                        <h3>RAG Paper Summarizer</h3>
+                        <p><a href="https://github.com/gbose01/rag-paper-summarizer" class="link">rag-paper-summarizer</a> — An AI-powered tool that uses Retrieval-Augmented Generation to summarize academic papers efficiently.</p>
                         <span class="meta">RAG • NLP • AI</span>
                     </article>
 
                     <article class="project">
-                        <h3><a href="https://github.com/gbose01/InvestAI" class="link">InvestAI</a></h3>
-                        <p>K-Means Clustering for ETF identification</p>
+                        <h3>InvestAI</h3>
+                        <p><a href="https://github.com/gbose01/InvestAI" class="link">InvestAI</a> — Machine learning application using K-Means Clustering to identify and categorize ETFs for investment strategies.</p>
                         <span class="meta">ML • Finance</span>
                     </article>
 
                     <article class="project">
-                        <h3><a href="https://github.com/gbose01/Fraud-Detection" class="link">Fraud-Detection</a></h3>
-                        <p>Detecting fraudulent ad clicks with XGBoost</p>
+                        <h3>Fraud Detection</h3>
+                        <p><a href="https://github.com/gbose01/Fraud-Detection" class="link">Fraud-Detection</a> — A security-focused project detecting fraudulent ad clicks using XGBoost machine learning models.</p>
                         <span class="meta">XGBoost • Security</span>
                     </article>
 
                     <article class="project">
-                        <h3><a href="https://github.com/gbose01/First-Game" class="link">First-Game</a></h3>
-                        <p>2D game developed in Godot</p>
+                        <h3>First Game</h3>
+                        <p><a href="https://github.com/gbose01/First-Game" class="link">First-Game</a> — My first 2D game developed using the Godot game engine.</p>
                         <span class="meta">Godot • Game Dev</span>
                     </article>
                 </div>
@@ -95,20 +95,41 @@
         <aside class="sidebar">
             <div class="sidebar-section">
                 <h3 class="sidebar-title">Writing</h3>
-                <div class="sidebar-list">
-                    <div class="sidebar-item">
-                        <a href="blog/1-week-with-openclaw.html">1 Week with OpenClaw</a>
-                        <span>Mar 2026</span>
-                    </div>
-                    <div class="sidebar-item">
-                        <a href="blog/openclaw-docker-journey.html">Building My Personal AI Assistant</a>
-                        <span>Mar 2026</span>
-                    </div>
+                <div class="sidebar-list" id="blog-posts">
+                    <!-- Blog posts loaded automatically via JavaScript -->
                 </div>
             </div>
         </aside>
     </div>
 
-    <script src="js/app.min.js"></script>
+    <script>
+        // Auto-populate blog posts from blog.html
+        fetch('blog.html')
+            .then(response => response.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const posts = doc.querySelectorAll('.post-list li');
+                const container = document.getElementById('blog-posts');
+                
+                posts.forEach(post => {
+                    const title = post.querySelector('.post-title a').textContent;
+                    const url = post.querySelector('.post-title a').getAttribute('href');
+                    const date = post.querySelector('.post-date').textContent;
+                    
+                    const item = document.createElement('div');
+                    item.className = 'sidebar-item';
+                    item.innerHTML = `<a href="${url}">${title}</a><span>${date}</span>`;
+                    container.appendChild(item);
+                });
+            })
+            .catch(() => {
+                // Fallback: show static content
+                document.getElementById('blog-posts').innerHTML = `
+                    <div class="sidebar-item"><a href="blog/1-week-with-openclaw.html">1 Week with OpenClaw</a><span>Mar 2026</span></div>
+                    <div class="sidebar-item"><a href="blog/openclaw-docker-journey.html">Building My Personal AI Assistant</a><span>Mar 2026</span></div>
+                `;
+            });
+    </script>
 </body>
 </html>
