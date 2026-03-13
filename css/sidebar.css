@@ -43,7 +43,46 @@ body {
 @media (max-width: 900px) {
     .layout {
         grid-template-columns: 1fr;
-        gap: 60px;
+        gap: 40px;
+    }
+    
+    .sidebar {
+        order: -1;
+        position: relative;
+        top: 0;
+        background: var(--bg-elevated);
+        padding: 24px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+    }
+    
+    .sidebar-section {
+        margin-bottom: 0;
+    }
+    
+    .sidebar-title {
+        margin-bottom: 16px;
+    }
+    
+    .sidebar-list {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    
+    .sidebar-item {
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .sidebar-item a {
+        font-size: 13px;
+    }
+    
+    .sidebar-item span {
+        font-size: 11px;
+        white-space: nowrap;
     }
 }
 
