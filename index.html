@@ -13,6 +13,71 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/sidebar.css">
+    <style>
+        /* Override layout for single column */
+        .layout {
+            display: block;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+        
+        .sidebar {
+            display: none;
+        }
+        
+        .hero {
+            padding: 0 0 40px;
+        }
+        
+        .section {
+            padding: 40px 0;
+        }
+        
+        /* Blog section styling */
+        .blog-list {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        
+        .blog-item {
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 24px;
+        }
+        
+        .blog-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        
+        .blog-item h3 {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .blog-item h3 a {
+            color: var(--text);
+            text-decoration: none;
+        }
+        
+        .blog-item h3 a:hover {
+            color: var(--accent);
+        }
+        
+        .blog-item .date {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+        
+        .blog-item p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+    </style>
 </head>
 <body>
     <div class="layout">
@@ -30,7 +95,7 @@
 
                     <nav class="nav-main">
                         <a href="#projects">Projects</a>
-                        <a href="blog.html">Blog</a>
+                        <a href="#blog">Blog</a>
                         <a href="https://github.com/gbose" target="_blank" rel="noopener noreferrer">GitHub</a>
                         <a href="http://linkedin.com/in/gbose" target="_blank" rel="noopener noreferrer">LinkedIn</a>
                     </nav>
@@ -43,13 +108,13 @@
                 <div class="projects-list">
                     <article class="project">
                         <h3>PortRadar</h3>
-                        <p><a href="projects/portradar/index.html" class="link">PortRadar</a> — A terminal UI that shows both host processes AND Docker container ports in one unified view. Built with Node.js, Blessed TUI, and Dockerode. Features filtering, search, process kill, and container stop.</p>
+                        <p><a href="projects/portradar/index.html" class="link">PortRadar</a> — A terminal UI that shows both host processes AND Docker container ports in one unified view. Built with Node.js, Blessed TUI, and Dockerode.</p>
                         <span class="meta">Node.js • TUI • Docker • Systems</span>
                     </article>
 
                     <article class="project">
                         <h3>Personal Website and Portfolio</h3>
-                        <p><a href="https://github.com/gbose01/about" class="link">gbose01</a> — A personal website and portfolio built from scratch to showcase projects, blog posts, and professional background. The goal was to create a clean, fast, and accessible site that reflects my work in AI and product management while learning web development fundamentals.</p>
+                        <p><a href="https://github.com/gbose01/about" class="link">gbose01</a> — A personal website and portfolio built from scratch to showcase projects, blog posts, and professional background.</p>
                         <span class="meta">HTML • Web Dev</span>
                     </article>
 
@@ -74,13 +139,37 @@
                     <article class="project">
                         <h3>Fraud Detection</h3>
                         <p><a href="https://github.com/gbose01/Fraud-Detection" class="link">Fraud-Detection</a> — A security-focused project detecting fraudulent ad clicks using XGBoost machine learning models.</p>
-                        <span class="meta">XGBoost • Security</span>
+                        <span class="meta">XGBoose • Security</span>
                     </article>
 
                     <article class="project">
                         <h3>First Game</h3>
                         <p><a href="https://github.com/gbose01/First-Game" class="link">First-Game</a> — My first 2D game developed using the Godot game engine.</p>
                         <span class="meta">Godot • Game Dev</span>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section" id="blog">
+                <h2>Blog</h2>
+                
+                <div class="blog-list">
+                    <article class="blog-item">
+                        <h3><a href="blog/building-portradar-ai.html">Building PortRadar: How I Used AI to Ship a Developer Tool in Hours</a></h3>
+                        <p class="date">March 13, 2026</p>
+                        <p>How I built a terminal tool that combines host processes and Docker container ports — and what this says about AI collaboration.</p>
+                    </article>
+
+                    <article class="blog-item">
+                        <h3><a href="blog/1-week-with-openclaw.html">1 Week with OpenClaw: What I've Built</a></h3>
+                        <p class="date">March 12, 2026</p>
+                        <p>One week in — portfolio site, cost dashboards, automated reports, and a personal AI that actually knows me.</p>
+                    </article>
+
+                    <article class="blog-item">
+                        <h3><a href="blog/openclaw-docker-journey.html">Building My Personal AI Assistant: OpenClaw on Docker</a></h3>
+                        <p class="date">March 9, 2026</p>
+                        <p>How I set up OpenClaw on Docker and configured my personal AI assistant.</p>
                     </article>
                 </div>
             </section>
@@ -97,45 +186,6 @@
                 </div>
             </footer>
         </main>
-        
-        <aside class="sidebar">
-            <div class="sidebar-section">
-                <h3 class="sidebar-title">Writing</h3>
-                <div class="sidebar-list" id="blog-posts">
-                    <!-- Blog posts loaded automatically via JavaScript -->
-                </div>
-            </div>
-        </aside>
     </div>
-
-    <script>
-        // Auto-populate blog posts from blog.html
-        fetch('blog.html')
-            .then(response => response.text())
-            .then(html => {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const posts = doc.querySelectorAll('.post-list li');
-                const container = document.getElementById('blog-posts');
-                
-                posts.forEach(post => {
-                    const title = post.querySelector('.post-title a').textContent;
-                    const url = post.querySelector('.post-title a').getAttribute('href');
-                    const date = post.querySelector('.post-date').textContent;
-                    
-                    const item = document.createElement('div');
-                    item.className = 'sidebar-item';
-                    item.innerHTML = `<a href="${url}">${title}</a><span>${date}</span>`;
-                    container.appendChild(item);
-                });
-            })
-            .catch(() => {
-                // Fallback: show static content
-                document.getElementById('blog-posts').innerHTML = `
-                    <div class="sidebar-item"><a href="blog/1-week-with-openclaw.html">1 Week with OpenClaw</a><span>Mar 2026</span></div>
-                    <div class="sidebar-item"><a href="blog/openclaw-docker-journey.html">Building My Personal AI Assistant</a><span>Mar 2026</span></div>
-                `;
-            });
-    </script>
 </body>
 </html>
