@@ -77,6 +77,31 @@
             color: var(--text-muted);
             line-height: 1.6;
         }
+        
+        /* Show more button */
+        .show-more {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 10px 20px;
+            background: var(--bg-secondary);
+            color: var(--text);
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid var(--border);
+            transition: background 0.2s, border-color 0.2s;
+        }
+        
+        .show-more:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        
+        .section-footer {
+            margin-top: 8px;
+        }
     </style>
 </head>
 <body>
@@ -94,96 +119,14 @@
                     </div>
 
                     <nav class="nav-main">
-                        <a href="#projects">Projects</a>
-                        <a href="#blog">Blog</a>
+                        <a href="projects.html">Projects</a>
+                        <a href="blog.html">Blog</a>
                         <a href="https://github.com/gbose" target="_blank" rel="noopener noreferrer">GitHub</a>
                         <a href="http://linkedin.com/in/gbose" target="_blank" rel="noopener noreferrer">LinkedIn</a>
                     </nav>
                 </div>
             </section>
 
-            <section class="section" id="projects">
-                <h2>Projects</h2>
-                
-                <div class="projects-list">
-                    <article class="project">
-                        <h3>PortRadar</h3>
-                        <p><a href="projects/portradar/index.html" class="link">PortRadar</a> — A terminal UI that shows both host processes AND Docker container ports in one unified view. Built with Node.js, Blessed TUI, and Dockerode.</p>
-                        <span class="meta">Node.js • TUI • Docker • Systems</span>
-                    </article>
-
-                    <article class="project">
-                        <h3>LLM Cost Tool</h3>
-                        <p><a href="https://github.com/gbose01/LLM-cost-tool" class="link">LLM-cost-tool</a> — A cost management and observability dashboard for OpenClaw. Tracks token usage, API costs by channel, and detects spikes in real-time. Built with SQLite, vanilla Node.js, and Chart.js.</p>
-                        <span class="meta">SQLite • Node.js • Observability • AI</span>
-                    </article>
-
-                    <article class="project">
-                        <h3>Personal Website and Portfolio</h3>
-                        <p><a href="https://github.com/gbose01/about" class="link">gbose01</a> — A personal website and portfolio built from scratch to showcase projects, blog posts, and professional background.</p>
-                        <span class="meta">HTML • Web Dev</span>
-                    </article>
-
-                    <article class="project">
-                        <h3>Mynt NFT</h3>
-                        <p><a href="https://github.com/gbose01/mynt-nft" class="link">mynt-nft</a> — A platform for minting NFTs tailored for startups looking to enter the blockchain space.</p>
-                        <span class="meta">NFT • Blockchain</span>
-                    </article>
-
-                    <article class="project">
-                        <h3>RAG Paper Summarizer</h3>
-                        <p><a href="https://github.com/gbose01/rag-paper-summarizer" class="link">rag-paper-summarizer</a> — An AI-powered tool that uses Retrieval-Augmented Generation to summarize academic papers efficiently.</p>
-                        <span class="meta">RAG • NLP • AI</span>
-                    </article>
-
-                    <article class="project">
-                        <h3>InvestAI</h3>
-                        <p><a href="https://github.com/gbose01/InvestAI" class="link">InvestAI</a> — Machine learning application using K-Means Clustering to identify and categorize ETFs for investment strategies.</p>
-                        <span class="meta">ML • Finance</span>
-                    </article>
-
-                    <article class="project">
-                        <h3>Fraud Detection</h3>
-                        <p><a href="https://github.com/gbose01/Fraud-Detection" class="link">Fraud-Detection</a> — A security-focused project detecting fraudulent ad clicks using XGBoost machine learning models.</p>
-                        <span class="meta">XGBoose • Security</span>
-                    </article>
-
-                    <article class="project">
-                        <h3>First Game</h3>
-                        <p><a href="https://github.com/gbose01/First-Game" class="link">First-Game</a> — My first 2D game developed using the Godot game engine.</p>
-                        <span class="meta">Godot • Game Dev</span>
-                    </article>
-                </div>
-            </section>
-
-            <section class="section" id="blog">
-                <h2>Blog</h2>
-                
-                <div class="blog-list">
-                    <article class="blog-item">
-                        <h3><a href="blog/2026-03-15-cost-observability-tool.html">Building a Cost Observability Tool for My AI Agent</a></h3>
-                        <p class="date">March 15, 2026</p>
-                        <p>How I built a real-time dashboard to track LLM API costs across my Discord AI agent conversations.</p>
-                    </article>
-
-                    <article class="blog-item">
-                        <h3><a href="blog/building-portradar-ai.html">Building PortRadar: How I Used AI to Ship a Developer Tool in Hours</a></h3>
-                        <p class="date">March 13, 2026</p>
-                        <p>How I built a terminal tool that combines host processes and Docker container ports — and what this says about AI collaboration.</p>
-                    </article>
-
-                    <article class="blog-item">
-                        <h3><a href="blog/1-week-with-openclaw.html">1 Week with OpenClaw: What I've Built</a></h3>
-                        <p class="date">March 12, 2026</p>
-                        <p>One week in — portfolio site, cost dashboards, automated reports, and a personal AI that actually knows me.</p>
-                    </article>
-
-                    <article class="blog-item">
-                        <h3><a href="blog/openclaw-docker-journey.html">Building My Personal AI Assistant: OpenClaw on Docker</a></h3>
-                        <p class="date">March 9, 2026</p>
-                        <p>How I set up OpenClaw on Docker and configured my personal AI assistant.</p>
-                    </article>
-                </div>
             </section>
 
             <footer class="footer">

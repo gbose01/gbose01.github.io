@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects — Gaurab Bose</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <style>
+        .layout {
+            display: block;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+        .sidebar { display: none; }
+        .hero { padding: 0 0 40px; }
+        .section { padding: 40px 0; }
+        h1 { font-size: 2.5rem; margin-bottom: 8px; }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 24px;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .projects-list {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+        .project {
+            padding-bottom: 32px;
+            border-bottom: 1px solid var(--border);
+        }
+        .project:last-child { border-bottom: none; }
+        .project h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .project p { font-size: 15px; line-height: 1.6; margin-bottom: 12px; }
+        .meta {
+            display: inline-block;
+            font-size: 12px;
+            color: var(--text-muted);
+            background: var(--bg-secondary);
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <a href="index.html" class="back-link">← Back to Home</a>
+        
+        <h1>Projects</h1>
+        <p style="color: var(--text-muted); margin-bottom: 32px;">A collection of things I've built.</p>
+        
+        <div class="projects-list">
+            <article class="project">
+                <h3>PortRadar</h3>
+                <p><a href="projects/portradar/index.html" class="link">PortRadar</a> — A terminal UI that shows both host processes AND Docker container ports in one unified view. Built with Node.js, Blessed TUI, and Dockerode.</p>
+                <span class="meta">Node.js • TUI • Docker • Systems</span>
+            </article>
+
+            <article class="project">
+                <h3>LLM Cost Tool</h3>
+                <p><a href="https://github.com/gbose01/LLM-cost-tool" class="link">LLM-cost-tool</a> — A cost management and observability dashboard for OpenClaw. Tracks token usage, API costs by channel, and detects spikes in real-time. Built with SQLite, vanilla Node.js, and Chart.js.</p>
+                <span class="meta">SQLite • Node.js • Observability • AI</span>
+            </article>
+
+            <article class="project">
+                <h3>Personal Website and Portfolio</h3>
+                <p><a href="https://github.com/gbose01/about" class="link">gbose01</a> — A personal website and portfolio built from scratch to showcase projects, blog posts, and professional background.</p>
+                <span class="meta">HTML • Web Dev</span>
+            </article>
+
+            <article class="project">
+                <h3>Mynt NFT</h3>
+                <p><a href="https://github.com/gbose01/mynt-nft" class="link">mynt-nft</a> — A platform for minting NFTs tailored for startups looking to enter the blockchain space.</p>
+                <span class="meta">NFT • Blockchain</span>
+            </article>
+
+            <article class="project">
+                <h3>RAG Paper Summarizer</h3>
+                <p><a href="https://github.com/gbose01/rag-paper-summarizer" class="link">rag-paper-summarizer</a> — An AI-powered tool that uses Retrieval-Augmented Generation to summarize academic papers efficiently.</p>
+                <span class="meta">RAG • NLP • AI</span>
+            </article>
+
+            <article class="project">
+                <h3>InvestAI</h3>
+                <p><a href="https://github.com/gbose01/InvestAI" class="link">InvestAI</a> — Machine learning application using K-Means Clustering to identify and categorize ETFs for investment strategies.</p>
+                <span class="meta">ML • Finance</span>
+            </article>
+
+            <article class="project">
+                <h3>Fraud Detection</h3>
+                <p><a href="https://github.com/gbose01/Fraud-Detection" class="link">Fraud-Detection</a> — A security-focused project detecting fraudulent ad clicks using XGBoost machine learning models.</p>
+                <span class="meta">XGBoose • Security</span>
+            </article>
+
+            <article class="project">
+                <h3>First Game</h3>
+                <p><a href="https://github.com/gbose01/First-Game" class="link">First-Game</a> — My first 2D game developed using the Godot game engine.</p>
+                <span class="meta">Godot • Game Dev</span>
+            </article>
+        </div>
+    </div>
+</body>
+</html>

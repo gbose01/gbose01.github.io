@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog — Gaurab Bose</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <style>
+        .layout {
+            display: block;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+        .sidebar { display: none; }
+        .hero { padding: 0 0 40px; }
+        .section { padding: 40px 0; }
+        h1 { font-size: 2.5rem; margin-bottom: 8px; }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 24px;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .blog-list {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+        .blog-item {
+            padding-bottom: 32px;
+            border-bottom: 1px solid var(--border);
+        }
+        .blog-item:last-child { border-bottom: none; }
+        .blog-item h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .blog-item h3 a {
+            color: var(--text);
+            text-decoration: none;
+        }
+        .blog-item h3 a:hover {
+            color: var(--accent);
+        }
+        .blog-item .date {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+        .blog-item p {
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <a href="index.html" class="back-link">← Back to Home</a>
+        
+        <h1>Blog</h1>
+        <p style="color: var(--text-muted); margin-bottom: 32px;">Thoughts on AI, product, and engineering.</p>
+        
+        <div class="blog-list">
+            <article class="blog-item">
+                <h3><a href="blog/2026-03-15-cost-observability-tool.html">Building a Cost Observability Tool for My AI Agent</a></h3>
+                <p class="date">March 15, 2026</p>
+                <p>How I built a real-time dashboard to track LLM API costs across my Discord AI agent conversations.</p>
+            </article>
+
+            <article class="blog-item">
+                <h3><a href="blog/building-portradar-ai.html">Building PortRadar: How I Used AI to Ship a Developer Tool in Hours</a></h3>
+                <p class="date">March 13, 2026</p>
+                <p>How I built a terminal tool that combines host processes AND Docker container ports in one unified view — and what this says about AI collaboration.</p>
+            </article>
+
+            <article class="blog-item">
+                <h3><a href="blog/1-week-with-openclaw.html">1 Week with OpenClaw: What I've Built</a></h3>
+                <p class="date">March 12, 2026</p>
+                <p>One week in — portfolio site, cost dashboards, automated reports, and a personal AI that actually knows me.</p>
+            </article>
+
+            <article class="blog-item">
+                <h3><a href="blog/openclaw-docker-journey.html">Building My Personal AI Assistant: OpenClaw on Docker</a></h3>
+                <p class="date">March 9, 2026</p>
+                <p>How I set up OpenClaw on Docker and configured my personal AI assistant.</p>
+            </article>
+        </div>
+    </div>
+</body>
+</html>
