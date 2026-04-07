@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Setting up QMD with Obsidian for better AI memory management in OpenClaw">
+    <title>Setting Up QMD with Obsidian - Better AI Memory - Gaurab Bose</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/sidebar.css">
+    <style>
+        .post-header { margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid #eee; }
+        .post-meta { color: #666; }
+        .post-content { line-height: 1.8; }
+        .post-content h2 { margin-top: 32px; }
+        .post-content code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; }
+        .post-content pre { background: #f4f4f4; padding: 16px; border-radius: 6px; overflow-x: auto; }
+        .back-link { margin-bottom: 24px; }
+        .task-list { list-style: none; padding-left: 0; }
+        .task-list li { padding: 8px 0; border-bottom: 1px solid #eee; }
+        .task-list li::before { content: "✓"; margin-right: 12px; color: #22c55e; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section class="hero">
+            <div class="hero-inner">
+                <nav class="nav-main">
+                    <a href="../../#projects">Projects</a>
+                    <a href="../../blog.html">Blog</a>
+                    <a href="https://github.com/gbose" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    <a href="https://twitter.com/gbose" target="_blank" rel="noopener noreferrer">Twitter</a>
+                    <a href="https://linkedin.com/in/gbose" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                </nav>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="post-header">
+                <p class="post-meta">April 7, 2026</p>
+                <h1>Setting Up QMD with Obsidian for Better AI Memory</h1>
+            </div>
+
+            <div class="post-content">
+<p>I've been thinking about how to make my AI assistant remember more of our conversations. Not just the forced "save this to memory" prompts, but a system that actually surfaces relevant context when we talk.</p>
+
+<p>Enter QMD — a local-first search sidecar that combines BM25, vector search, and reranking. Combined with my existing Obsidian vault, it's become a pretty solid memory system.</p>
+
+<h2>What is QMD?</h2>
+
+<p>QMD is a search engine that runs alongside OpenClaw. It handles:</p>
+<ul>
+<li><strong>BM25</strong> — classic keyword search</li>
+<li><strong>Vector search</strong> — semantic similarity</li>
+<li><strong>Reranking</strong> — improving initial results</li>
+</ul>
+
+<p>The killer feature: it indexes directories outside the workspace. My Obsidian vault now lives at <code>~/.openclaw/workspace-records/obsidian_vault</code>, and QMD indexes it automatically every 5 minutes.</p>
+
+<h2>The Setup</h2>
+
+<p>Installation was straightforward:</p>
+
+<pre><code>npm install -g @tobilu/qmd</code></pre>
+
+<p>Then a config patch to enable it:</p>
+
+<pre><code>{
+  "memory": {
+    "backend": "qmd",
+    "qmd": {
+      "paths": [{
+        "name": "obsidian",
+        "path": "/home/node/.openclaw/workspace-records/obsidian_vault",
+        "pattern": "**/*.md"
+      }]
+    }
+  }
+}</code></pre>
+
+<h2>Vault Structure Review</h2>
+
+<p>I had an existing Obsidian vault with folders: Finance, Health, Records, Reviews, Travel. Solid structure, but it was missing:</p>
+
+<ul>
+<li>YAML frontmatter on most files</li>
+<li>A Work/ folder for projects</li>
+<li>Consistent tagging</li>
+</ul>
+
+<p>Claude Sonnet (running as a subagent) reviewed the structure and gave solid feedback:</p>
+
+<ul>
+<li>Keep folders flat — nesting hurts retrieval</li>
+<li>Frontmatter with tags helps QMD's hybrid search</li>
+<li>Keep AI notes in a <em>separate</em> collection from personal records</li>
+</ul>
+
+<h2>What's New in the Vault</h2>
+
+<p>After implementing the changes:</p>
+
+<ul class="task-list">
+<li>YAML frontmatter added to 8 existing files</li>
+<li>Work/ folder created with GitHub projects template</li>
+<li>ai/ folder added for session summaries</li>
+<li>Index files cleaned up and linked</li>
+</ul>
+
+<h2>Continuous Note-Taking</h2>
+
+<p>The real question: how do I keep adding to the vault without asking?</p>
+
+<p>Two approaches:</p>
+
+<ol>
+<li><strong>Heartbeat</strong> — Every 30 minutes, I now check session transcripts for new info worth saving</li>
+<li><strong>Auto-flush</strong> — Before context compaction, important context gets saved automatically</li>
+</ol>
+
+<p>The heartbeat task looks like:</p>
+
+<pre><code>## Session Note-Taking
+- Review recent session transcripts
+- Identify new information worth saving to Obsidian vault
+- Save key decisions, context, and learnings to vault</code></pre>
+
+<h2>Results</h2>
+
+<p>Now when I ask "what did we discuss about..." or reference something from past sessions, QMD surfaces it. The retrieval isn't perfect, but it's far better than the alternative (nothing).</p>
+
+<p>The key insight: building a memory system isn't about one big setup — it's about small, consistent habits. The heartbeat ensures those habits happen.</p>
+
+<h2>What's Next</h2>
+
+<ul>
+<li>Add more session summaries manually at first</li>
+<li>Let the beacon pick up patterns over time</li>
+<li>Maybe a separate QMD collection for code-related notes</li>
+</ul>
+
+<p>If you're running OpenClaw and wanting better memory, QMD + Obsidian is a solid combo.</p>
+            </div>
+
+            <div class="back-link">
+                <a href="../../blog.html">← Back to Blog</a>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
