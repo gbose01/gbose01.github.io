@@ -6,272 +6,237 @@
     <meta name="description" content="Building PortRadar with AI assistance - a terminal tool that combines host processes and Docker container ports">
     <title>Building PortRadar: How I Used AI to Ship a Developer Tool in Hours - Gaurab Bose</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/sidebar.css">
     <style>
-        .post-header { margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid #eee; }
-        .post-meta { color: #666; }
-        .post-content { line-height: 1.8; }
-        .post-content h2 { margin-top: 40px; color: #1a1a1a; }
-        .post-content h3 { margin-top: 24px; color: #333; font-weight: 600; }
-        .post-content code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-size: 14px; }
-        .post-content pre { background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 8px; overflow-x: auto; font-size: 13px; line-height: 1.5; }
-        .post-content pre code { background: none; padding: 0; }
-        .post-content ul, .post-content ol { margin: 16px 0; padding-left: 24px; }
-        .post-content li { margin: 8px 0; }
-        .post-content blockquote { border-left: 4px solid #ddd; padding-left: 20px; margin: 24px 0; color: #666; font-style: italic; }
-        .highlight-box { background: #f0f7ff; border: 1px solid #d0e3ff; border-radius: 8px; padding: 20px; margin: 24px 0; }
-        .highlight-box h4 { margin-top: 0; color: #1a40bf; }
-        .key-takeaway { background: #fff8e0; border-left: 4px solid #ffc107; padding: 16px 20px; margin: 24px 0; }
-        .back-link { margin-bottom: 24px; }
-        .author-block { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid #eee; }
-        .author-avatar { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-        .author-info h3 { margin: 0; font-size: 18px; }
-        .author-info p { margin: 4px 0 0; color: #666; font-size: 14px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background: #fafafa; color: #24292f; line-height: 1.7; }
+        .container { max-width: 700px; margin: 0 auto; padding: 40px 20px; }
+        .nav { margin-bottom: 40px; }
+        .nav a { color: #0969da; text-decoration: none; }
+        .nav a:hover { text-decoration: underline; }
+        h1 { font-size: 2.2rem; margin-bottom: 12px; line-height: 1.3; }
+        .date { color: #656d76; margin-bottom: 32px; }
+        h2 { font-size: 1.5rem; margin: 40px 0 16px; }
+        h3 { font-size: 1.2rem; margin: 24px 0 12px; }
+        p { margin-bottom: 20px; }
+        ul, ol { margin: 0 0 20px 24px; }
+        li { margin-bottom: 8px; }
+        code { background: #f6f8fa; padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
+        pre { background: #f6f8fa; padding: 16px; border-radius: 8px; overflow-x: auto; margin: 20px 0; }
+        pre code { background: none; padding: 0; }
+        blockquote { border-left: 4px solid #d0d7de; padding-left: 16px; color: #656d76; margin: 20px 0; }
+        hr { border: none; border-top: 1px solid #eee; margin: 40px 0; }
     </style>
 </head>
 <body>
     <div class="container">
-        <section class="hero">
-            <div class="hero-inner">
-                <nav class="nav-main">
-                    <a href="../#projects">Projects</a>
-                    <a href="../blog.html">Blog</a>
-                    <a href="https://github.com/gbose" target="_blank" rel="noopener noreferrer">GitHub</a>
-                    <a href="https://twitter.com/gbose" target="_blank" rel="noopener noreferrer">Twitter</a>
-                    <a href="https://linkedin.com/in/gbose" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-                </nav>
-            </div>
-        </section>
+        <nav class="nav">
+            <a href="blog.html">← Back to Blog</a>
+        </nav>
+        
+        <h1>Building PortRadar: How I Used AI to Ship a Developer Tool in Hours</h1>
+        <p class="date">March 13, 2026</p>
+        
+        <p>Last week I wanted a small terminal tool. This week I have a working project with Docker integration, a TUI interface, and a blog post about the experience.</p>
 
-        <section class="section">
-            <div class="back-link">
-                <a href="../blog.html">← Back to Blog</a>
-            </div>
-            
-            <div class="post-header">
-                <p class="post-meta">March 13, 2026 • 12 min read</p>
-                <h1>Building PortRadar: How I Used AI to Ship a Developer Tool in Hours</h1>
-            </div>
+        <p>Here's how I built <strong>PortRadar</strong> — and why this workflow represents something bigger than just "AI writing code."</p>
 
-            <div class="author-block">
-                <div class="author-avatar"></div>
-                <div class="author-info">
-                    <h3>Gaurab Bose</h3>
-                    <p>Building at the intersection of AI, product, and developer tools</p>
-                </div>
-            </div>
+        <h2>The Origin Story</h2>
 
-            <div class="post-content">
-<p>Last week I wanted a small terminal tool. This week I have a working project with Docker integration, a TUI interface, and a blog post about the experience.</p>
+        <p>It started with a frustration. I had a Docker container running on my machine, something wasn't working, and I needed to figure out which port it was using. So I opened Terminal and typed the usual sequence:</p>
 
-<p>Here's how I built <strong>PortRadar</strong> — and why this workflow represents something bigger than just "AI writing code."</p>
-
-<div class="highlight-box">
-<h4>What we'll cover</h4>
-<ul>
-<li>Finding the right project idea</li>
-<li>Working with AI as a pair programmer</li>
-<li>Why reading /proc is better than calling ss</li>
-<li>Lessons about product thinking in technical projects</li>
-</ul>
-</div>
-
-<h2>The Origin Story</h2>
-
-<p>It started with a frustration. I had a Docker container running on my machine, something wasn't working, and I needed to figure out which port it was using. So I opened Terminal and typed the usual sequence:</p>
-
-<pre><code>ss -tulpn | grep 5432
+        <pre><code>ss -tulpn | grep 5432
 # Nothing
 docker ps
 # Oh, it's postgres container
 docker port postgres
 # 5432->5432</code></pre>
 
-<p>Three commands. Two different contexts. And I realized: this is a solvable problem. Every developer has this workflow. What if there was a single view that showed both?</p>
+        <p>Three commands. Two different contexts. And I realized: this is a solvable problem. Every developer has this workflow. What if there was a single view that showed both?</p>
 
-<p>I mentioned this to my AI assistant in passing. The response was immediate: "Want me to help you build it?"</p>
+        <p>I mentioned this to my AI assistant in passing. The response was immediate: "Want me to help you build it?"</p>
 
-<h2>Starting Small (But Thinking Product)</h2>
+        <h2>Starting Small (But Thinking Product)</h2>
 
-<p>Before writing any code, I made a deliberate choice: <strong>keep it niche</strong>.</p>
+        <p>Before writing any code, I made a deliberate choice: <strong>keep it niche</strong>.</p>
 
-<p>There are dozens of process monitors, port scanners, and Docker GUIs. Building "another one" is pointless. But building one that specifically solves the "host + Docker in one view" problem? That's specific enough to be useful, different enough to be interesting.</p>
+        <p>There are dozens of process monitors, port scanners, and Docker GUIs. Building "another one" is pointless. But building one that specifically solves the "host + Docker in one view" problem? That's specific enough to be useful, different enough to be interesting.</p>
 
-<blockquote>
-The best side projects solve YOUR problems first. If it's useful to you, it might be useful to others. If it's only useful to others, you probably won't finish it.
-</blockquote>
+        <blockquote>
+        The best side projects solve YOUR problems first. If it's useful to you, it might be useful to others. If it's only useful to others, you probably won't finish it.
+        </blockquote>
 
-<p>This is something I believe strongly: <strong>product-market fit starts with personal pain</strong>. I needed this tool. So I would actually use it. That meant I wouldn't abandon it halfway through.</p>
+        <p>This is something I believe strongly: <strong>product-market fit starts with personal pain</strong>. I needed this tool. So I would actually use it. That meant I wouldn't abandon it halfway through.</p>
 
-<h2>The Implementation</h2>
+        <h2>The Implementation</h2>
 
-<h3>Phase 1: The Foundation</h3>
+        <h3>Phase 1: The Foundation</h3>
 
-<p>We started with host port scanning. The obvious approach would be calling <code>ss</code> or <code>netstat</code> — but those require elevated permissions on most systems, and parsing their output is fragile.</p>
+        <p>We started with host port scanning. The obvious approach would be calling <code>ss</code> or <code>netstat</code> — but those require elevated permissions on most systems, and parsing their output is fragile.</p>
 
-<p>Instead, we went lower-level: reading directly from <code>/proc/net/tcp</code>. This is Linux's native interface for network information. No permissions needed. No external dependencies.</p>
+        <p>Instead, we went lower-level: reading directly from <code>/proc/net/tcp</code>. This is Linux's native interface for network information. No permissions needed. No external dependencies.</p>
 
-<pre><code># /proc/net/tcp format:
+        <pre><code># /proc/net/tcp format:
 # sl  local_address rem_address   st tx_queue rx_queue ...
 # 0: 0100007F:9609 00000000:0000 0A 00000000:00000000 ...
 
 # local_address is IP:PORT in hex
 # state 0A = LISTEN</code></pre>
 
-<p>The tricky part was mapping ports to process names. Each connection has an inode number, and that inode connects to a process via <code>/proc/&lt;pid&gt;/fd</code>. We wrote a scanner that:</p>
+        <p>The tricky part was mapping ports to process names. Each connection has an inode number, and that inode connects to a process via <code>/proc/&lt;pid&gt;/fd</code>. We wrote a scanner that:</p>
 
-<ol>
-<li>Reads /proc/net/tcp and /proc/net/udp</li>
-<li>Extracts hex port numbers and converts to decimal</li>
-<li>Finds listening ports (state = 0A for TCP)</li>
-<li>Iterates through /proc/&lt;pid&gt;/fd looking for matching sockets</li>
-<li>Reads /proc/&lt;pid&gt;/comm to get the process name</li>
-</ol>
+        <ol>
+        <li>Reads /proc/net/tcp and /proc/net/udp</li>
+        <li>Extracts hex port numbers and converts to decimal</li>
+        <li>Finds listening ports (state = 0A for TCP)</li>
+        <li>Iterates through /proc/&lt;pid&gt;/fd looking for matching sockets</li>
+        <li>Reads /proc/&lt;pid&gt;/comm to get the process name</li>
+        </ol>
 
-<p>It worked. First run found 6 ports on my machine — including the OpenClaw gateway ports I didn't even know were running.</p>
+        <p>It worked. First run found 6 ports on my machine — including the OpenClaw gateway ports I didn't even know were running.</p>
 
-<h3>Phase 2: Docker Integration</h3>
+        <h3>Phase 2: Docker Integration</h3>
 
-<p>Adding Docker was conceptually simple but had a subtle challenge: Docker's port mapping works differently than host ports. A container might listen on port 80 internally, but only publish to host port 8080. Or not publish at all.</p>
+        <p>Adding Docker was conceptually simple but had a subtle challenge: Docker's port mapping works differently than host ports. A container might listen on port 80 internally, but only publish to host port 8080. Or not publish at all.</p>
 
-<p>We needed to show both:</p>
+        <p>We needed to show both:</p>
 
-<ul>
-<li><strong>Published ports:</strong> host → container (what the user cares about)</li>
-<li><strong>Container ports:</strong> internal to the container</li>
-</ul>
+        <ul>
+        <li><strong>Published ports:</strong> host → container (what the user cares about)</li>
+        <li><strong>Container ports:</strong> internal to the container</li>
+        </ul>
 
-<p>The Docker Engine API makes this straightforward. Using the dockerode library:</p>
+        <p>The Docker Engine API makes this straightforward. Using the dockerode library:</p>
 
-<pre><code>const containers = await docker.listContainers();
+        <pre><code>const containers = await docker.listContainers();
 for (const c of containers) {
   for (const p of c.Ports) {
     // p.PublicPort (if exposed) + p.PrivatePort + p.Type
   }
 }</code></pre>
 
-<p>The result: a unified table where you see host processes on top, Docker containers below, all sorted by port number. One screen. Zero context switching.</p>
+        <p>The result: a unified table where you see host processes on top, Docker containers below, all sorted by port number. One screen. Zero context switching.</p>
 
-<h2>Working With AI: The Real Story</h2>
+        <h2>Working With AI: The Real Story</h2>
 
-<p>Here's what I want to be honest about: this wasn't "AI did everything and I watched."</p>
+        <p>Here's what I want to be honest about: this wasn't "AI did everything and I watched."</p>
 
-<p>It was <strong>collaborative</strong>. I provided the domain knowledge ("I want this specific workflow"), the constraints ("needs to work without sudo"), and the product sense ("keep it simple, focus on the core"). The AI provided implementation speed, boilerplate handling, and pattern recognition.</p>
+        <p>It was <strong>collaborative</strong>. I provided the domain knowledge ("I want this specific workflow"), the constraints ("needs to work without sudo"), and the product sense ("keep it simple, focus on the core"). The AI provided implementation speed, boilerplate handling, and pattern recognition.</p>
 
-<div class="key-takeaway">
-<strong>The meta-skill isn't prompting. It's knowing what to ask for.</strong>
-</div>
+        <blockquote>
+        <strong>The meta-skill isn't prompting. It's knowing what to ask for.</strong>
+        </blockquote>
 
-<p>I didn't say "build a port scanner." I said: "I want to see host processes and Docker containers in one view, filterable, searchable, with the ability to kill processes." That's a product spec, not a code request.</p>
+        <p>I didn't say "build a port scanner." I said: "I want to see host processes and Docker containers in one view, filterable, searchable, with the ability to kill processes." That's a product spec, not a code request.</p>
 
-<h3>What AI Did Well</h3>
-<ul>
-<li><strong>Rapid prototyping</strong> — The initial host scanner was working in 20 minutes</li>
-<li><strong>Handling edge cases</strong> — It anticipated the /proc parsing issues I didn't think of</li>
-<li><strong>Code organization</strong> — Separate services for host vs Docker, clean separation of concerns</li>
-<li><strong>Documentation</strong> — README with controls, installation steps, explanation</li>
-</ul>
+        <h3>What AI Did Well</h3>
+        <ul>
+        <li><strong>Rapid prototyping</strong> — The initial host scanner was working in 20 minutes</li>
+        <li><strong>Handling edge cases</strong> — It anticipated the /proc parsing issues I didn't think of</li>
+        <li><strong>Code organization</strong> — Separate services for host vs Docker, clean separation of concerns</li>
+        <li><strong>Documentation</strong> — README with controls, installation steps, explanation</li>
+        </ul>
 
-<h3>Where I Had to Guide</h3>
-<ul>
-<li><strong>Initial choice</strong> — Started with Go, realized no Go runtime available, pivoted to Node.js</li>
-<strong>Permission issues</strong> — First version used <code>ss</code> command, failed without sudo, rewrote to use /proc</li>
-<li><strong>UI polish</strong> — Added color coding, keyboard shortcuts, confirmation dialogs</li>
-</ul>
+        <h3>Where I Had to Guide</h3>
+        <ul>
+        <li><strong>Initial choice</strong> — Started with Go, realized no Go runtime available, pivoted to Node.js</li>
+        <li><strong>Permission issues</strong> — First version used <code>ss</code> command, failed without sudo, rewrote to use /proc</li>
+        <li><strong>UI polish</strong> — Added color coding, keyboard shortcuts, confirmation dialogs</li>
+        </ul>
 
-<h3>What I Learned</h3>
+        <h3>What I Learned</h3>
 
-<p>The value isn't in the code AI generates. It's in the <strong>iteration speed</strong>. Traditional workflow:</p>
+        <p>The value isn't in the code AI generates. It's in the <strong>iteration speed</strong>. Traditional workflow:</p>
 
-<ol>
-<li>Google "how to parse /proc/net/tcp"</li>
-<li>Read StackOverflow</li>
-<li>Try code, fail, debug</li>
-<li>Repeat for Docker integration</li>
-<li>Get stuck on TUI library docs</li>
-</ol>
+        <ol>
+        <li>Google "how to parse /proc/net/tcp"</li>
+        <li>Read StackOverflow</li>
+        <li>Try code, fail, debug</li>
+        <li>Repeat for Docker integration</li>
+        <li>Get stuck on TUI library docs</li>
+        </ol>
 
-<p>AI workflow:</p>
+        <p>AI workflow:</p>
 
-<ol>
-<li>Explain what you want</li>
-<li>Get working code</li>
-<li>Refine based on actual results</li>
-</ol>
+        <ol>
+        <li>Explain what you want</li>
+        <li>Get working code</li>
+        <li>Refine based on actual results</li>
+        </ol>
 
-<p>The time savings are real. But only because I knew <strong>what I wanted</strong>. The AI can't tell you what to build. It can only help you build what you've decided to build.</p>
+        <p>The time savings are real. But only because I knew <strong>what I wanted</strong>. The AI can't tell you what to build. It can only help you build what you've decided to build.</p>
 
-<h2>The Polish Phase (Which We Skipped)</h2>
+        <h2>The Polish Phase (Which We Skipped)</h2>
 
-<p>In our original plan, there were 4 phases:</p>
+        <p>In our original plan, there were 4 phases:</p>
 
-<ol>
-<li>Host port scanner ✓</li>
-<li>Docker integration ✓</li>
-<li>UI polish (skipped)</li>
-<li>Deploy and blog (now)</li>
-</ol>
+        <ol>
+        <li>Host port scanner ✓</li>
+        <li>Docker integration ✓</li>
+        <li>UI polish (skipped)</li>
+        <li>Deploy and blog (now)</li>
+        </ol>
 
-<p>We skipped Phase 3. The TUI was functional. It had colors, filtering, search, kill/stop actions. Was it perfect? No. But it was <strong>useful</strong>.</p>
+        <p>We skipped Phase 3. The TUI was functional. It had colors, filtering, search, kill/stop actions. Was it perfect? No. But it was <strong>useful</strong>.</p>
 
-<p>This is a recurring pattern for me:</p>
+        <p>This is a recurring pattern for me:</p>
 
-<blockquote>
-Ship at 80%, polish at 100%. Not the other way around.
-</blockquote>
+        <blockquote>
+        Ship at 80%, polish at 100%. Not the other way around.
+        </blockquote>
 
-<p>Perfect is the enemy of done. I could have spent another week on sorting, process trees, historical logging. But the core value — unified host + Docker port view — was already delivered.</p>
+        <p>Perfect is the enemy of done. I could have spent another week on sorting, process trees, historical logging. But the core value — unified host + Docker port view — was already delivered.</p>
 
-<h2>Why This Matters for Your Personal Brand</h2>
+        <h2>Why This Matters for Your Personal Brand</h2>
 
-<p>You might be thinking: "This is a cool toy, but does it actually help my career?"</p>
+        <p>You might be thinking: "This is a cool toy, but does it actually help my career?"</p>
 
-<p>Here's my thesis: <strong>the best personal branding is shipping things</strong>.</p>
+        <p>Here's my thesis: <strong>the best personal branding is shipping things</strong>.</p>
 
-<p>Not blogging about what you <em>could</em> build. Not tweeting about frameworks. Not posting "learning Rust" updates. Actually building something, putting it out there, and documenting the journey.</p>
+        <p>Not blogging about what you <em>could</em> build. Not tweeting about frameworks. Not posting "learning Rust" updates. Actually building something, putting it out there, and documenting the journey.</p>
 
-<h3>What PortRadar Signals</h3>
-<ul>
-<li><strong>Systems-level thinking</strong> — Reading /proc, understanding Linux networking</li>
-<li><strong>Product instincts</strong> — Finding genuine pain points, not solutions in search of problems</li>
-<li><strong>AI collaboration</strong> — Knowing how to work with AI tools effectively (increasingly important)</li>
-<li><strong>End-to-end delivery</strong> — From idea to working code to deployed to documented</li>
-</ul>
+        <h3>What PortRadar Signals</h3>
+        <ul>
+        <li><strong>Systems-level thinking</strong> — Reading /proc, understanding Linux networking</li>
+        <li><strong>Product instincts</strong> — Finding genuine pain points, not solutions in search of problems</li>
+        <li><strong>AI collaboration</strong> — Knowing how to work with AI tools effectively</li>
+        <li><strong>End-to-end delivery</strong> — From idea to working code to deployed to documented</li>
+        </ul>
 
-<p>Anyone can clone a tutorial. PortRadar is something I built because I needed it. That distinction matters.</p>
+        <p>Anyone can clone a tutorial. PortRadar is something I built because I needed it. That distinction matters.</p>
 
-<h3>What You Can Replicate</h3>
+        <h3>What You Can Replicate</h3>
 
-<p>Find your own PortRadar. Ask yourself:</p>
+        <p>Find your own PortRadar. Ask yourself:</p>
 
-<ul>
-<li>What workflow do I repeat multiple times a day?</li>
-<li>What tool do I wish existed?</li>
-<li>What's annoying enough that I'd actually use a solution?</li>
-</ul>
+        <ul>
+        <li>What workflow do I repeat multiple times a day?</li>
+        <li>What tool do I wish existed?</li>
+        <li>What's annoying enough that I'd actually use a solution?</li>
+        </ul>
 
-<p>Then build it. Use AI as a force multiplier, not a replacement for your judgment. Document the process. Share what you learned.</p>
+        <p>Then build it. Use AI as a force multiplier, not a replacement for your judgment. Document the process. Share what you learned.</p>
 
-<p>That's how you build expertise in public.</p>
+        <p>That's how you build expertise in public.</p>
 
-<h2>What's Next</h2>
+        <h2>What's Next</h2>
 
-<p>PortRadar is live on my portfolio. The code is on GitHub. I've used it almost daily since building it — already caught two port conflicts that would have taken longer to debug.</p>
+        <p>PortRadar is live on my portfolio. The code is on GitHub. I've used it almost daily since building it — already caught two port conflicts that would have taken longer to debug.</p>
 
-<p>Future improvements I'm considering:</p>
-<ul>
-<li>Column sorting</li>
-<li>Process tree visualization</li>
-<li>macOS compatibility (parsing netstat instead of /proc)</li>
-<li>Historical port usage logging</li>
-</ul>
+        <p>Future improvements I'm considering:</p>
+        <ul>
+        <li>Column sorting</li>
+        <li>Process tree visualization</li>
+        <li>macOS compatibility</li>
+        <li>Historical port usage logging</li>
+        </ul>
 
-<p>But those are nice-to-haves. The core is done. It solves the problem. I'm already benefitting from it.</p>
+        <p>But those are nice-to-haves. The core is done. It solves the problem. I'm already benefitting from it.</p>
 
-<p>That's the goal.</p>
+        <hr>
 
-<hr>
+        <p><em>Have a project idea that fits this pattern? I'd love to hear about it. Find me on <a href="https://twitter.com/gbose">Twitter</a> or <a href="https://linkedin.com/in/gbose">LinkedIn</a>.</em></p>
 
+<<<<<<< HEAD
 <p><em>Have a project idea that fits this pattern? I'd love to hear about it. Find me on <a href="https://twitter.com/gbose">Twitter</a> or <a href="https://linkedin.com/in/gbose">LinkedIn</a>.</em></p>
 
 <p><em>PortRadar source code: <a href="https://github.com/gbose/portradar">github.com/gbose/portradar</a></em></p>
@@ -288,6 +253,9 @@ Ship at 80%, polish at 100%. Not the other way around.
                 <p class="footer-credit">&copy; 2026 Gaurab Bose.</p>
             </div>
         </footer>
+=======
+        <p><em>PortRadar source code: <a href="https://github.com/gbose/portradar">github.com/gbose/portradar</a></em></p>
+>>>>>>> origin/main
     </div>
 </body>
 </html>

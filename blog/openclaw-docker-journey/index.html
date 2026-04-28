@@ -6,132 +6,115 @@
     <meta name="description" content="How I set up OpenClaw on Docker and configured my personal AI assistant">
     <title>Building My Personal AI Assistant: OpenClaw on Docker - Gaurab Bose</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../css/sidebar.css">
     <style>
-        .post-header { margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid #eee; }
-        .post-meta { color: #666; }
-        .post-content { line-height: 1.8; }
-        .post-content h2 { margin-top: 32px; }
-        .post-content code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; }
-        .post-content table, .post-content th, .post-content td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-.post-content th { background: #f4f4f4; font-weight: 600; }
-.post-content table { border-collapse: collapse; width: 100%; margin: 16px 0; }
-.post-content pre { background: #f4f4f4; padding: 16px; border-radius: 6px; overflow-x: auto; }
-        .back-link { margin-bottom: 24px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background: #fafafa; color: #24292f; line-height: 1.7; }
+        .container { max-width: 700px; margin: 0 auto; padding: 40px 20px; }
+        .nav { margin-bottom: 40px; }
+        .nav a { color: #0969da; text-decoration: none; }
+        .nav a:hover { text-decoration: underline; }
+        h1 { font-size: 2.2rem; margin-bottom: 12px; line-height: 1.3; }
+        .date { color: #656d76; margin-bottom: 32px; }
+        h2 { font-size: 1.5rem; margin: 40px 0 16px; }
+        h3 { font-size: 1.2rem; margin: 24px 0 12px; }
+        p { margin-bottom: 20px; }
+        ul, ol { margin: 0 0 20px 24px; }
+        li { margin-bottom: 8px; }
+        code { background: #f6f8fa; padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
+        pre { background: #f6f8fa; padding: 16px; border-radius: 8px; overflow-x: auto; margin: 20px 0; }
+        pre code { background: none; padding: 0; }
+        blockquote { border-left: 4px solid #d0d7de; padding-left: 16px; color: #656d76; margin: 20px 0; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background: #f6f8fa; font-weight: 600; }
     </style>
 </head>
 <body>
     <div class="container">
-        <section class="hero">
-            <div class="hero-inner">
-                <nav class="nav-main">
-                    <a href="../../#projects">Projects</a>
-                    <a href="../../blog.html">Blog</a>
-                    <a href="https://github.com/gbose" target="_blank" rel="noopener noreferrer">GitHub</a>
-                    <a href="https://twitter.com/gbose" target="_blank" rel="noopener noreferrer">Twitter</a>
-                    <a href="https://linkedin.com/in/gbose" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-                </nav>
-            </div>
-        </section>
+        <nav class="nav">
+            <a href="../blog.html">← Back to Blog</a>
+        </nav>
+        
+        <h1>Building My Personal AI Assistant: OpenClaw on Docker</h1>
+        <p class="date">March 9, 2026</p>
+        
+        <p>I've always been curious about self-hosted AI assistants. As a PM at Google working on Search AI Mode, I spend my days thinking about how people interact with AI. But I wanted something for <em>my</em> personal use. Something that lived on my machine, connected to the apps I already use.</p>
 
-        <section class="section">
-            <div class="post-header">
-                <p class="post-meta">March 9, 2026</p>
-                <h1>Building My Personal AI Assistant: OpenClaw on Docker</h1>
-            </div>
+        <p>That's where OpenClaw comes in.</p>
 
-            <div class="post-content">
-<p>I've always been curious about self-hosted AI assistants. As a PM at Google working on Search AI Mode, I spend my days thinking about how people interact with AI. But I wanted something for <em>my</em> personal use. Something that lived on my machine, connected to the apps I already use.</p>
+        <p>For those who haven't seen it — OpenClaw is a self-hosted gateway that bridges chat apps (Discord, Telegram, WhatsApp, iMessage) to AI agents. You message an AI from anywhere and it actually <em>does</em> things. Runs code. Checks calendar. Controls smart home devices.</p>
 
-<p>That's where OpenClaw comes in.</p>
+        <p>This is how I got it running on Windows via Docker, and the decisions I made along the way.</p>
 
-<p>For those who haven't seen it — OpenClaw is a self-hosted gateway that bridges chat apps (Discord, Telegram, WhatsApp, iMessage) to AI agents. You message an AI from anywhere and it actually <em>does</em> things. Runs code. Checks calendar. Controls smart home devices.</p>
+        <h2>The Setup</h2>
 
-<p>This is how I got it running on Windows via Docker, and the decisions I made along the way.</p>
+        <p>OpenClaw on Windows + Docker. The docs are solid, and they recommend <code>openclaw onboard</code> for guided setup. But I wanted something more interactive.</p>
 
-<h2>The Setup</h2>
+        <p>So I used Claude Code (Anthropic's CLI agent) to help spin up the Docker Compose environment. Honestly? Game-changer. Instead of manually editing YAML and hoping for the best, I just talked through what I wanted with an AI that could actually execute commands.</p>
 
-<p>OpenClaw on Windows + Docker. The docs are solid, and they recommend <code>openclaw onboard</code> for guided setup. But I wanted something more interactive.</p>
+        <p><strong>Why Docker Compose?</strong> Portability and isolation. If something breaks, I nuke the container and start fresh without touching my system. Plus, all the config stays in one place.</p>
 
-<p>So I used Claude Code (Anthropic's CLI agent) to help spin up the Docker Compose environment. Honestly? Game-changer. Instead of manually editing YAML and hoping for the best, I just talked through what I wanted with an AI that could actually execute commands.</p>
+        <h2>Security and File Isolation</h2>
 
-<p><strong>Why Docker Compose?</strong> Portability and isolation. If something breaks, I nuke the container and start fresh without touching my system. Plus, all the config stays in one place.</p>
+        <p>One thing that made me pause early on: OpenClaw needs a workspace directory for config, memory, sessions. By default this lives inside the container. But I wanted it on my host so I could actually read and edit the files.</p>
 
-<h2>Security and File Isolation</h2>
+        <p>The solution was volume mounting the workspace:</p>
 
-<p>One thing that made me pause early on: OpenClaw needs a workspace directory for config, memory, sessions. By default this lives inside the container. But I wanted it on my host so I could actually read and edit the files.</p>
+        <pre><code>volumes:
+  - ./workspace:/home/node/.openclaw/workspace</code></pre>
 
-<p>The solution was volume mounting the workspace:</p>
+        <p>Here's the thing — if you're mounting volumes, know what you're exposing. The workspace can contain API keys and session history. I set up a separate <code>.env</code> file outside the repo (added to <code>.gitignore</code>) and passed secrets via environment variables, not hardcoded in config.</p>
 
-<pre><code>volumes:
-  - ./workspace:/home/node/.openclaw/workspace
-</code></pre>
+        <h2>The Gateway UI</h2>
 
-<p>Here's the thing — if you're mounting volumes, know what you're exposing. The workspace can contain API keys and session history. I set up a separate <code>.env</code> file outside the repo (added to <code>.gitignore</code>) and passed secrets via environment variables, not hardcoded in config.</p>
+        <p>First time I started the gateway, I had no idea what was going on. Logs streaming, processes running, but no visible feedback.</p>
 
-<h2>The Gateway UI</h2>
+        <p>Then I discovered the Control UI. Run <code>openclaw web</code> and it spins up a local dashboard at <code>http://localhost:8080</code>. This is where you can:</p>
 
-<p>First time I started the gateway, I had no idea what was going on. Logs streaming, processes running, but no visible feedback.</p>
+        <ul>
+        <li>See active sessions</li>
+        <li>Chat directly with your agent</li>
+        <li>Edit config in real-time</li>
+        <li>Check what's running</li>
+        </ul>
 
-<p>Then I discovered the Control UI. Run <code>openclaw web</code> and it spins up a local dashboard at <code>http://localhost:8080</code>. This is where you can:</p>
+        <p>Sounds small, but it was crucial for debugging.</p>
 
-<ul>
-<li>See active sessions</li>
-<li>Chat directly with your agent</li>
-<li>Edit config in real-time</li>
-<li>Check what's running</li>
-</ul>
+        <h2>The Agent Architecture Question</h2>
 
-<p>Sounds small, but it was crucial for debugging.</p>
+        <p>OpenClaw supports multiple patterns:</p>
 
-<h2>The Agent Architecture Question</h2>
+        <ul>
+        <li><strong>Single agent</strong> — one "Jeeves" handling everything</li>
+        <li><strong>Multiple agents</strong> — different agents for different purposes</li>
+        <li><strong>Sub-agents</strong> — spawning isolated sessions for specific tasks</li>
+        </ul>
 
-<p>OpenClaw supports multiple patterns:</p>
+        <p>For my use case (personal assistant for coding, writing, random tasks), I went with a single main agent with sub-agent capability for heavy-lifting tasks.</p>
 
-<ul>
-<li><strong>Single agent</strong> — one "Jeeves" handling everything</li>
-<li><strong>Multiple agents</strong> — different agents for different purposes</li>
-<li><strong>Sub-agents</strong> — spawning isolated sessions for specific tasks</li>
-</ul>
+        <h2>Model Selection</h2>
 
-<p>For my use case (personal assistant for coding, writing, random tasks), I went with a single main agent with sub-agent capability for heavy-lifting tasks.</p>
+        <table>
+        <tr><th>Model</th><th>Quality</th><th>Speed</th><th>Cost</th><th>When to use</th></tr>
+        <tr><td>Haiku 3.5</td><td>Good enough</td><td>Fast</td><td>Cheap</td><td>Simple queries</td></tr>
+        <tr><td>Sonnet 4</td><td>Solid</td><td>Moderate</td><td>Moderate</td><td>Daily driver</td></tr>
+        <tr><td>Opus 4</td><td>Best</td><td>Slower</td><td>Expensive</td><td>Complex reasoning</td></tr>
+        </table>
 
-<h2>Model Selection</h2>
+        <p><strong>My setup:</strong> Default to Sonnet 4 for daily use. Switch to Opus 4 for writing or complex tasks.</p>
 
-<table>
-<tr><th>Model</th><th>Quality</th><th>Speed</th><th>Cost</th><th>When to use</th></tr>
-<tr><td>Haiku 3.5</td><td>Good enough</td><td>Fast</td><td>Cheap</td><td>Simple queries</td></tr>
-<tr><td>Sonnet 4</td><td>Solid</td><td>Moderate</td><td>Moderate</td><td>Daily driver</td></tr>
-<tr><td>Opus 4</td><td>Best</td><td>Slower</td><td>Expensive</td><td>Complex reasoning</td></tr>
-</table>
+        <h2>What I Learned</h2>
 
-<p><strong>My setup:</strong> Default to Sonnet 4 for daily use. Switch to Opus 4 for writing or complex tasks.</p>
+        <ul>
+        <li><strong>The tools are ready.</strong> Self-hosted AI assistants aren't science fiction anymore.</li>
+        <li><strong>The real work is configuration.</strong> 90% of the time is deciding how you want it to behave.</li>
+        <li><strong>Context is everything.</strong> Be deliberate about what stays in the context window.</li>
+        <li><strong>Windows + Docker is fine.</strong> Once it's running, it Just Works.</li>
+        </ul>
 
-<h2>What I Learned</h2>
+        <p><em>Next up: actually using this thing. More on that soon.</em></p>
 
-<ul>
-<li><strong>The tools are ready.</strong> Self-hosted AI assistants aren't science fiction anymore.</li>
-<li><strong>The real work is configuration.</strong> 90% of the time is deciding how you want it to behave.</li>
-<li><strong>Context is everything.</strong> Be deliberate about what stays in the context window.</li>
-<li><strong>Windows + Docker is fine.</strong> Once it's running, it Just Works.</li>
-</ul>
-
-<p><em>Next up: actually using this thing. More on that soon.</em></p>
-
-<p>— Gaurab</p>
-            </div>
-        </section>
-
-        <footer class="footer">
-            <div class="footer-inner">
-                <nav class="social-links">
-                    <a href="https://github.com/gbose" target="_blank" rel="noopener noreferrer">GitHub</a>
-                    <a href="https://twitter.com/gbose" target="_blank" rel="noopener noreferrer">Twitter</a>
-                    <a href="https://linkedin.com/in/gbose" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-                </nav>
-                <p class="footer-credit">&copy; 2026 Gaurab Bose.</p>
-            </div>
-        </footer>
+        <p>— Gaurab</p>
     </div>
 </body>
 </html>
