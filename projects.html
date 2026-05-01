@@ -3,116 +3,220 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Projects — Gaurab Bose">
+    <meta name="theme-color" content="#0A0A0F">
     <title>Projects — Gaurab Bose</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/sidebar.css">
     <style>
         .layout {
             display: block;
-            max-width: 800px;
+            max-width: 760px;
             margin: 0 auto;
-            padding: 40px 24px;
+            padding: 60px 24px;
         }
         .sidebar { display: none; }
-        .hero { padding: 0 0 40px; }
-        .section { padding: 40px 0; }
-        h1 { font-size: 2.5rem; margin-bottom: 8px; }
-        .back-link {
-            display: inline-block;
-            margin-bottom: 24px;
-            color: var(--accent);
-            text-decoration: none;
-            font-size: 14px;
+
+        .page-header {
+            margin-bottom: 48px;
         }
-        .back-link:hover { text-decoration: underline; }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-bottom: 32px;
+            transition: color 0.2s ease;
+        }
+        .back-link:hover { color: var(--accent); }
+
+        .page-header h1 {
+            font-size: 40px;
+            letter-spacing: -1.5px;
+            margin-bottom: 12px;
+        }
+
+        .page-header p {
+            font-size: 16px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
         .projects-list {
             display: flex;
             flex-direction: column;
-            gap: 32px;
+            gap: 12px;
         }
-        .project {
-            padding-bottom: 32px;
-            border-bottom: 1px solid var(--border);
-        }
-        .project:last-child { border-bottom: none; }
-        .project h3 {
-            font-size: 20px;
+
+        .project-group-label {
+            font-size: 10px;
             font-weight: 600;
-            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: var(--accent);
+            margin: 40px 0 16px;
         }
-        .project p { font-size: 15px; line-height: 1.6; margin-bottom: 12px; }
-        .meta {
-            display: inline-block;
-            font-size: 12px;
-            color: var(--text-muted);
-            background: var(--bg-secondary);
-            padding: 4px 10px;
-            border-radius: 4px;
+
+        .project-group-label:first-child {
+            margin-top: 0;
         }
     </style>
 </head>
 <body>
     <div class="layout">
-        <a href="index.html" class="back-link">← Back to Home</a>
-        
-        <h1>Projects</h1>
-        <p style="color: var(--text-muted); margin-bottom: 32px;">A collection of things I've built.</p>
-        
-        <div class="projects-list">
-            <article class="project">
-                <h3>MetaCode</h3>
-                <p><a href="https://github.com/gbose01/kaggle-metacognition-benchmark" class="link">MetaCode</a> — A metacognitive coding benchmark measuring confidence calibration, error detection, and self-correction in LLMs. Built for the Kaggle Measuring AGI Challenge.</p>
-                <span class="meta">Python • LLM Evaluation • Metacognition</span>
-            </article>
 
-            <article class="project">
-                <h3>PortRadar</h3>
-                <p><a href="projects/portradar/index.html" class="link">PortRadar</a> — A terminal UI that shows both host processes AND Docker container ports in one unified view. Built with Node.js, Blessed TUI, and Dockerode.</p>
-                <span class="meta">Node.js • TUI • Docker • Systems</span>
-            </article>
-
-            <article class="project">
-                <h3>LLM Cost Tool</h3>
-                <p><a href="https://github.com/gbose01/LLM-cost-tool" class="link">LLM-cost-tool</a> — A cost management and observability dashboard for OpenClaw. Tracks token usage, API costs by channel, and detects spikes in real-time. Built with SQLite, vanilla Node.js, and Chart.js.</p>
-                <span class="meta">SQLite • Node.js • Observability • AI</span>
-            </article>
-
-            <article class="project">
-                <h3>Personal Website and Portfolio</h3>
-                <p><a href="https://github.com/gbose01/about" class="link">gbose01</a> — A personal website and portfolio built from scratch to showcase projects, blog posts, and professional background.</p>
-                <span class="meta">HTML • Web Dev</span>
-            </article>
-
-            <article class="project">
-                <h3>Mynt NFT</h3>
-                <p><a href="https://github.com/gbose01/mynt-nft" class="link">mynt-nft</a> — A platform for minting NFTs tailored for startups looking to enter the blockchain space.</p>
-                <span class="meta">NFT • Blockchain</span>
-            </article>
-
-            <article class="project">
-                <h3>RAG Paper Summarizer</h3>
-                <p><a href="https://github.com/gbose01/rag-paper-summarizer" class="link">rag-paper-summarizer</a> — An AI-powered tool that uses Retrieval-Augmented Generation to summarize academic papers efficiently.</p>
-                <span class="meta">RAG • NLP • AI</span>
-            </article>
-
-            <article class="project">
-                <h3>InvestAI</h3>
-                <p><a href="https://github.com/gbose01/InvestAI" class="link">InvestAI</a> — Machine learning application using K-Means Clustering to identify and categorize ETFs for investment strategies.</p>
-                <span class="meta">ML • Finance</span>
-            </article>
-
-            <article class="project">
-                <h3>Fraud Detection</h3>
-                <p><a href="https://github.com/gbose01/Fraud-Detection" class="link">Fraud-Detection</a> — A security-focused project detecting fraudulent ad clicks using XGBoost machine learning models.</p>
-                <span class="meta">XGBoose • Security</span>
-            </article>
-
-            <article class="project">
-                <h3>First Game</h3>
-                <p><a href="https://github.com/gbose01/First-Game" class="link">First-Game</a> — My first 2D game developed using the Godot game engine.</p>
-                <span class="meta">Godot • Game Dev</span>
-            </article>
+        <div class="page-header">
+            <a href="index.html" class="back-link">← Home</a>
+            <h1>Projects</h1>
+            <p>Things I've built — mostly on nights and weekends, increasingly with AI agents.</p>
         </div>
+
+        <p class="project-group-label">AI &amp; Machine Learning</p>
+        <div class="projects-list">
+
+            <article class="project project-featured">
+                <div class="project-header">
+                    <h3><a href="https://github.com/gbose01/kaggle-metacognition-benchmark" target="_blank" rel="noopener noreferrer">MetaCode</a></h3>
+                    <span class="ai-badge">⚡ Built with AI agents</span>
+                </div>
+                <p class="project-lede">Can LLMs know what they don't know?</p>
+                <p class="project-detail">A metacognitive coding benchmark measuring confidence calibration, error detection, and self-correction in frontier models. Submitted to the Kaggle Measuring AGI Challenge.</p>
+                <div class="tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">LLM Evaluation</span>
+                    <span class="tag">Metacognition</span>
+                    <span class="tag">Kaggle AGI</span>
+                </div>
+            </article>
+
+            <article class="project">
+                <div class="project-header">
+                    <h3><a href="https://github.com/gbose01/rag-paper-summarizer" target="_blank" rel="noopener noreferrer">RAG Paper Summarizer</a></h3>
+                </div>
+                <p>Retrieval-augmented generation pipeline for extracting structured insights from academic papers. Beats naive summarization by grounding responses in retrieved chunks.</p>
+                <div class="tags">
+                    <span class="tag">RAG</span>
+                    <span class="tag">NLP</span>
+                    <span class="tag">Python</span>
+                </div>
+            </article>
+
+            <article class="project">
+                <div class="project-header">
+                    <h3><a href="https://github.com/gbose01/InvestAI" target="_blank" rel="noopener noreferrer">InvestAI</a></h3>
+                </div>
+                <p>ETF classification using K-Means clustering — unsupervised learning applied to portfolio construction. Then layered supervised classification on top to predict category membership.</p>
+                <div class="tags">
+                    <span class="tag">ML</span>
+                    <span class="tag">Finance</span>
+                    <span class="tag">R</span>
+                    <span class="tag">Clustering</span>
+                </div>
+            </article>
+
+            <article class="project">
+                <div class="project-header">
+                    <h3><a href="https://github.com/gbose01/Fraud-Detection" target="_blank" rel="noopener noreferrer">Fraud Detection</a></h3>
+                </div>
+                <p>Ad click fraud detection using XGBoost — imbalanced classification at scale.</p>
+                <div class="tags">
+                    <span class="tag">XGBoost</span>
+                    <span class="tag">Security</span>
+                    <span class="tag">Python</span>
+                </div>
+            </article>
+
+        </div>
+
+        <p class="project-group-label">Developer Tools</p>
+        <div class="projects-list">
+
+            <article class="project">
+                <div class="project-header">
+                    <h3><a href="projects/portradar/index.html">PortRadar</a></h3>
+                    <span class="ai-badge">⚡ Built with AI agents</span>
+                </div>
+                <p>Terminal UI that unifies host processes and Docker container ports in a single view. Eliminates the context-switch between <code style="font-size:12px; background:var(--bg-tertiary); padding:1px 5px; border-radius:3px; color:var(--accent)">ps aux</code> and <code style="font-size:12px; background:var(--bg-tertiary); padding:1px 5px; border-radius:3px; color:var(--accent)">docker ps</code>. Idea to shipped in one afternoon.</p>
+                <div class="tags">
+                    <span class="tag">Node.js</span>
+                    <span class="tag">TUI</span>
+                    <span class="tag">Docker</span>
+                    <span class="tag">Systems</span>
+                </div>
+            </article>
+
+            <article class="project">
+                <div class="project-header">
+                    <h3><a href="https://github.com/gbose01/LLM-cost-tool" target="_blank" rel="noopener noreferrer">LLM Cost Tool</a></h3>
+                    <span class="ai-badge">⚡ Built with AI agents</span>
+                </div>
+                <p>Real-time cost observability dashboard for LLM API usage — tracks spend, latency, and token burn across sessions. Built because I kept getting surprised by my monthly API bill.</p>
+                <div class="tags">
+                    <span class="tag">SQLite</span>
+                    <span class="tag">Node.js</span>
+                    <span class="tag">Observability</span>
+                    <span class="tag">Chart.js</span>
+                </div>
+            </article>
+
+        </div>
+
+        <p class="project-group-label">Experiments &amp; Side Bets</p>
+        <div class="projects-list">
+
+            <article class="project">
+                <div class="project-header">
+                    <h3><a href="https://github.com/gbose01/mynt-nft" target="_blank" rel="noopener noreferrer">Mynt NFT</a></h3>
+                </div>
+                <p>NFT minting platform for startups — built when on-chain ownership for digital assets felt like an interesting primitive worth exploring.</p>
+                <div class="tags">
+                    <span class="tag">Solidity</span>
+                    <span class="tag">JavaScript</span>
+                    <span class="tag">Blockchain</span>
+                </div>
+            </article>
+
+            <article class="project">
+                <div class="project-header">
+                    <h3><a href="https://github.com/gbose01/Optimized-Cricket-Fantasy-League-Team" target="_blank" rel="noopener noreferrer">Cricket Fantasy Optimizer</a></h3>
+                </div>
+                <p>Linear optimization to select the highest expected-value 11-man squad for the 2018 IPL season.</p>
+                <div class="tags">
+                    <span class="tag">R</span>
+                    <span class="tag">Linear Programming</span>
+                    <span class="tag">Sports</span>
+                </div>
+            </article>
+
+            <article class="project">
+                <div class="project-header">
+                    <h3><a href="https://github.com/gbose01/First-Game" target="_blank" rel="noopener noreferrer">First Game</a></h3>
+                </div>
+                <p>My first 2D game in the Godot engine. Shipping something playable beats perfecting something unfinished.</p>
+                <div class="tags">
+                    <span class="tag">Godot</span>
+                    <span class="tag">GDScript</span>
+                    <span class="tag">Game Dev</span>
+                </div>
+            </article>
+
+        </div>
+
+        <footer class="footer" style="grid-column: auto;">
+            <div class="footer-inner">
+                <nav class="social-links">
+                    <a href="https://github.com/gbose01" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    <a href="https://linkedin.com/in/gbose" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                    <a href="mailto:gaurab.bose@gmail.com">Email</a>
+                </nav>
+                <p class="footer-credit">© 2026 Gaurab Bose</p>
+            </div>
+        </footer>
+
     </div>
 </body>
 </html>
