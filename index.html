@@ -3,233 +3,233 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Gaurab Bose—Building high-quality Gen AI experiences at Google.">
-    <meta name="theme-color" content="#FFFFFF">
+    <meta name="description" content="Gaurab Bose — Google AI PM shaping Search AI Mode and AI Overviews. Building at the frontier.">
+    <meta name="theme-color" content="#0A0A0F">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Gaurab Bose">
-    <meta property="og:description" content="Building high-quality Gen AI experiences at Google.">
-    
+    <meta property="og:description" content="Google AI PM shaping Search AI Mode and AI Overviews. Building at the frontier.">
+
     <title>Gaurab Bose</title>
-    
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/sidebar.css">
     <style>
-        /* Override layout for single column */
         .layout {
             display: block;
-            max-width: 800px;
+            max-width: 760px;
             margin: 0 auto;
-            padding: 40px 24px;
+            padding: 60px 24px;
         }
-        
+
         .sidebar {
             display: none;
         }
-        
+
         .hero {
-            padding: 0 0 40px;
+            padding: 0 0 56px;
         }
-        
+
         .section {
-            padding: 40px 0;
+            padding: 48px 0;
         }
-        
-        /* Blog section styling */
+
+        /* ─── Blog ─── */
         .blog-list {
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 0;
         }
-        
+
         .blog-item {
+            padding: 20px 0;
             border-bottom: 1px solid var(--border);
-            padding-bottom: 24px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 12px 24px;
+            align-items: start;
+            transition: all 0.2s ease;
         }
-        
+
         .blog-item:last-child {
             border-bottom: none;
-            padding-bottom: 0;
         }
-        
-        .blog-item h3 {
-            font-size: 18px;
-            font-weight: 500;
-            margin-bottom: 8px;
-        }
-        
-        .blog-item h3 a {
-            color: var(--text);
-            text-decoration: none;
-        }
-        
-        .blog-item h3 a:hover {
+
+        .blog-item:hover .blog-title {
             color: var(--accent);
         }
-        
-        .blog-item .date {
+
+        .blog-title {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text);
+            text-decoration: none;
+            line-height: 1.4;
+            transition: color 0.2s ease;
+            grid-column: 1;
+        }
+
+        .blog-teaser {
             font-size: 13px;
             color: var(--text-muted);
-            margin-bottom: 8px;
+            line-height: 1.5;
+            margin-top: 4px;
+            grid-column: 1;
         }
-        
-        .blog-item p {
-            font-size: 14px;
+
+        .blog-date {
+            font-size: 12px;
             color: var(--text-muted);
-            line-height: 1.6;
-        }
-        
-        /* Show more button */
-        .show-more {
-            display: inline-block;
-            margin-top: 16px;
-            padding: 10px 20px;
-            background: var(--bg-secondary);
-            color: var(--text);
-            text-decoration: none;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 500;
-            border: 1px solid var(--border);
-            transition: background 0.2s, border-color 0.2s;
-        }
-        
-        .show-more:hover {
-            background: var(--bg-tertiary);
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-        
-        .section-footer {
-            margin-top: 8px;
+            white-space: nowrap;
+            font-variant-numeric: tabular-nums;
+            grid-column: 2;
+            grid-row: 1;
+            padding-top: 2px;
         }
     </style>
 </head>
 <body>
     <div class="layout">
         <main>
+
+            <!-- ─── HERO ─── -->
             <section class="hero">
                 <div class="hero-inner">
+
+                    <div class="hero-eyebrow">
+                        <span class="status-dot"></span>
+                        Currently shipping at Google
+                    </div>
+
                     <h1>Gaurab Bose</h1>
-                    <p class="subtitle">Product Manager at Google • <span class="accent">Building high-quality Gen AI experiences</span></p>
-                    
-                    <div class="bio">
-                        <p>I lead product initiatives in Search AI Mode and AI Overviews at Google. I'm passionate about AI, product strategy, and open source.</p>
-                        <p><strong>Education:</strong> MBA, Stanford Graduate School of Business • BS Statistics & Economics, University of Chicago</p>
-                        <p><strong>Previously:</strong> Senior Analyst at PayPal • GCP Engineer Certified</p>
+
+                    <p class="hero-statement">
+                        I shape how <strong>billions of people search with AI</strong> at Google —
+                        and use AI agents to ship real products on the side.
+                    </p>
+
+                    <div class="credential-badges">
+                        <span class="badge badge-primary">Google · Search AI Mode &amp; AI Overviews</span>
+                        <span class="badge">Stanford MBA</span>
+                        <span class="badge">UChicago Statistics</span>
+                        <span class="badge">GCP Certified</span>
+                    </div>
+
+                    <div class="currently-building">
+                        <span class="cb-label">Currently building</span>
+                        <a href="https://github.com/gbose01/kaggle-metacognition-benchmark" class="cb-item" target="_blank" rel="noopener noreferrer">
+                            <span class="pulse-dot"></span>
+                            MetaCode — does your LLM know what it doesn't know?
+                        </a>
                     </div>
 
                     <nav class="nav-main">
                         <a href="projects.html">Projects</a>
-                        <a href="blog.html">Blog</a>
-                        <a href="https://github.com/gbose" target="_blank" rel="noopener noreferrer">GitHub</a>
-                        <a href="http://linkedin.com/in/gbose" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                        <a href="blog.html">Writing</a>
+                        <a href="https://github.com/gbose01" target="_blank" rel="noopener noreferrer">GitHub</a>
+                        <a href="https://linkedin.com/in/gbose" target="_blank" rel="noopener noreferrer">LinkedIn</a>
                     </nav>
+
                 </div>
             </section>
 
+            <!-- ─── PROJECTS ─── -->
             <section class="section" id="projects">
                 <h2>Projects</h2>
-                
+
                 <div class="projects-list">
+
                     <article class="project">
-                        <h3>MetaCode</h3>
-                        <p><a href="https://github.com/gbose01/kaggle-metacognition-benchmark" class="link">MetaCode</a> — A metacognitive coding benchmark measuring confidence, error detection, and self-correction in LLMs.</p>
-                        <span class="meta">Python • LLM Evaluation • Metacognition</span>
+                        <h3><a href="https://github.com/gbose01/kaggle-metacognition-benchmark" target="_blank" rel="noopener noreferrer">MetaCode</a></h3>
+                        <p>A metacognitive coding benchmark — measures whether LLMs can detect their own errors and calibrate confidence. Built for the Kaggle AGI Challenge.</p>
+                        <span class="meta">Python · LLM Evaluation · Metacognition</span>
                     </article>
 
                     <article class="project">
-                        <h3>PortRadar</h3>
-                        <p><a href="projects/portradar/index.html" class="link">PortRadar</a> — A terminal UI that shows both host processes AND Docker container ports in one unified view.</p>
-                        <span class="meta">Node.js • TUI • Docker • Systems</span>
+                        <h3><a href="projects/portradar/index.html">PortRadar</a></h3>
+                        <p>Terminal UI that unifies host processes and Docker container ports in a single view — built and shipped in hours using AI agents.</p>
+                        <span class="meta">Node.js · TUI · Docker · Systems</span>
                     </article>
 
                     <article class="project">
-                        <h3>LLM Cost Tool</h3>
-                        <p><a href="https://github.com/gbose01/LLM-cost-tool" class="link">LLM-cost-tool</a> — A cost management and observability dashboard for OpenClaw.</p>
-                        <span class="meta">SQLite • Node.js • Observability • AI</span>
+                        <h3><a href="https://github.com/gbose01/LLM-cost-tool" target="_blank" rel="noopener noreferrer">LLM Cost Tool</a></h3>
+                        <p>Real-time cost management and observability dashboard for LLM API usage. Tracks spend, latency, and token burn across sessions.</p>
+                        <span class="meta">SQLite · Node.js · Observability · AI</span>
                     </article>
 
                     <article class="project">
-                        <h3>Personal Website</h3>
-                        <p><a href="https://github.com/gbose01/about" class="link">gbose01</a> — Personal website and portfolio built from scratch.</p>
-                        <span class="meta">HTML • Web Dev</span>
+                        <h3><a href="https://github.com/gbose01/rag-paper-summarizer" target="_blank" rel="noopener noreferrer">RAG Paper Summarizer</a></h3>
+                        <p>AI tool using retrieval-augmented generation to extract key insights from academic papers.</p>
+                        <span class="meta">RAG · NLP · Python</span>
                     </article>
 
                     <article class="project">
-                        <h3>Mynt NFT</h3>
-                        <p><a href="https://github.com/gbose01/mynt-nft" class="link">mynt-nft</a> — Platform for minting NFTs for startups.</p>
-                        <span class="meta">NFT • Blockchain</span>
+                        <h3><a href="https://github.com/gbose01/InvestAI" target="_blank" rel="noopener noreferrer">InvestAI</a></h3>
+                        <p>ETF identification via K-Means clustering, combining unsupervised learning with classification for portfolio analysis.</p>
+                        <span class="meta">ML · Finance · R</span>
                     </article>
 
-                    <article class="project">
-                        <h3>RAG Paper Summarizer</h3>
-                        <p><a href="https://github.com/gbose01/rag-paper-summarizer" class="link">rag-paper-summarizer</a> — AI tool using RAG to summarize academic papers.</p>
-                        <span class="meta">RAG • NLP • AI</span>
-                    </article>
-
-                    <article class="project">
-                        <h3>InvestAI</h3>
-                        <p><a href="https://github.com/gbose01/InvestAI" class="link">InvestAI</a> — K-Means Clustering for ETF identification.</p>
-                        <span class="meta">ML • Finance</span>
-                    </article>
                 </div>
-                
+
                 <div class="section-footer">
-                    <a href="projects.html" class="show-more">Show more projects →</a>
+                    <a href="projects.html" class="show-more">All projects →</a>
                 </div>
             </section>
 
+            <!-- ─── WRITING ─── -->
             <section class="section" id="blog">
-                <h2>Blog</h2>
-                
+                <h2>Writing</h2>
+
                 <div class="blog-list">
+
                     <article class="blog-item">
-                        <h3><a href="blog/2026-04-28-metacode-benchmark.html">Building MetaCode: A Metacognitive Benchmark for LLMs</a></h3>
-                        <p class="date">April 28, 2026</p>
-                        <p>How I built a benchmark to measure whether AI models know what they don't know — and why it matters for AGI.</p>
+                        <a href="blog/2026-04-28-metacode-benchmark.html" class="blog-title">Building MetaCode: A Metacognitive Benchmark for LLMs</a>
+                        <span class="blog-date">Apr 28</span>
+                        <p class="blog-teaser">Can AI models know what they don't know — and why that gap matters for AGI.</p>
                     </article>
 
                     <article class="blog-item">
-                        <h3><a href="blog/qmd-obsidian-setup.html">Setting Up QMD with Obsidian for Better AI Memory</a></h3>
-                        <p class="date">April 7, 2026</p>
-                        <p>How I connected my Obsidian vault to OpenClaw with QMD for semantic search.</p>
+                        <a href="blog/qmd-obsidian-setup.html" class="blog-title">Setting Up QMD with Obsidian for Better AI Memory</a>
+                        <span class="blog-date">Apr 7</span>
+                        <p class="blog-teaser">Wiring my Obsidian vault to an LLM with semantic search via QMD.</p>
                     </article>
 
                     <article class="blog-item">
-                        <h3><a href="blog/2026-03-15-cost-observability-tool.html">Building a Cost Observability Tool for My AI Agent</a></h3>
-                        <p class="date">March 15, 2026</p>
-                        <p>How I built a real-time dashboard to track LLM API costs.</p>
+                        <a href="blog/2026-03-15-cost-observability-tool.html" class="blog-title">Building a Cost Observability Tool for My AI Agent</a>
+                        <span class="blog-date">Mar 15</span>
+                        <p class="blog-teaser">How I built a real-time dashboard to track LLM API spend before it tracks me.</p>
                     </article>
 
                     <article class="blog-item">
-                        <h3><a href="blog/building-portradar-ai.html">Building PortRadar: How I Used AI to Ship a Developer Tool in Hours</a></h3>
-                        <p class="date">March 13, 2026</p>
-                        <p>How I built a terminal tool that combines host processes and Docker container ports.</p>
+                        <a href="blog/building-portradar-ai.html" class="blog-title">Building PortRadar: Shipping a Developer Tool in Hours with AI</a>
+                        <span class="blog-date">Mar 13</span>
+                        <p class="blog-teaser">The agentic workflow that took a tool from idea to terminal in one afternoon.</p>
                     </article>
 
                     <article class="blog-item">
-                        <h3><a href="blog/1-week-with-openclaw.html">1 Week with OpenClaw: What I've Built</a></h3>
-                        <p class="date">March 12, 2026</p>
-                        <p>One week in — portfolio site, cost dashboards, automated reports, and a personal AI.</p>
+                        <a href="blog/1-week-with-openclaw.html" class="blog-title">1 Week with OpenClaw: What I've Built</a>
+                        <span class="blog-date">Mar 12</span>
+                        <p class="blog-teaser">A portfolio site, cost dashboards, automated reports, and a personal AI — in seven days.</p>
                     </article>
+
                 </div>
-                
+
                 <div class="section-footer">
-                    <a href="blog.html" class="show-more">Show more posts →</a>
+                    <a href="blog.html" class="show-more">All writing →</a>
                 </div>
             </section>
 
+            <!-- ─── FOOTER ─── -->
             <footer class="footer">
                 <div class="footer-inner">
-                    <p class="footer-email">gaurab.bose@gmail.com</p>
                     <nav class="social-links">
-                        <a href="https://github.com/gbose" target="_blank" rel="noopener noreferrer">GitHub</a>
-                        <a href="http://linkedin.com/in/gbose" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                        <a href="https://github.com/gbose01" target="_blank" rel="noopener noreferrer">GitHub</a>
+                        <a href="https://linkedin.com/in/gbose" target="_blank" rel="noopener noreferrer">LinkedIn</a>
                         <a href="mailto:gaurab.bose@gmail.com">Email</a>
                     </nav>
                     <p class="footer-credit">© 2026 Gaurab Bose</p>
                 </div>
             </footer>
+
         </main>
     </div>
 </body>
