@@ -3,69 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0A0A0F">
+    <meta name="description" content="How I built a real-time dashboard to track LLM API costs across my AI agent conversations.">
     <title>Building a Cost Observability Tool for My AI Agent — Gaurab Bose</title>
-    <meta name="description" content="How I built a real-time dashboard to track LLM API costs across my Discord AI agent conversations.">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Inter', sans-serif; background: #fafafa; color: #24292f; line-height: 1.7; }
-        .container { max-width: 700px; margin: 0 auto; padding: 40px 20px; }
-        .nav { margin-bottom: 40px; }
-        .nav a { color: #0969da; text-decoration: none; }
-        .nav a:hover { text-decoration: underline; }
-        h1 { font-size: 2.2rem; margin-bottom: 12px; line-height: 1.3; }
-        .date { color: #656d76; margin-bottom: 32px; }
-        h2 { font-size: 1.5rem; margin: 40px 0 16px; }
-        p { margin-bottom: 20px; }
-        ul, ol { margin: 0 0 20px 24px; }
-        li { margin-bottom: 8px; }
-        code { background: #f6f8fa; padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
-        pre { background: #f6f8fa; padding: 16px; border-radius: 8px; overflow-x: auto; margin: 20px 0; }
-        pre code { background: none; padding: 0; }
-        blockquote { border-left: 4px solid #d0d7de; padding-left: 16px; color: #656d76; margin: 20px 0; }
-    </style>
+    <link rel="stylesheet" href="../css/sidebar.css">
 </head>
 <body>
-    <div class="container">
-        <nav class="nav">
-            <a href="blog.html">← Back to Blog</a>
-        </nav>
-        
-        <h1>Building a Cost Observability Tool for My AI Agent</h1>
-        <p class="date">March 15, 2026</p>
-        
+    <div class="post-container">
+        <a href="../blog.html" class="post-back">← Writing</a>
+
+        <header class="post-header">
+            <h1>Building a Cost Observability Tool for My AI Agent</h1>
+            <p class="post-date">March 15, 2026</p>
+        </header>
+
+        <div class="post-body">
+
         <p>I run an AI agent (OpenClaw) on Discord that helps me with coding, writing, and daily tasks. Every message triggers an LLM API call — and here's the thing: <strong>I had no idea how much each conversation was costing me.</strong></p>
-        
+
         <p>Was that blog post draft I asked for worth $0.02 or $0.50? Which channel was eating through my API quota? Did something weird happen last Tuesday that blew up my bill?</p>
-        
+
         <p>The OpenClaw framework logs everything to JSONL files — rich data with token counts, costs, model info — but there's no dashboard to actually <em>see</em> it. So I built one.</p>
-        
+
         <h2>What I Built</h2>
-        
+
         <p>A real-time cost observability dashboard that tracks:</p>
-        
+
         <ul>
             <li><strong>Token usage over time</strong> — day/week/month graphs</li>
             <li><strong>Cost by channel</strong> — which Discord conversations are most expensive</li>
             <li><strong>Spike detection</strong> — alerts when a request uses 2× the normal amount</li>
             <li><strong>Drill-down</strong> — click any channel to see every query with its token count and cost</li>
         </ul>
-        
+
         <p>The whole thing runs locally with no external services. SQLite for storage, vanilla Node.js for the server, Chart.js for graphs.</p>
-        
+
         <h2>How It Works</h2>
-        
+
         <h3>Data Collection</h3>
-        
+
         <p>OpenClaw stores session data as append-only JSONL files. Each file contains a stream of events — session start, model changes, user messages, assistant responses with token usage.</p>
-        
+
         <p>The collector scans these files, tracking byte offsets so it only reads new data on each run:</p>
-        
+
         <pre><code>{type: "message", role: "user", content: [...]}     ← capture query preview
 {type: "message", role: "assistant", usage: {...}} ← extract tokens + cost</code></pre>
-        
+
         <p>For each request, I store:</p>
-        
+
         <ul>
             <li>Timestamp</li>
             <li>Channel ID (from filename pattern <code>*-topic-{channel_id}.jsonl</code>)</li>
@@ -73,81 +59,73 @@
             <li>Cost in USD (already computed by OpenClaw)</li>
             <li>First 200 characters of the query (privacy + storage efficiency)</li>
         </ul>
-        
+
         <h3>Spike Detection</h3>
-        
+
         <p>For each channel with at least 10 requests in the last 7 days:</p>
-        
+
         <ul>
             <li>Calculate the average tokens per request</li>
             <li>Flag anything above 2× average as a spike</li>
         </ul>
-        
+
         <p>This catches things like: a massive code analysis request, a long document summarization, or a multi-tool reasoning chain that went wild.</p>
-        
+
         <h3>The Dashboard</h3>
-        
+
         <p>Single HTML page with vanilla JavaScript. Chart.js for graphs. Dark theme (because obviously).</p>
-        
+
         <p>Click a channel in the sidebar → see every request. Toggle between day/week/month → graphs update. Simple.</p>
-        
+
         <h2>The Numbers</h2>
-        
+
         <p>After running the collector on my existing session data:</p>
-        
+
         <ul>
             <li><strong>679 requests</strong> processed</li>
             <li><strong>13 Discord channels</strong> tracked</li>
             <li><strong>$4.82 total</strong> API cost since I started using OpenClaw</li>
         </ul>
-        
+
         <p>Most expensive channel? #cost-tool (ironically) at $1.42 — lots of back-and-forth on this very project.</p>
-        
+
         <p>The spike detection caught a few requests around 30K+ tokens — mostly complex coding tasks and multi-paragraph responses.</p>
-        
+
         <h2>Why No External Services?</h2>
-        
+
         <p>I didn't want to set up cloud databases or API keys. The tool runs on the same machine as OpenClaw:</p>
-        
+
         <ul>
             <li><strong>SQLite</strong> — zero-config, synchronous, fast</li>
             <li><strong>Node.js http module</strong> — no Express needed</li>
             <li><strong>Chart.js from CDN</strong> — no build step</li>
         </ul>
-        
+
         <p>This means it works offline, starts instantly, and has no attack surface beyond the local network.</p>
-        
+
         <h2>What I Learned</h2>
-        
+
         <ol>
             <li><strong>Append-only files are great for incremental processing</strong> — just track byte offsets</li>
             <li><strong>SQLite is underrated for local tools</strong> — no setup, real queries, fast enough</li>
             <li><strong>Spike detection doesn't need statistics</strong> — a simple 2× threshold is interpretable and actionable</li>
             <li><strong>Vanilla JS + CDN libs = minimal maintenance</strong> — no build pipeline, no dependency hell</li>
         </ol>
-        
+
         <h2>What's Next</h2>
-        
+
         <ul>
             <li>Per-channel cost budget alerts (Discord notifications when a channel exceeds a daily limit)</li>
             <li>Model breakdown chart (Claude vs MiniMax cost split)</li>
             <li>Cache hit ratio tracking (how efficiently am I using the context cache?)</li>
             <li>Export to CSV</li>
         </ul>
-        
-        <hr style="margin: 40px 0; border: none; border-top: 1px solid #d0d7de;">
-        
+
+        <hr>
+
         <p><em>Built with OpenClaw, SQLite, Chart.js, and too many Discord messages.</em></p>
-        
+
+        </div>
     </div>
-    
-    <footer class="footer" style="margin-top: 60px; padding-top: 20px; border-top: 1px solid #d0d7de;">
-        <nav class="social-links" style="display: flex; gap: 16px;">
-            <a href="https://github.com/gbose" style="color: #0969da; text-decoration: none;">GitHub</a>
-            <a href="https://twitter.com/gbose" style="color: #0969da; text-decoration: none;">Twitter</a>
-            <a href="https://linkedin.com/in/gbose" style="color: #0969da; text-decoration: none;">LinkedIn</a>
-        </nav>
-        <p style="color: #656d76; margin-top: 12px;">&copy; 2026 Gaurab Bose.</p>
-    </footer>
 </body>
 </html>
