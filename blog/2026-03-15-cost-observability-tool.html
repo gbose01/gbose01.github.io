@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#0A0A0F">
     <meta name="description" content="How I built a real-time dashboard to track LLM API costs across my AI agent conversations.">
-    <title>Building a Cost Observability Tool for My AI Agent — Gaurab Bose</title>
+    <title>Building a Cost Observability Tool for My AI Agent | Gaurab Bose</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/sidebar.css">
     <script src="../js/theme.js"></script>
@@ -21,21 +21,21 @@
 
         <div class="post-body">
 
-        <p>I run an AI agent (OpenClaw) on Discord that helps me with coding, writing, and daily tasks. Every message triggers an LLM API call — and here's the thing: <strong>I had no idea how much each conversation was costing me.</strong></p>
+        <p>I run an AI agent (OpenClaw) on Discord that helps me with coding, writing, and daily tasks. Every message triggers an LLM API call, and here's the thing: <strong>I had no idea how much each conversation was costing me.</strong></p>
 
         <p>Was that blog post draft I asked for worth $0.02 or $0.50? Which channel was eating through my API quota? Did something weird happen last Tuesday that blew up my bill?</p>
 
-        <p>The OpenClaw framework logs everything to JSONL files — rich data with token counts, costs, model info — but there's no dashboard to actually <em>see</em> it. So I built one.</p>
+        <p>The OpenClaw framework logs everything to JSONL files, rich data with token counts, costs, model info, but there's no dashboard to actually <em>see</em> it. So I built one.</p>
 
         <h2>What I Built</h2>
 
         <p>A real-time cost observability dashboard that tracks:</p>
 
         <ul>
-            <li><strong>Token usage over time</strong> — day/week/month graphs</li>
-            <li><strong>Cost by channel</strong> — which Discord conversations are most expensive</li>
-            <li><strong>Spike detection</strong> — alerts when a request uses 2× the normal amount</li>
-            <li><strong>Drill-down</strong> — click any channel to see every query with its token count and cost</li>
+            <li><strong>Token usage over time:</strong> day/week/month graphs</li>
+            <li><strong>Cost by channel:</strong> which Discord conversations are most expensive</li>
+            <li><strong>Spike detection:</strong> alerts when a request uses 2× the normal amount</li>
+            <li><strong>Drill-down:</strong> click any channel to see every query with its token count and cost</li>
         </ul>
 
         <p>The whole thing runs locally with no external services. SQLite for storage, vanilla Node.js for the server, Chart.js for graphs.</p>
@@ -44,7 +44,7 @@
 
         <h3>Data Collection</h3>
 
-        <p>OpenClaw stores session data as append-only JSONL files. Each file contains a stream of events — session start, model changes, user messages, assistant responses with token usage.</p>
+        <p>OpenClaw stores session data as append-only JSONL files. Each file contains a stream of events, session start, model changes, user messages, assistant responses with token usage.</p>
 
         <p>The collector scans these files, tracking byte offsets so it only reads new data on each run:</p>
 
@@ -88,18 +88,18 @@
             <li><strong>$4.82 total</strong> API cost since I started using OpenClaw</li>
         </ul>
 
-        <p>Most expensive channel? #cost-tool (ironically) at $1.42 — lots of back-and-forth on this very project.</p>
+        <p>Most expensive channel? #cost-tool (ironically) at $1.42, lots of back-and-forth on this very project.</p>
 
-        <p>The spike detection caught a few requests around 30K+ tokens — mostly complex coding tasks and multi-paragraph responses.</p>
+        <p>The spike detection caught a few requests around 30K+ tokens, mostly complex coding tasks and multi-paragraph responses.</p>
 
         <h2>Why No External Services?</h2>
 
         <p>I didn't want to set up cloud databases or API keys. The tool runs on the same machine as OpenClaw:</p>
 
         <ul>
-            <li><strong>SQLite</strong> — zero-config, synchronous, fast</li>
-            <li><strong>Node.js http module</strong> — no Express needed</li>
-            <li><strong>Chart.js from CDN</strong> — no build step</li>
+            <li><strong>SQLite:</strong> zero-config, synchronous, fast</li>
+            <li><strong>Node.js http module:</strong> no Express needed</li>
+            <li><strong>Chart.js from CDN:</strong> no build step</li>
         </ul>
 
         <p>This means it works offline, starts instantly, and has no attack surface beyond the local network.</p>
@@ -107,10 +107,10 @@
         <h2>What I Learned</h2>
 
         <ol>
-            <li><strong>Append-only files are great for incremental processing</strong> — just track byte offsets</li>
-            <li><strong>SQLite is underrated for local tools</strong> — no setup, real queries, fast enough</li>
-            <li><strong>Spike detection doesn't need statistics</strong> — a simple 2× threshold is interpretable and actionable</li>
-            <li><strong>Vanilla JS + CDN libs = minimal maintenance</strong> — no build pipeline, no dependency hell</li>
+            <li><strong>Append-only files are great for incremental processing:</strong> just track byte offsets</li>
+            <li><strong>SQLite is underrated for local tools:</strong> no setup, real queries, fast enough</li>
+            <li><strong>Spike detection doesn't need statistics:</strong> a simple 2× threshold is interpretable and actionable</li>
+            <li><strong>Vanilla JS + CDN libs = minimal maintenance:</strong> no build pipeline, no dependency hell</li>
         </ol>
 
         <h2>What's Next</h2>

@@ -42,7 +42,7 @@
 
         <p>That's where OpenClaw comes in.</p>
 
-        <p>For those who haven't seen it — OpenClaw is a self-hosted gateway that bridges chat apps (Discord, Telegram, WhatsApp, iMessage) to AI agents. You message an AI from anywhere and it actually <em>does</em> things. Runs code. Checks calendar. Controls smart home devices.</p>
+        <p>For those who haven't seen it, OpenClaw is a self-hosted gateway that bridges chat apps (Discord, Telegram, WhatsApp, iMessage) to AI agents. You message an AI from anywhere and it actually <em>does</em> things. Runs code. Checks calendar. Controls smart home devices.</p>
 
         <p>This is how I got it running on Windows via Docker, and the decisions I made along the way.</p>
 
@@ -63,7 +63,7 @@
         <pre><code>volumes:
   - ./workspace:/home/node/.openclaw/workspace</code></pre>
 
-        <p>Here's the thing — if you're mounting volumes, know what you're exposing. The workspace can contain API keys and session history. I set up a separate <code>.env</code> file outside the repo (added to <code>.gitignore</code>) and passed secrets via environment variables, not hardcoded in config.</p>
+        <p>Here's the thing, if you're mounting volumes, know what you're exposing. The workspace can contain API keys and session history. I set up a separate <code>.env</code> file outside the repo (added to <code>.gitignore</code>) and passed secrets via environment variables, not hardcoded in config.</p>
 
         <h2>The Gateway UI</h2>
 
@@ -85,9 +85,9 @@
         <p>OpenClaw supports multiple patterns:</p>
 
         <ul>
-        <li><strong>Single agent</strong> — one "Jeeves" handling everything</li>
-        <li><strong>Multiple agents</strong> — different agents for different purposes</li>
-        <li><strong>Sub-agents</strong> — spawning isolated sessions for specific tasks</li>
+        <li><strong>Single agent:</strong> one "Jeeves" handling everything</li>
+        <li><strong>Multiple agents:</strong> different agents for different purposes</li>
+        <li><strong>Sub-agents:</strong> spawning isolated sessions for specific tasks</li>
         </ul>
 
         <p>For my use case (personal assistant for coding, writing, random tasks), I went with a single main agent with sub-agent capability for heavy-lifting tasks.</p>
@@ -114,7 +114,7 @@
 
         <p><em>Next up: actually using this thing. More on that soon.</em></p>
 
-        <p>— Gaurab</p>
+        <p>, Gaurab</p>
     </div>
 </body>
 </html>

@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#0A0A0F">
-    <meta name="description" content="Building PortRadar with AI assistance — a terminal tool that combines host processes and Docker container ports.">
-    <title>Building PortRadar: How I Used AI to Ship a Developer Tool in Hours — Gaurab Bose</title>
+    <meta name="description" content="Building PortRadar with AI assistance, a terminal tool that combines host processes and Docker container ports.">
+    <title>Building PortRadar: How I Used AI to Ship a Developer Tool in Hours | Gaurab Bose</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/sidebar.css">
     <script src="../js/theme.js"></script>
@@ -23,7 +23,7 @@
 
         <p>Last week I wanted a small terminal tool. This week I have a working project with Docker integration, a TUI interface, and a blog post about the experience.</p>
 
-        <p>Here's how I built <strong>PortRadar</strong> — and why this workflow represents something bigger than just "AI writing code."</p>
+        <p>Here's how I built <strong>PortRadar:</strong> and why this workflow represents something bigger than just "AI writing code."</p>
 
         <h2>The Origin Story</h2>
 
@@ -56,7 +56,7 @@ docker port postgres
 
         <h3>Phase 1: The Foundation</h3>
 
-        <p>We started with host port scanning. The obvious approach would be calling <code>ss</code> or <code>netstat</code> — but those require elevated permissions on most systems, and parsing their output is fragile.</p>
+        <p>We started with host port scanning. The obvious approach would be calling <code>ss</code> or <code>netstat</code>, but those require elevated permissions on most systems, and parsing their output is fragile.</p>
 
         <p>Instead, we went lower-level: reading directly from <code>/proc/net/tcp</code>. This is Linux's native interface for network information. No permissions needed. No external dependencies.</p>
 
@@ -77,7 +77,7 @@ docker port postgres
             <li>Reads /proc/&lt;pid&gt;/comm to get the process name</li>
         </ol>
 
-        <p>It worked. First run found 6 ports on my machine — including the OpenClaw gateway ports I didn't even know were running.</p>
+        <p>It worked. First run found 6 ports on my machine, including the OpenClaw gateway ports I didn't even know were running.</p>
 
         <h3>Phase 2: Docker Integration</h3>
 
@@ -115,17 +115,17 @@ for (const c of containers) {
 
         <h3>What AI Did Well</h3>
         <ul>
-            <li><strong>Rapid prototyping</strong> — The initial host scanner was working in 20 minutes</li>
-            <li><strong>Handling edge cases</strong> — It anticipated the /proc parsing issues I didn't think of</li>
-            <li><strong>Code organization</strong> — Separate services for host vs Docker, clean separation of concerns</li>
-            <li><strong>Documentation</strong> — README with controls, installation steps, explanation</li>
+            <li><strong>Rapid prototyping:</strong> The initial host scanner was working in 20 minutes</li>
+            <li><strong>Handling edge cases:</strong> It anticipated the /proc parsing issues I didn't think of</li>
+            <li><strong>Code organization:</strong> Separate services for host vs Docker, clean separation of concerns</li>
+            <li><strong>Documentation:</strong> README with controls, installation steps, explanation</li>
         </ul>
 
         <h3>Where I Had to Guide</h3>
         <ul>
-            <li><strong>Initial choice</strong> — Started with Go, realized no Go runtime available, pivoted to Node.js</li>
-            <li><strong>Permission issues</strong> — First version used <code>ss</code> command, failed without sudo, rewrote to use /proc</li>
-            <li><strong>UI polish</strong> — Added color coding, keyboard shortcuts, confirmation dialogs</li>
+            <li><strong>Initial choice:</strong> Started with Go, realized no Go runtime available, pivoted to Node.js</li>
+            <li><strong>Permission issues:</strong> First version used <code>ss</code> command, failed without sudo, rewrote to use /proc</li>
+            <li><strong>UI polish:</strong> Added color coding, keyboard shortcuts, confirmation dialogs</li>
         </ul>
 
         <h2>The Polish Phase (Which We Skipped)</h2>
@@ -148,15 +148,15 @@ for (const c of containers) {
         <h2>What This Signals</h2>
 
         <ul>
-            <li><strong>Systems-level thinking</strong> — Reading /proc, understanding Linux networking</li>
-            <li><strong>Product instincts</strong> — Finding genuine pain points, not solutions in search of problems</li>
-            <li><strong>AI collaboration</strong> — Knowing how to work with AI tools effectively</li>
-            <li><strong>End-to-end delivery</strong> — From idea to working code to deployed to documented</li>
+            <li><strong>Systems-level thinking:</strong> Reading /proc, understanding Linux networking</li>
+            <li><strong>Product instincts:</strong> Finding genuine pain points, not solutions in search of problems</li>
+            <li><strong>AI collaboration:</strong> Knowing how to work with AI tools effectively</li>
+            <li><strong>End-to-end delivery:</strong> From idea to working code to deployed to documented</li>
         </ul>
 
         <h2>What's Next</h2>
 
-        <p>PortRadar is live on my portfolio. I've used it almost daily since building it — already caught two port conflicts that would have taken longer to debug.</p>
+        <p>PortRadar is live on my portfolio. I've used it almost daily since building it, already caught two port conflicts that would have taken longer to debug.</p>
 
         <p>Future improvements: column sorting, process tree visualization, macOS compatibility, historical port usage logging. But those are nice-to-haves. The core is done.</p>
 

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#0A0A0F">
     <meta name="description" content="Setting up QMD with Obsidian for better AI memory management in OpenClaw.">
-    <title>Setting Up QMD with Obsidian for Better AI Memory — Gaurab Bose</title>
+    <title>Setting Up QMD with Obsidian for Better AI Memory | Gaurab Bose</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/sidebar.css">
     <script src="../js/theme.js"></script>
@@ -23,16 +23,16 @@
 
         <p>I've been thinking about how to make my AI assistant remember more of our conversations. Not just the forced "save this to memory" prompts, but a system that actually surfaces relevant context when we talk.</p>
 
-        <p>Enter QMD — a local-first search sidecar that combines BM25, vector search, and reranking. Combined with my existing Obsidian vault, it's become a pretty solid memory system.</p>
+        <p>Enter QMD, a local-first search sidecar that combines BM25, vector search, and reranking. Combined with my existing Obsidian vault, it's become a pretty solid memory system.</p>
 
         <h2>What is QMD?</h2>
 
         <p>QMD is a search engine that runs alongside OpenClaw. It handles:</p>
 
         <ul>
-            <li><strong>BM25</strong> — classic keyword search</li>
-            <li><strong>Vector search</strong> — semantic similarity</li>
-            <li><strong>Reranking</strong> — improving initial results</li>
+            <li><strong>BM25:</strong> classic keyword search</li>
+            <li><strong>Vector search:</strong> semantic similarity</li>
+            <li><strong>Reranking:</strong> improving initial results</li>
         </ul>
 
         <p>The killer feature: it indexes directories outside the workspace. My Obsidian vault now lives at <code>~/.openclaw/workspace-records/obsidian_vault</code>, and QMD indexes it automatically every 5 minutes.</p>
@@ -71,7 +71,7 @@
         <p>Claude Sonnet (running as a subagent) reviewed the structure and gave solid feedback:</p>
 
         <ul>
-            <li>Keep folders flat — nesting hurts retrieval</li>
+            <li>Keep folders flat, nesting hurts retrieval</li>
             <li>Frontmatter with tags helps QMD's hybrid search</li>
             <li>Keep AI notes in a <em>separate</em> collection from personal records</li>
         </ul>
@@ -94,8 +94,8 @@
         <p>Two approaches:</p>
 
         <ol>
-            <li><strong>Heartbeat</strong> — Every 30 minutes, I now check session transcripts for new info worth saving</li>
-            <li><strong>Auto-flush</strong> — Before context compaction, important context gets saved automatically</li>
+            <li><strong>Heartbeat:</strong> Every 30 minutes, I now check session transcripts for new info worth saving</li>
+            <li><strong>Auto-flush:</strong> Before context compaction, important context gets saved automatically</li>
         </ol>
 
         <p>The heartbeat task looks like:</p>
@@ -109,7 +109,7 @@
 
         <p>Now when I ask "what did we discuss about..." or reference something from past sessions, QMD surfaces it. The retrieval isn't perfect, but it's far better than the alternative (nothing).</p>
 
-        <p>The key insight: building a memory system isn't about one big setup — it's about small, consistent habits. The heartbeat ensures those habits happen.</p>
+        <p>The key insight: building a memory system isn't about one big setup, it's about small, consistent habits. The heartbeat ensures those habits happen.</p>
 
         <h2>What's Next</h2>
 

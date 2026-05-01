@@ -80,19 +80,19 @@ PID    PORT   PROTO  PROCESS           CONTAINER<br>
 <p>Each line contains the local address (IP:port in hex), connection state, and inode number. The tricky part: mapping that inode back to a process. PortRadar iterates through <code>/proc/&lt;pid&gt;/fd</code> looking for socket symlinks that match the inode.</p>
 
 <h3>Docker Integration</h3>
-<p>The Docker client connects to the Docker Engine API (via the Docker socket or TCP) and fetches running containers. Each container's port mappings are extracted — both published ports (host:container) and internal-only ports.</p>
+<p>The Docker client connects to the Docker Engine API (via the Docker socket or TCP) and fetches running containers. Each container's port mappings are extracted, both published ports (host:container) and internal-only ports.</p>
 
 <h3>Terminal UI</h3>
 <p>Built with <a href="https://github.com/chjj/blessed">blessed</a>, a ncurses-style TUI library for Node.js. It handles keyboard input, screen rendering, and interactive elements like the confirmation dialogs.</p>
 
 <h2>Key Features</h2>
 <ul>
-<li><strong>Unified View</strong> — Host processes and Docker containers in one table</li>
-<li><strong>Filtering</strong> — Press 1/2/3 or 'f' to cycle: All / Host / Docker</li>
-<li><strong>Search</strong> — '/' to focus search, filter by port or process name</li>
-<li><strong>Kill Process</strong> — Select a host process, press 'k', confirm with 'y'</li>
-<li><strong>Stop Container</strong> — Select a container, press 'd', confirm with 'y'</li>
-<li><strong>Auto-refresh</strong> — Toggle with 'r', updates every 3 seconds</li>
+<li><strong>Unified View:</strong> Host processes and Docker containers in one table</li>
+<li><strong>Filtering:</strong> Press 1/2/3 or 'f' to cycle: All / Host / Docker</li>
+<li><strong>Search:</strong> '/' to focus search, filter by port or process name</li>
+<li><strong>Kill Process:</strong> Select a host process, press 'k', confirm with 'y'</li>
+<li><strong>Stop Container:</strong> Select a container, press 'd', confirm with 'y'</li>
+<li><strong>Auto-refresh:</strong> Toggle with 'r', updates every 3 seconds</li>
 </ul>
 
 <h2>Tech Stack</h2>

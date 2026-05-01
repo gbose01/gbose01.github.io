@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#0A0A0F">
     <meta name="description" content="One week with OpenClaw: building a personal AI assistant from scratch.">
-    <title>1 Week with OpenClaw: What I've Built — Gaurab Bose</title>
+    <title>1 Week with OpenClaw: What I've Built | Gaurab Bose</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/sidebar.css">
     <script src="../js/theme.js"></script>
@@ -23,28 +23,28 @@
 
         <p>It's been exactly one week since I got OpenClaw running on my machine. What started as "let me try this Docker setup" has turned into something I genuinely use every day.</p>
 
-        <p>Here's the retrospective — what I built, what I learned, and what surprised me.</p>
+        <p>Here's the retrospective, what I built, what I learned, and what surprised me.</p>
 
         <h2>The Foundation</h2>
 
-        <p>Day 1 was all about setup. Docker, the workspace directory, environment variables for API keys. The usual. But I quickly realized OpenClaw isn't just a chatbot — it's a <em>platform</em>. The real question wasn't "how do I run it?" but "how do I want it to work?"</p>
+        <p>Day 1 was all about setup. Docker, the workspace directory, environment variables for API keys. The usual. But I quickly realized OpenClaw isn't just a chatbot, it's a <em>platform</em>. The real question wasn't "how do I run it?" but "how do I want it to work?"</p>
 
         <p>I spent the first few days building out the agent architecture:</p>
 
         <ul>
-            <li><strong>AGENTS.md</strong> — The constitution. How I wake up, what I remember, when to speak in group chats, how to handle heartbeats. This is essentially my "operating manual."</li>
-            <li><strong>SOUL.md</strong> — Who the agent is. Personality, tone, vibe. "Be genuinely helpful, not performatively helpful." Skip the corporate filler.</li>
-            <li><strong>USER.md</strong> — Notes about me. What I care about, my timezone, preferences. The agent actually knows things about the human it's helping.</li>
-            <li><strong>Memory system</strong> — Daily notes (raw logs) + long-term MEMORY.md (curated wisdom). The agent reads both at startup. It actually has continuity.</li>
-            <li><strong>Skills framework</strong> — Discord ops, weather, healthchecks, skill creation. Modular tools I can pull in when needed.</li>
+            <li><strong>AGENTS.md:</strong> The constitution. How I wake up, what I remember, when to speak in group chats, how to handle heartbeats. This is essentially my "operating manual."</li>
+            <li><strong>SOUL.md:</strong> Who the agent is. Personality, tone, vibe. "Be genuinely helpful, not performatively helpful." Skip the corporate filler.</li>
+            <li><strong>USER.md:</strong> Notes about me. What I care about, my timezone, preferences. The agent actually knows things about the human it's helping.</li>
+            <li><strong>Memory system:</strong> Daily notes (raw logs) + long-term MEMORY.md (curated wisdom). The agent reads both at startup. It actually has continuity.</li>
+            <li><strong>Skills framework:</strong> Discord ops, weather, healthchecks, skill creation. Modular tools I can pull in when needed.</li>
         </ul>
 
         <p>I also set up the model tier:</p>
 
         <ul>
-            <li><strong>Haiku 3.5</strong> — Fast, cheap, good enough for simple queries</li>
-            <li><strong>Sonnet 4</strong> — My daily driver. Solid reasoning, reasonable cost</li>
-            <li><strong>Opus 4</strong> — The heavy hitter. Complex tasks, writing, tricky debugging</li>
+            <li><strong>Haiku 3.5:</strong> Fast, cheap, good enough for simple queries</li>
+            <li><strong>Sonnet 4:</strong> My daily driver. Solid reasoning, reasonable cost</li>
+            <li><strong>Opus 4:</strong> The heavy hitter. Complex tasks, writing, tricky debugging</li>
         </ul>
 
         <h2>The Portfolio Site</h2>
@@ -58,28 +58,28 @@
             <li>Quick reference, deployment, and customization docs</li>
         </ul>
 
-        <p>The agent wrote the code. I asked, it generated, we iterated. The first draft was rough. The second was better. By the third, it knew my style preferences. We went through a full refactor mid-week — renamed files, cleaned up structure, added proper documentation.</p>
+        <p>The agent wrote the code. I asked, it generated, we iterated. The first draft was rough. The second was better. By the third, it knew my style preferences. We went through a full refactor mid-week, renamed files, cleaned up structure, added proper documentation.</p>
 
         <h2>Automation & Utilities</h2>
 
         <p>Then I got curious. What else can this thing do?</p>
 
-        <p><strong>Cost tracking.</strong> A JavaScript dashboard that pulls API usage data from the gateway, visualizes spending by model, and tracks daily/weekly trends. Now I know exactly how much Claude API time costs me each week — and it's less than I expected.</p>
+        <p><strong>Cost tracking.</strong> A JavaScript dashboard that pulls API usage data from the gateway, visualizes spending by model, and tracks daily/weekly trends. Now I know exactly how much Claude API time costs me each week, and it's less than I expected.</p>
 
         <p><strong>Request monitoring.</strong> Another dashboard tracking incoming requests, response times, error rates, session counts. It's like having a tiny observability stack for my personal AI. I can see when I'm overusing Opus vs. when Haiku would have sufficed.</p>
 
         <p><strong>Daily reports.</strong> Automated cost summaries via cron jobs. The agent wakes up on a schedule, pulls the numbers, and I get a digest in Discord. No manual checking required.</p>
 
-        <p><strong>Custom skills.</strong> I built a <code>skill-creator</code> skill — a template for building new skills with scripts, references, and assets. Now adding capabilities is repeatable.</p>
+        <p><strong>Custom skills.</strong> I built a <code>skill-creator</code> skill, a template for building new skills with scripts, references, and assets. Now adding capabilities is repeatable.</p>
 
         <h2>The Little Things</h2>
 
         <p>Some improvements weren't flashy but made a huge difference:</p>
 
         <ul>
-            <li><strong>Heartbeats.</strong> The agent periodically checks email, calendar, weather — without me asking. It learned when to speak and when to stay quiet (respecting quiet hours 11pm-8am).</li>
+            <li><strong>Heartbeats.</strong> The agent periodically checks email, calendar, weather, without me asking. It learned when to speak and when to stay quiet (respecting quiet hours 11pm-8am).</li>
             <li><strong>Group chat etiquette.</strong> I configured it to not interrupt human conversations. One thoughtful response beats three "yeah!" messages.</li>
-            <li><strong>Reaction handling.</strong> It now uses emoji reactions naturally — 👍 for acknowledgment, ❤️ for appreciation, 🤔 for interesting stuff.</li>
+            <li><strong>Reaction handling.</strong> It now uses emoji reactions naturally, 👍 for acknowledgment, ❤️ for appreciation, 🤔 for interesting stuff.</li>
             <li><strong>Safety defaults.</strong> Destructive commands require confirmation. The <code>trash</code> command (recoverable) is preferred over <code>rm</code> (permanent).</li>
         </ul>
 
@@ -87,7 +87,7 @@
 
         <ol>
             <li><strong>Configuration is the product.</strong> OpenClaw gives you a framework. What you build on top is personal. The agent's "personality" is really just well-documented preferences.</li>
-            <li><strong>Memory is hard.</strong> Not the technical part — the discipline. What do you keep? What do you discard? I've already refactored MEMORY.md twice.</li>
+            <li><strong>Memory is hard.</strong> Not the technical part, the discipline. What do you keep? What do you discard? I've already refactored MEMORY.md twice.</li>
             <li><strong>Boundaries matter.</strong> The agent has access to a lot. Being deliberate about what stays internal vs. external is crucial.</li>
             <li><strong>Iteration beats perfection.</strong> I didn't build all of this in day one. It emerged. Ask, refine, ask again.</li>
         </ol>
