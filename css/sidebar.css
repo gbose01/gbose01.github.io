@@ -544,6 +544,22 @@ h2 {
     flex-shrink: 0;
 }
 
+.building-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--green);
+    background: var(--green-dim);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    padding: 3px 9px;
+    border-radius: 20px;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
 .tags {
     display: flex;
     flex-wrap: wrap;
