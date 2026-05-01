@@ -402,7 +402,7 @@ h2 {
     text-transform: uppercase;
     letter-spacing: 2px;
     color: var(--accent);
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     padding-bottom: 12px;
     border-bottom: 1px solid var(--border);
 }
@@ -432,6 +432,42 @@ h2 {
 
 .sidebar-item span {
     font-size: 12px;
+    color: var(--text-muted);
+}
+
+/* Compact writing list in sidebar */
+.sidebar-writing {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-post {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.sidebar-post:last-child {
+    border-bottom: none;
+}
+
+.sidebar-post-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    text-decoration: none;
+    line-height: 1.4;
+    transition: color 0.2s ease;
+}
+
+.sidebar-post-title:hover {
+    color: var(--accent);
+}
+
+.sidebar-post-date {
+    font-size: 11px;
     color: var(--text-muted);
 }
 
@@ -792,9 +828,37 @@ h2 {
 }
 
 /* ─── Mobile ─────────────────────────────────── */
+@media (max-width: 900px) {
+    .sidebar {
+        order: 2;
+        position: relative;
+        top: 0;
+        background: var(--bg-elevated);
+        padding: 24px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+    }
+
+    .sidebar-list {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .sidebar-item {
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+    }
+}
+
 @media (max-width: 600px) {
+    .layout {
+        padding: 32px 16px;
+    }
+
     h1 {
-        font-size: 38px;
+        font-size: 36px;
         letter-spacing: -1.5px;
     }
 
@@ -802,7 +866,65 @@ h2 {
         font-size: 16px;
     }
 
+    .hero-eyebrow {
+        font-size: 11px;
+    }
+
     .currently-building {
         max-width: 100%;
+    }
+
+    .credential-badges {
+        gap: 6px;
+    }
+
+    .badge {
+        font-size: 11px;
+        padding: 4px 9px;
+    }
+
+    .nav-main {
+        gap: 20px;
+    }
+
+    .project {
+        padding: 18px 20px;
+    }
+
+    .project-featured {
+        padding: 20px 24px;
+    }
+
+    /* Blog rows: stack title above date on small screens */
+    .blog-item {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .blog-date {
+        order: -1;
+        grid-column: auto;
+    }
+
+    /* Post articles */
+    .post-container {
+        padding: 32px 16px 60px;
+    }
+
+    .post-header h1 {
+        font-size: 26px;
+    }
+
+    .post-body {
+        font-size: 15px;
+    }
+
+    /* Toggle button stays top-right but smaller */
+    #theme-toggle {
+        width: 32px;
+        height: 32px;
+        top: 14px;
+        right: 16px;
     }
 }

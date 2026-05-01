@@ -16,14 +16,8 @@
     <script src="js/theme.js"></script>
     <style>
         .layout {
-            display: block;
-            max-width: 760px;
-            margin: 0 auto;
+            max-width: 1080px;
             padding: 60px 24px;
-        }
-
-        .sidebar {
-            display: none;
         }
 
         .hero {
@@ -33,63 +27,12 @@
         .section {
             padding: 48px 0;
         }
-
-        /* ─── Blog ─── */
-        .blog-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-        }
-
-        .blog-item {
-            padding: 20px 0;
-            border-bottom: 1px solid var(--border);
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: 12px 24px;
-            align-items: start;
-            transition: all 0.2s ease;
-        }
-
-        .blog-item:last-child {
-            border-bottom: none;
-        }
-
-        .blog-item:hover .blog-title {
-            color: var(--accent);
-        }
-
-        .blog-title {
-            font-size: 15px;
-            font-weight: 500;
-            color: var(--text);
-            text-decoration: none;
-            line-height: 1.4;
-            transition: color 0.2s ease;
-            grid-column: 1;
-        }
-
-        .blog-teaser {
-            font-size: 13px;
-            color: var(--text-muted);
-            line-height: 1.5;
-            margin-top: 4px;
-            grid-column: 1;
-        }
-
-        .blog-date {
-            font-size: 12px;
-            color: var(--text-muted);
-            white-space: nowrap;
-            font-variant-numeric: tabular-nums;
-            grid-column: 2;
-            grid-row: 1;
-            padding-top: 2px;
-        }
     </style>
 </head>
 <body>
     <div class="layout">
+
+        <!-- ─── MAIN ─── -->
         <main>
 
             <!-- ─── HERO ─── -->
@@ -113,7 +56,7 @@
                         <span class="badge">Stanford MBA</span>
                         <span class="badge">University of Chicago · Statistics &amp; Economics</span>
                         <span class="badge">Open source enthusiast</span>
-                        <span class="badge">AI Agent Herder</span>
+                        <span class="badge">AI agent herder</span>
                     </div>
 
                     <div class="currently-building">
@@ -214,62 +157,58 @@
                 </div>
             </section>
 
-            <!-- ─── WRITING ─── -->
-            <section class="section" id="blog">
-                <h2>Writing</h2>
+        </main>
 
-                <div class="blog-list">
+        <!-- ─── SIDEBAR: Recent Writing ─── -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <p class="sidebar-title">Recent writing</p>
+                <div class="sidebar-writing">
 
-                    <article class="blog-item">
-                        <a href="blog/2026-04-28-metacode-benchmark.html" class="blog-title">Building MetaCode: A Metacognitive Benchmark for LLMs</a>
-                        <span class="blog-date">Apr 28</span>
-                        <p class="blog-teaser">Can AI models know what they don't know — and why that gap matters for AGI.</p>
+                    <article class="sidebar-post">
+                        <a href="blog/2026-04-28-metacode-benchmark.html" class="sidebar-post-title">Building MetaCode: A Metacognitive Benchmark for LLMs</a>
+                        <span class="sidebar-post-date">Apr 28, 2026</span>
                     </article>
 
-                    <article class="blog-item">
-                        <a href="blog/qmd-obsidian-setup.html" class="blog-title">Setting Up QMD with Obsidian for Better AI Memory</a>
-                        <span class="blog-date">Apr 7</span>
-                        <p class="blog-teaser">Wiring my Obsidian vault to an LLM with semantic search via QMD.</p>
+                    <article class="sidebar-post">
+                        <a href="blog/qmd-obsidian-setup.html" class="sidebar-post-title">Setting Up QMD with Obsidian for Better AI Memory</a>
+                        <span class="sidebar-post-date">Apr 7, 2026</span>
                     </article>
 
-                    <article class="blog-item">
-                        <a href="blog/2026-03-15-cost-observability-tool.html" class="blog-title">Building a Cost Observability Tool for My AI Agent</a>
-                        <span class="blog-date">Mar 15</span>
-                        <p class="blog-teaser">How I built a real-time dashboard to track LLM API spend before it tracks me.</p>
+                    <article class="sidebar-post">
+                        <a href="blog/2026-03-15-cost-observability-tool.html" class="sidebar-post-title">Building a Cost Observability Tool for My AI Agent</a>
+                        <span class="sidebar-post-date">Mar 15, 2026</span>
                     </article>
 
-                    <article class="blog-item">
-                        <a href="blog/building-portradar-ai.html" class="blog-title">Building PortRadar: Shipping a Developer Tool in Hours with AI</a>
-                        <span class="blog-date">Mar 13</span>
-                        <p class="blog-teaser">The agentic workflow that took a tool from idea to terminal in one afternoon.</p>
+                    <article class="sidebar-post">
+                        <a href="blog/building-portradar-ai.html" class="sidebar-post-title">Building PortRadar: Shipping a Developer Tool in Hours with AI</a>
+                        <span class="sidebar-post-date">Mar 13, 2026</span>
                     </article>
 
-                    <article class="blog-item">
-                        <a href="blog/1-week-with-openclaw.html" class="blog-title">1 Week with OpenClaw: What I've Built</a>
-                        <span class="blog-date">Mar 12</span>
-                        <p class="blog-teaser">A portfolio site, cost dashboards, automated reports, and a personal AI — in seven days.</p>
+                    <article class="sidebar-post">
+                        <a href="blog/1-week-with-openclaw.html" class="sidebar-post-title">1 Week with OpenClaw: What I've Built</a>
+                        <span class="sidebar-post-date">Mar 12, 2026</span>
                     </article>
 
                 </div>
-
                 <div class="section-footer">
                     <a href="blog.html" class="show-more">All writing →</a>
                 </div>
-            </section>
+            </div>
+        </aside>
 
-            <!-- ─── FOOTER ─── -->
-            <footer class="footer">
-                <div class="footer-inner">
-                    <nav class="social-links">
-                        <a href="https://github.com/gbose01" target="_blank" rel="noopener noreferrer">GitHub</a>
-                        <a href="https://linkedin.com/in/gbose" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-                        <a href="mailto:gaurab.bose@gmail.com">Email</a>
-                    </nav>
-                    <p class="footer-credit">© 2026 Gaurab Bose</p>
-                </div>
-            </footer>
+        <!-- ─── FOOTER ─── -->
+        <footer class="footer">
+            <div class="footer-inner">
+                <nav class="social-links">
+                    <a href="https://github.com/gbose01" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    <a href="https://linkedin.com/in/gbose" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                    <a href="mailto:gaurab.bose@gmail.com">Email</a>
+                </nav>
+                <p class="footer-credit">© 2026 Gaurab Bose</p>
+            </div>
+        </footer>
 
-        </main>
     </div>
 </body>
 </html>
