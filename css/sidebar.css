@@ -515,6 +515,28 @@ h2 {
     color: #3A3645;
 }
 
+/* ─── Project Post Link ─────────────────────── */
+.project-post-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--accent);
+    text-decoration: none;
+    margin-top: 12px;
+    border-bottom: 1px solid var(--accent-dim);
+    padding-bottom: 1px;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.project-post-link:hover {
+    border-bottom-color: var(--accent);
+    background: var(--accent-dim);
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
 /* ─── Project Cards ─────────────────────────── */
 .project-header {
     display: flex;
