@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0A0A0F">
+    <meta name="description" content="How I used Claude Code to redesign my personal website, focusing on product decisions rather than implementation.">
+    <title>Redesigning My Website with Claude Code | Gaurab Bose</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/sidebar.css">
+    <script src="../js/theme.js"></script>
+</head>
+<body>
+    <div class="post-container">
+        <a href="../blog.html" class="post-back">← Writing</a>
+
+        <header class="post-header">
+            <h1>Redesigning My Website with Claude Code</h1>
+            <p class="post-date">April 30, 2026</p>
+        </header>
+
+        <div class="post-body">
+
+        <p>I've had a personal website for a while. It worked fine. White background, some projects listed, a few blog posts. Nothing that would make anyone stop scrolling.</p>
+
+        <p>A few weeks ago I decided to actually fix it. Not by spending a weekend wrestling with CSS, but by treating it like a product problem: define what I want it to convey, make the decisions, and let the implementation happen fast.</p>
+
+        <p>I used Claude Code to do the building. Here's how that went.</p>
+
+        <!-- BEFORE/AFTER: add screenshot of old site here once available -->
+
+        <h2>The Audit</h2>
+
+        <p>Before writing a single line of CSS, I asked for a full audit. The feedback was direct:</p>
+
+        <blockquote>
+            The site reads like a competent developer portfolio, but nothing about it says "this person is a product visionary at the frontier of AI."
+        </blockquote>
+
+        <p>That was accurate. My bio listed credentials in a paragraph. My Google AI work wasn't landing above the fold. There were no animations, no dark mode, no visual hierarchy worth mentioning.</p>
+
+        <p>But the audit found things I wouldn't have caught myself.</p>
+
+        <p>My blog posts had a completely separate design system. Every post had its own inline <code>&lt;style&gt;</code> block with <code>background: #fafafa</code> and <code>color: #0969da</code>. A light-theme stylesheet that had nothing to do with the main site. The blog index looked one way. Click a post, and you were looking at something different entirely. I'd been publishing posts for months without noticing.</p>
+
+        <p>There was also a git merge conflict sitting unresolved in <code>building-portradar-ai.html</code>. Committed to <code>main</code>.</p>
+
+        <p>And the GitHub link in the nav was pointing to <code>github.com/gbose</code> instead of <code>github.com/gbose01</code>.</p>
+
+        <p>Small things. Three different kinds of debt, none of which I knew were there.</p>
+
+        <h2>The Design Direction</h2>
+
+        <p>The brief was specific: make it immediately clear that I'm a PM working on AI search at Google, and that I build real projects using AI agents on the side. That combination is unusual. The site should make it impossible to miss.</p>
+
+        <p>Two real decisions came out of that.</p>
+
+        <p>First, dark mode first. The AI/ML crowd expects it. A white portfolio in 2026 reads as outdated.</p>
+
+        <p>Second, replace the blue. The suggestion was amber/gold (<code>#F59E0B</code>). Uncommon in tech portfolios, distinctive without being loud. I said yes immediately.</p>
+
+        <p>Everything else followed from those two choices.</p>
+
+        <h2>What Got Built</h2>
+
+        <p>We went phase by phase:</p>
+
+        <ul>
+            <li><strong>Color system:</strong> dark background (<code>#0A0A0F</code>), amber accent, warm off-white text, green reserved only for live status indicators</li>
+            <li><strong>Hero redesign:</strong> lead with "Product Manager shaping how billions of people search with AI," credential labels instead of a bio paragraph</li>
+            <li><strong>Project cards:</strong> featured spotlight for MetaCode, "Built with AI agents" badge on projects where it's true, individual tag pills instead of one concatenated string</li>
+            <li><strong>Blog consistency:</strong> eight files, not one. All posts now use the same stylesheet. Merge conflict resolved.</li>
+            <li><strong>Two-column layout:</strong> writing sidebar alongside projects so it's visible without scrolling</li>
+            <li><strong>Dark/light toggle:</strong> reads <code>prefers-color-scheme</code> on first visit, persists to <code>localStorage</code></li>
+        </ul>
+
+        <p>The conversation was about 70 messages long. Almost none of them were about code. They were about: does this match the intent? Is this consistent? What would a first-time visitor understand in five seconds?</p>
+
+        <h2>The Part I Found Most Useful</h2>
+
+        <p>Early on I mentioned I wanted to keep working on the site across sessions without re-explaining everything. The suggestion was a <code>CLAUDE.md</code> file. A living spec in the project root recording every design decision, convention, and what not to do.</p>
+
+        <p>The rule that made it actually useful: remove things when they're no longer true. Don't just append. Stale context misleads future sessions more than no context.</p>
+
+        <p>I've started doing this for other projects now.</p>
+
+        <h2>The PM Skill Is Still the PM Skill</h2>
+
+        <p>Here's what I want to be honest about: this wasn't "AI did everything and I watched."</p>
+
+        <p>The decisions were fast. Amber vs. blue was five seconds. Making the credential badges non-interactive was five seconds. Noticing that the "currently building" callout was redundant with MetaCode at the top of the projects list was five seconds. But they were mine. Bad decisions here would have produced a worse site just as quickly.</p>
+
+        <blockquote>
+            The AI changes the cost of implementation. It doesn't change the cost of knowing what to build.
+        </blockquote>
+
+        <p>The implementation is now instant. The judgment still takes as long as it takes.</p>
+
+        <p>The site is still plain HTML, CSS, and a small JS file. Deploys by pushing to <code>main</code> on GitHub Pages. No build tools, no framework.</p>
+
+        <p>It just looks like someone who thinks about design made it.</p>
+
+        </div>
+    </div>
+</body>
+</html>
