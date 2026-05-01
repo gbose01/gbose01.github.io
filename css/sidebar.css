@@ -32,7 +32,7 @@ html {
     --text-muted: #6B6560;
     --accent: #D97706;
     --accent-dim: rgba(217, 119, 6, 0.10);
-    --accent-glow: rgba(217, 119, 6, 0.18);
+    --accent-glow: rgba(217, 119, 6, 0.35);
     --border: rgba(0, 0, 0, 0.09);
     --border-accent: rgba(217, 119, 6, 0.30);
     --green: #059669;
@@ -848,6 +848,7 @@ h2 {
 /* ─── Profile Photo ─────────────────────────── */
 .profile-photo-wrap {
     margin-bottom: 28px;
+    text-align: center;
 }
 
 .profile-photo {
@@ -855,7 +856,7 @@ h2 {
     height: 96px;
     border-radius: 50%;
     object-fit: cover;
-    display: block;
+    display: inline-block;
     border: 2px solid var(--border-accent);
     box-shadow: 0 0 0 0 var(--accent-glow);
     animation: photo-breathe 4s ease-in-out infinite;
@@ -863,12 +864,12 @@ h2 {
 }
 
 .profile-photo:hover {
-    box-shadow: 0 0 20px 4px var(--accent-glow);
+    box-shadow: 0 0 28px 10px var(--accent-glow);
 }
 
 @keyframes photo-breathe {
     0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
-    50%       { box-shadow: 0 0 12px 3px var(--accent-glow); }
+    50%       { box-shadow: 0 0 22px 8px var(--accent-glow); }
 }
 
 /* ─── Theme Toggle ──────────────────────────── */
