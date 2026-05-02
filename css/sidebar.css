@@ -1018,6 +1018,36 @@ h2 {
     line-height: 1.55;
 }
 
+.work-subroles {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.work-subrole-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 7px;
+}
+
+.work-subrole-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.1px;
+}
+
+.work-subrole-year {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.work-subrole + .work-subrole {
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+}
+
 /* ─── Mobile ─────────────────────────────────── */
 @media (max-width: 900px) {
     .sidebar {
