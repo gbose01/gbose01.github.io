@@ -577,6 +577,15 @@ h2 {
     margin-bottom: 0;
 }
 
+.project-header-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-end;
+    align-items: center;
+    flex-shrink: 0;
+}
+
 .ai-badge {
     display: inline-flex;
     align-items: center;
