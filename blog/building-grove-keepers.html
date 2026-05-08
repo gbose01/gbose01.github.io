@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0A0A0F">
+    <meta name="description" content="How I built my first mobile game, Grove Keepers, using Claude, Cursor, and Godot.">
+    <title>Building Grove Keepers: Shipping My First Game with AI | Gaurab Bose</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/sidebar.css">
+    <script src="../js/theme.js"></script>
+</head>
+<body>
+    <div class="post-container">
+        <a href="../blog.html" class="post-back">← Writing</a>
+
+        <header class="post-header">
+            <h1>Building Grove Keepers: Shipping My First Game with AI</h1>
+            <p class="post-date">May 7, 2026</p>
+        </header>
+
+        <div class="post-body">
+
+        <p>I build AI products for a living, and I build terminal tools on the side. But I had never built a game. The barrier to entry always felt too high: learning an engine, managing state loops, wrestling with UI canvases, and the inevitable trap of programmer art.</p>
+
+        <p>Over the last few weeks, that changed. I built and shipped <strong>Grove Keepers</strong>, a portrait-mode tower defense game for iOS. And I did it entirely through AI collaboration using Claude Code, Cursor, and Claude Design.</p>
+
+        <p>Here is how the workflow actually looked, the false start that almost killed the project, and why building games with AI is ultimately a product management exercise.</p>
+
+        <h2>The Game: Grove Keepers</h2>
+
+        <p>I wanted to build something cozy but strategic. In Grove Keepers, you defend a living grove heart by dragging and dropping magical totems onto an isometric grid. The twist: you do all your placement before the wave begins. Once the shadow creatures spawn, combat auto-resolves. You watch, learn, and collect seeds to permanently upgrade the grove across 20 visual tiers.</p>
+
+        <p>The target mood was "candlelit forest at dusk." No stressful real-time twitch mechanics. Just thoughtful placement, a parchment-on-twilight aesthetic, and a satisfying progression loop.</p>
+
+        <h2>The False Start: AI Ergonomics in Unity</h2>
+
+        <p>I started the project in Unity 6 LTS. It's the industry standard, so it felt like the obvious choice. But I quickly ran into a wall, and it wasn't Unity's fault—it was a problem of <em>AI ergonomics</em>.</p>
+
+        <p>Unity is a highly visual, editor-first environment. To let Claude Code work in Unity, I had to run a local MCP (Model Context Protocol) server. When I wanted the AI to wire up a health bar, it couldn't just edit a text file. It had to send a JSON RPC call to the MCP server to search the scene, find the GameObject, and inject a serialized property change.</p>
+
+        <p>It felt like doing surgery through a keyhole using a robotic arm with lag. It was fragile. The AI would lose context, hallucinate GameObject names, or fail to apply prefab overrides.</p>
+
+        <p>I realized something fundamental about the current generation of AI coding:</p>
+
+        <blockquote>
+            AI models are text-in, text-out prediction engines. If your tools aren't plain text, you are fighting the medium.
+        </blockquote>
+
+        <p>I pivoted to Godot 4. Godot's scene files (<code>.tscn</code>) are just plain text. An LLM can read the entire scene tree, understand the node hierarchy, and edit UI anchors directly in text. The friction vanished overnight. The pivot wasn't an engine preference; it was an architecture decision to align with how my "co-founder" actually thinks.</p>
+
+        <h2>Avoiding "Programmer Art" with Claude Design</h2>
+
+        <p>The easiest way to ruin a good indie game is with inconsistent visual language. Four different fonts, arbitrary button sizes, and a rainbow of hex codes. I wanted Grove Keepers to feel intentional.</p>
+
+        <p>Instead of hacking together UI canvases, I treated Claude like a Senior UI/UX Designer. I wrote a massive, structured brief (<code>DESIGN_MOCK_PROMPT.md</code>). I didn't ask for "a shop menu." I gave it constraints:</p>
+
+        <ul>
+            <li><strong>Hard Canvas:</strong> 1080x1920 reference resolution only.</li>
+            <li><strong>Locked Palette:</strong> A strict list of 20 named tokens (e.g., <code>CANVAS_DUSK_DEEP</code>, <code>GLOW_AMBER</code>, <code>ALERT_EMBER</code>). No new hex codes allowed.</li>
+            <li><strong>Strict Typography:</strong> Cinzel Decorative for headers, Nunito for body. Only 8 specific sizes.</li>
+            <li><strong>8pt Grid:</strong> All spacing must be multiples of 8.</li>
+        </ul>
+
+        <p>The result was a beautiful 9-state SVG mockup set. Claude Design handed back pixel-perfect specs: empty placement states, tutorial overlays, shop card variations, and failure screens. All unified under one visual identity.</p>
+
+        <h2>The Implementation: Coding with Cursor Rules</h2>
+
+        <p>Having a design is one thing. Stopping the AI from butchering it during implementation is another.</p>
+
+        <p>To implement the UI in Godot, I used Cursor. But I didn't just paste screenshots into the chat. I wrote a strict, auto-loaded Cursor rule (<code>.cursor/rules/ui-rebuild-workflow.mdc</code>) that forced the AI to follow a rigorous protocol:</p>
+
+        <ol>
+            <li><strong>Read the Architecture:</strong> Always check <code>UITheme.gd</code> and <code>Palette.gd</code> first.</li>
+            <li><strong>No Magic Numbers:</strong> If you need padding, use <code>UITheme.SP_16</code>. If you need a color, use <code>Palette.GLOW_AMBER</code>. <em>Zero tolerance for raw hex codes.</em></li>
+            <li><strong>One State Per Commit:</strong> Migrate one design state at a time. Do not try to build the whole HUD at once.</li>
+        </ol>
+
+        <p>I handed the AI an <code>IMPLEMENTATION_HANDOFF.md</code> document with the SVG mocks and the exact X/Y coordinates from the design phase. Cursor wrote the GDScript, wired the Godot signals, and built the UI overlays exactly to spec.</p>
+
+        <h2>The PM Skill Is Still the PM Skill</h2>
+
+        <p>Here is the reality of building a game with AI in 2026: The AI did not make Grove Keepers. I made Grove Keepers. The AI just typed the code incredibly fast.</p>
+
+        <p>The hardest parts of this project weren't writing C# or GDScript. The hardest parts were:</p>
+        
+        <ul>
+            <li>Designing an economy scaling formula (<code>EconomyConfig.gd</code>) that felt rewarding at wave 3 and wave 25.</li>
+            <li>Deciding that failure should give you 60% consolation seeds instead of 0%, so the player never feels punished.</li>
+            <li>Structuring a centralized <code>EventBus</code> so the <code>WaveManager</code> and <code>EconomyManager</code> didn't turn into spaghetti code.</li>
+            <li>Maintaining a living <code>ARCHITECTURE.md</code> document so the AI never lost the plot of the codebase.</li>
+        </ul>
+
+        <blockquote>
+            The AI removes the syntax barrier, but it amplifies the architecture barrier. If your product specs and data flows are sloppy, the AI will just build you a sloppy mess at lightspeed.
+        </blockquote>
+
+        <p>Grove Keepers works because I treated it like a product. I defined the constraints, managed the state machine, and held the creative vision. The AI was the ultimate execution engine.</p>
+
+        <p>You can't prompt your way out of knowing what to build. But if you know exactly what you want, there has never been a better time to build it.</p>
+
+        </div>
+    </div>
+</body>
+</html>
