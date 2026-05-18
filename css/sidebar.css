@@ -200,7 +200,7 @@ h1 {
     color: var(--text-muted);
     line-height: 1.6;
     margin-top: 0;
-    margin-bottom: 12px;
+    margin-bottom: 36px;
     letter-spacing: 0.1px;
 }
 
@@ -985,20 +985,7 @@ h2 {
     animation-delay: 0.1s;
 }
 
-/* ─── Formerly Line ─────────────────────────── */
-.hero-formerly {
-    font-size: 12px;
-    color: var(--text-muted);
-    line-height: 1.6;
-    margin-top: 0;
-    margin-bottom: 36px;
-    letter-spacing: 0.1px;
-}
 
-.hero-formerly strong {
-    color: var(--text-muted);
-    font-weight: 600;
-}
 
 /* ─── Sidebar Traits ─────────────────────────── */
 .sidebar-traits {
