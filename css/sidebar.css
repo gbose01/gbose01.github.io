@@ -209,6 +209,20 @@ h1 {
     font-weight: 600;
 }
 
+.divider-dot {
+    color: var(--text-muted);
+    font-weight: 700;
+    opacity: 0.75;
+    padding: 0 4px;
+    display: inline-block;
+}
+
+[data-theme="light"] .divider-dot {
+    color: var(--text-muted);
+    font-weight: 700;
+    opacity: 1;
+}
+
 /* ─── Currently Building ────────────────────── */
 .currently-building {
     display: flex;
