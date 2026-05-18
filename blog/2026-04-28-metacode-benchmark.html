@@ -69,18 +69,109 @@ python3 run_local.py
 export ANTHROPIC_API_KEY="your-api-key"
 python3 run_local.py</code></pre>
 
-        <h2>Evaluating Google's Gemini 2.5 Flash-Lite</h2>
+        <h2>Comparing Gemini 3 vs. Claude 4: The Metacognitive Showdown</h2>
 
-        <p>To test the benchmark, I evaluated **Gemini 2.5 Flash-Lite** against live APIs. The results revealed fascinating behaviors in today's frontier models:</p>
+        <p>To thoroughly test the benchmark under real-world conditions, I conducted a comprehensive comparative evaluation across six prominent model configurations from Google's Gemini and Anthropic's Claude series. To make the evaluation perfectly fair, all models were tested on the **exact same representative, domain-balanced subset of 10 questions** using a fixed, deterministic seed.</p>
 
+        <p>The models evaluated were:</p>
         <ul>
-            <li><strong>Composite Score:</strong> <code>0.6246 (62.46%)</code></li>
-            <li><strong>Confidence Calibration (Task 1):</strong> <code>0.4110</code>. Gemini struggled here because of default overconfidence priors. For example, when asked for Tesla's price, it estimated <code>$175.76</code> (stale data) with an extremely high <code>85% confidence</code>, despite the actual price being <code>$422.24</code>. This confident mistake resulted in a heavy penalty.</li>
-            <li><strong>Error Detection (Task 2):</strong> <code>58.00%</code>. Just slightly better than a coin toss. Models struggle to reason about temporal ranges and shifts without live browsing.</li>
-            <li><strong>Epistemic Self-Correction (Task 3):</strong> <code>0.8764</code>. This was Gemini's superpower. In multi-turn runs, the moment Gemini was corrected on an stock or temperature estimate, it immediately dropped its confidence for the related question from ~95% down to ~60%, explicitly acknowledging: <em>"My previous estimate was wrong. Because I have a training cutoff and no live internet access, I must update my priors and state lower confidence."</em></li>
+            <li><strong>Google Gemini</strong>: <code>Gemini 2.5 Flash-Lite</code>, <code>Gemini 3 Flash (Preview)</code>, and <code>Gemini 3 Pro (Preview)</code></li>
+            <li><strong>Anthropic Claude</strong>: <code>Claude 4.5 Haiku</code>, <code>Claude 4.6 Sonnet</code>, and <code>Claude 4.7 Opus</code></li>
         </ul>
 
-        <p>This proves that while models have built-in overconfidence biases on single prompts, they possess **excellent latent self-monitoring abilities** that can be unlocked via interactive feedback loops.</p>
+        <h3>The Metacognitive Leaderboard</h3>
+
+        <p>Here is the aggregated performance scorecard showing composite and task-specific scores (higher is better):</p>
+
+        <div style="overflow-x: auto; margin: 2rem 0; border: 1px solid var(--border); border-radius: 8px;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 0.95rem; text-align: left;">
+                <thead>
+                    <tr style="background: var(--bg-secondary); border-bottom: 2px solid var(--border);">
+                        <th style="padding: 12px 16px;">Model</th>
+                        <th style="padding: 12px 16px; text-align: center;">Composite</th>
+                        <th style="padding: 12px 16px; text-align: center;">T1: Calibration</th>
+                        <th style="padding: 12px 16px; text-align: center;">T2: Error Detection</th>
+                        <th style="padding: 12px 16px; text-align: center;">T3: Self-Correction</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid var(--border);">
+                        <td style="padding: 12px 16px; font-weight: 600; color: var(--accent);">Claude 4.7 Opus</td>
+                        <td style="padding: 12px 16px; text-align: center; font-weight: 700;">0.8716</td>
+                        <td style="padding: 12px 16px; text-align: center;">0.8045</td>
+                        <td style="padding: 12px 16px; text-align: center; font-weight: 600; color: var(--accent);">80.00%</td>
+                        <td style="padding: 12px 16px; text-align: center; font-weight: 600; color: var(--accent);">1.0000</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border);">
+                        <td style="padding: 12px 16px; font-weight: 600;">Claude 4.6 Sonnet</td>
+                        <td style="padding: 12px 16px; text-align: center; font-weight: 700;">0.8125</td>
+                        <td style="padding: 12px 16px; text-align: center;">0.8072</td>
+                        <td style="padding: 12px 16px; text-align: center;">60.00%</td>
+                        <td style="padding: 12px 16px; text-align: center; font-weight: 600; color: var(--accent);">1.0000</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border);">
+                        <td style="padding: 12px 16px; font-weight: 600;">Gemini 3 Pro (Preview)</td>
+                        <td style="padding: 12px 16px; text-align: center; font-weight: 700;">0.8048</td>
+                        <td style="padding: 12px 16px; text-align: center; font-weight: 600; color: var(--accent);">0.8158</td>
+                        <td style="padding: 12px 16px; text-align: center;">60.00%</td>
+                        <td style="padding: 12px 16px; text-align: center;">0.9695</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border);">
+                        <td style="padding: 12px 16px;">Claude 4.5 Haiku</td>
+                        <td style="padding: 12px 16px; text-align: center; font-weight: 700;">0.7726</td>
+                        <td style="padding: 12px 16px; text-align: center;">0.7789</td>
+                        <td style="padding: 12px 16px; text-align: center;">50.00%</td>
+                        <td style="padding: 12px 16px; text-align: center; font-weight: 600; color: var(--accent);">1.0000</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border);">
+                        <td style="padding: 12px 16px;">Gemini 3 Flash (Preview)</td>
+                        <td style="padding: 12px 16px; text-align: center; font-weight: 700;">0.7576</td>
+                        <td style="padding: 12px 16px; text-align: center;">0.7559</td>
+                        <td style="padding: 12px 16px; text-align: center;">50.00%</td>
+                        <td style="padding: 12px 16px; text-align: center;">0.9800</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px 16px; color: var(--text-muted);">Gemini 2.5 Flash-Lite</td>
+                        <td style="padding: 12px 16px; text-align: center; font-weight: 700; color: var(--text-muted);">0.6326</td>
+                        <td style="padding: 12px 16px; text-align: center; color: var(--text-muted);">0.4339</td>
+                        <td style="padding: 12px 16px; text-align: center; color: var(--text-muted);">50.00%</td>
+                        <td style="padding: 12px 16px; text-align: center; color: var(--text-muted);">0.9450</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <img src="images/compare_composite.png" alt="MetaCode Leaderboard Chart" style="display: block; width: 100%; max-width: 720px; height: auto; border-radius: 8px; border: 1px solid var(--border); margin: 2rem auto; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+
+        <h2>Three Fascinating Metacognitive Takeaways</h2>
+
+        <p>Aggregating the model runs produced extremely clean comparative data and highlighted several distinct cognitive patterns:</p>
+
+        <img src="images/compare_tasks.png" alt="MetaCode Task Scores by Model" style="display: block; width: 100%; max-width: 720px; height: auto; border-radius: 8px; border: 1px solid var(--border); margin: 2rem auto; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+
+        <h3>1. The Giant Calibration Gap (T1)</h3>
+        
+        <p>Confidence calibration separates lightweight models from state-of-the-art frontiers immediately. When asked about unknowable real-time prices or temperatures, <strong>Gemini 2.5 Flash-Lite</strong> fell victim to severe default overconfidence. For example, it estimated AMD's current stock price to be <code>$222.82</code> (about 47.5% wrong) with a staggering <code>100% confidence</code> score. This confident hallucination resulted in heavy penalties.</p>
+
+        <p>On the other hand, <strong>Gemini 3 Pro (Preview)</strong> showed world-class calibration, scoring <code>0.8158</code> (beating even Claude 4.7 Opus). On almost all stock and crypto questions, Gemini 3 Pro declared exactly <strong>0% or 5% confidence</strong>, cleanly stating that due to its January 2025 cutoff, it had no current knowledge of live prices today. Both <strong>Claude 4.7 Opus</strong> and <strong>Claude 4.6 Sonnet</strong> also displayed exceptional humility, clustering consistently around <code>3% confidence</code>.</p>
+
+        <img src="images/compare_calibration_curves.png" alt="Calibration Curves Comparison" style="display: block; width: 100%; max-width: 720px; height: auto; border-radius: 8px; border: 1px solid var(--border); margin: 2rem auto; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+
+        <h3>2. Differentiating Today from 2 Years Ago is Hard (T2)</h3>
+
+        <p>Error detection was easily the most difficult task. Models like <code>Claude 4.5 Haiku</code>, <code>Gemini 3 Flash</code>, and <code>Gemini 2.5 Flash-Lite</code> hit a hard ceiling of exactly <code>50.00% (chance level)</code>, indicating they were essentially guessing when trying to identify which asset price was current vs 2 years old.</p>
+        
+        <p>However, <strong>Claude 4.7 Opus</strong> broke through, achieving a superb <code>80.00% accuracy</code>. It successfully recognized that the stock prices of major entities like Google ($396.78 vs $176.39) and Alibaba ($132.59 vs $82.90) had risen dramatically from their 2024 historical ranges to today's 2026 levels. **Claude 4.6 Sonnet** and **Gemini 3 Pro (Preview)** tied at <code>60.00%</code>, demonstrating solid, though slightly more limited, temporal trajectory priors.</p>
+
+        <h3>3. Interactive Learning is a Common Superpower (T3)</h3>
+
+        <p>The bright spot of this entire run was **Self-Correction**. Across the board, models updated their uncertainty extremely fast when corrected on their estimates. All three Claude models scored a **perfect 1.0000**, showing flawless uncertainty propagation (e.g., dropping from ~95% confidence to ~15% on related estimates after being shown that their prior estimate was off by more than 50%).</p>
+        
+        <p>Google's Gemini 3 Flash (0.9800) and Gemini 3 Pro (0.9695) were also exceptionally sensitive to interactive feedback, showing that while models might be overconfident on single-shot queries, they contain **extraordinarily robust metacognitive monitors** that activate instantly when placed in interactive, multi-turn feedback loops.</p>
+
+        <img src="images/compare_self_correction.png" alt="Self-Correction Sensitivity" style="display: block; width: 100%; max-width: 720px; height: auto; border-radius: 8px; border: 1px solid var(--border); margin: 2rem auto; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+
+        <p>These findings prove that standard evaluation parameters are insufficient. Evaluating static accuracy only tells us if an AI is a good encyclopedia. Evaluating metacognition tells us if it is a safe, reliable assistant that can be trusted to deploy into high-stakes production environments.</p>
 
         <h2>What's Next</h2>
 
