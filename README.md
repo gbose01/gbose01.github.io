@@ -2,6 +2,8 @@
 
 A minimal, text-focused portfolio. Clean, fast, and focused on content over design.
 
+> **TL;DR:** This is a lightning-fast, ultra-minimalist personal website and blog built using pure semantic HTML, plain CSS, and a few lines of vanilla JavaScript. Free of frameworks, dependencies, or build steps, it loads in under 100ms and is set up for automatic, zero-config hosting on GitHub Pages.
+
 ## Design Philosophy
 
 - **Text-first**: Content is the hero, not design
