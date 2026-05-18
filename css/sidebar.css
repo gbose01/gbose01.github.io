@@ -204,10 +204,6 @@ h1 {
     letter-spacing: 0.1px;
 }
 
-.hero-credentials strong {
-    color: var(--text);
-    font-weight: 600;
-}
 
 .divider-dot {
     color: var(--text-muted);
