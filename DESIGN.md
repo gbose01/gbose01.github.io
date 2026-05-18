@@ -61,8 +61,8 @@ Uses CSS custom properties (see `css/sidebar.css`):
 
 ### 1.1. Editorial Typography Credentials Layout
 - Stripped away visual badge capsule chips and borders entirely to prevent shape overload with the navigation bar.
-- Merged primary Google professional roles and GSB/UChicago academic achievements into a clean, single-line narrative paragraph (`.hero-credentials`) positioned underneath the static navbar.
-- Sized text elegantly at `13px` with muted tone (`var(--text-muted)`) and balanced inline separator dividers (`·`), letting the primary navigation dock capture 100% of visual focus.
+- Unified primary role (Google Search), work history (Google Cloud, Zillow, PayPal), and academic highlights (Stanford MBA, UChicago BS in Statistics & Economics) into a single, extremely punchy and high-density line (`.hero-credentials`) directly beneath the navigation capsule.
+- Sized text elegantly at `13px` with muted tone (`var(--text-muted)`), strong accent on current role, and balanced separators (`·` and `|`), letting the primary navigation dock capture 100% of visual focus.
 
 
 ### 2. Homepage Dual-Mode Project Catalog
