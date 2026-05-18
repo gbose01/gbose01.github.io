@@ -29,6 +29,39 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     document.body.appendChild(btn);
+
+    // Mobile Navigation Menu Toggle
+    var navMain = document.querySelector('.nav-main');
+    if (navMain) {
+        var menuBtn = document.createElement('button');
+        menuBtn.id = 'mobile-menu-toggle';
+        menuBtn.setAttribute('aria-label', 'Toggle navigation menu');
+        // Hamburger icon
+        menuBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>';
+        
+        menuBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            var isOpen = navMain.classList.contains('nav-open');
+            if (isOpen) {
+                navMain.classList.remove('nav-open');
+                menuBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>';
+            } else {
+                navMain.classList.add('nav-open');
+                // Close icon (X)
+                menuBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
+            }
+        });
+
+        // Close menu if clicking outside of it
+        document.addEventListener('click', function (e) {
+            if (navMain.classList.contains('nav-open') && !navMain.contains(e.target) && e.target !== menuBtn) {
+                navMain.classList.remove('nav-open');
+                menuBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>';
+            }
+        });
+
+        document.body.appendChild(menuBtn);
+    }
 });
 
 function getIcon(theme) {
