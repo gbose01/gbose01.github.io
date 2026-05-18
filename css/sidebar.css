@@ -382,7 +382,7 @@ h2 {
 .project {
     background: var(--bg-elevated);
     border: 1px solid var(--border);
-    padding: 22px 26px;
+    padding: 15px 18px;
     border-radius: 10px;
     transition: all 0.25s ease;
     position: relative;
@@ -415,7 +415,7 @@ h2 {
 .project h3 {
     font-size: 16px;
     font-weight: 500;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
     color: var(--text);
 }
 
@@ -429,10 +429,10 @@ h2 {
 }
 
 .project > p {
-    font-size: 14px;
+    font-size: 13.5px;
     color: var(--text-muted);
-    margin-bottom: 12px;
-    line-height: 1.6;
+    margin-bottom: 8px;
+    line-height: 1.55;
 }
 
 .meta {
@@ -581,7 +581,7 @@ h2 {
 .project-links {
     display: flex;
     gap: 8px;
-    margin-top: 14px;
+    margin-top: 10px;
     flex-wrap: wrap;
 }
 
@@ -592,7 +592,7 @@ h2 {
     font-size: 11px;
     font-weight: 600;
     text-decoration: none;
-    padding: 4px 10px;
+    padding: 3px 8px;
     border-radius: 5px;
     border: 1px solid var(--border);
     color: var(--text-muted);
@@ -699,8 +699,8 @@ h2 {
 .tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 12px;
+    gap: 5px;
+    margin-top: 8px;
 }
 
 .tag {
@@ -711,7 +711,7 @@ h2 {
     color: var(--text-muted);
     background: var(--bg-tertiary);
     border: 1px solid var(--border);
-    padding: 3px 8px;
+    padding: 2px 6px;
     border-radius: 4px;
 }
 
