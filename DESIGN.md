@@ -59,6 +59,12 @@ Uses CSS custom properties (see `css/sidebar.css`):
   - Icon colors use theme-sensitive custom property tokens: SKY BLUE (`--icon-projects`), AMBER GOLD (`--icon-job`), MINT GREEN (`--icon-writing`), PURPLE (`--icon-github`), BLUE (`--icon-linkedin`).
 - **Mobile Viewports (`< 600px`)**: Automatically transitions to a fixed hamburger menu toggler button on the top-left of the screen, which slides open a full-screen glassmorphic drawer overlay.
 
+### 1.1. Editorial Typography Credentials Layout
+- Stripped away visual badge capsule chips and borders entirely to prevent shape overload with the navigation bar.
+- Merged primary Google professional roles and GSB/UChicago academic achievements into a clean, single-line narrative paragraph (`.hero-credentials`) positioned underneath the static navbar.
+- Sized text elegantly at `13px` with muted tone (`var(--text-muted)`) and balanced inline separator dividers (`·`), letting the primary navigation dock capture 100% of visual focus.
+
+
 ### 2. Homepage Dual-Mode Project Catalog
 The Projects section on the homepage features a segmented toggle control allowing visitors to swap layout modes instantly:
 - **Spotlight View (Default)**: Displays visual cards of your top 5 featured projects. We optimized these card layouts to use **minimal vertical height** (padding `15px 18px`, paragraph `margin-bottom: 8px`, tag padding `2px 6px`, links `margin-top: 10px`).
