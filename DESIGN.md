@@ -51,11 +51,11 @@ Uses CSS custom properties (see `css/sidebar.css`):
 ## Premium Design & Interactive System (Implemented May 2026)
 
 ### 1. Global Static Capsule Navigation
-- **Desktop Viewports (`> 600px`)**: The `.nav-main` header is positioned statically directly underneath the `<h1>Gaurab Bose</h1>` heading container:
-  - CSS: `display: inline-flex; position: relative; margin-top: 20px; margin-bottom: 12px; flex-wrap: nowrap;`
+- **Desktop Viewports (`> 600px`)**: The `.nav-main` header is positioned statically directly underneath the `<p class="hero-statement">` subheader introduction container:
+  - CSS: `display: inline-flex; position: relative; margin-top: 0; margin-bottom: 32px; flex-wrap: nowrap;`
   - Styled as an elegant capsule pill containing custom SVG branding icons.
   - Reverted layout paddings back to `60px 24px` (releasing extra top margin buffers) to ensure natural flow.
-  - Links utilize a `white-space: nowrap;` property to guarantee multi-word titles (such as "Day Job") sit strictly on a single line.
+  - Links utilize an enforced `white-space: nowrap !important;` property to guarantee multi-word titles (such as "Day Job") sit strictly on a single line.
   - Icon colors use theme-sensitive custom property tokens: SKY BLUE (`--icon-projects`), AMBER GOLD (`--icon-job`), MINT GREEN (`--icon-writing`), PURPLE (`--icon-github`), BLUE (`--icon-linkedin`).
 - **Mobile Viewports (`< 600px`)**: Automatically transitions to a fixed hamburger menu toggler button on the top-left of the screen, which slides open a full-screen glassmorphic drawer overlay.
 
