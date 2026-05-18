@@ -43,7 +43,6 @@ Uses CSS custom properties (see `css/sidebar.css`):
 ### Layout
 
 - Grid-template layout on desktop (`1fr 320px` main content + sticky sidebar).
-- Top margin buffer: desktop pages (`.layout`) utilize a `100px` top padding gutter to ensure floating fixed header elements sit perfectly in the margins on page load without covering content or page titles.
 - Dark theme by default.
 - Responsive: hides sidebar on mobile viewports.
 
@@ -51,10 +50,12 @@ Uses CSS custom properties (see `css/sidebar.css`):
 
 ## Premium Design & Interactive System (Implemented May 2026)
 
-### 1. Global Floating Sticky Capsule Navigation
-- **Desktop Viewports (`> 600px`)**: The `.nav-main` header is rendered as a floating capsule sticky dock centered at the top of the viewport:
-  - CSS: `position: fixed; top: 24px; left: 50%; transform: translateX(-50%); z-index: 1000;`
-  - Styled as a high-fidelity capsule pill with a 16px backdrop blur filter and semi-transparent theme-sensitive backgrounds (Dark: `rgba(17, 17, 24, 0.75)`, Light: `rgba(242, 239, 233, 0.85)`).
+### 1. Global Static Capsule Navigation
+- **Desktop Viewports (`> 600px`)**: The `.nav-main` header is positioned statically directly underneath the `<h1>Gaurab Bose</h1>` heading container:
+  - CSS: `display: inline-flex; position: relative; margin-top: 20px; margin-bottom: 12px; flex-wrap: nowrap;`
+  - Styled as an elegant capsule pill containing custom SVG branding icons.
+  - Reverted layout paddings back to `60px 24px` (releasing extra top margin buffers) to ensure natural flow.
+  - Links utilize a `white-space: nowrap;` property to guarantee multi-word titles (such as "Day Job") sit strictly on a single line.
   - Icon colors use theme-sensitive custom property tokens: SKY BLUE (`--icon-projects`), AMBER GOLD (`--icon-job`), MINT GREEN (`--icon-writing`), PURPLE (`--icon-github`), BLUE (`--icon-linkedin`).
 - **Mobile Viewports (`< 600px`)**: Automatically transitions to a fixed hamburger menu toggler button on the top-left of the screen, which slides open a full-screen glassmorphic drawer overlay.
 
