@@ -21,6 +21,14 @@ html {
     --border-accent: rgba(245, 158, 11, 0.25);
     --green: #10B981;
     --green-dim: rgba(16, 185, 129, 0.1);
+
+    /* Premium Nav Icon Colors (Dark Theme) */
+    --icon-projects: #38BDF8; /* Electric blue */
+    --icon-job: #F59E0B;      /* Amber gold */
+    --icon-writing: #34D399;  /* Mint green */
+    --icon-github: #A78BFA;   /* Soft purple */
+    --icon-linkedin: #60A5FA; /* Bright blue */
+    --icon-twitter: #A1A1AA;  /* Sleek silver */
 }
 
 /* ─── Light Theme ────────────────────────────── */
@@ -37,6 +45,14 @@ html {
     --border-accent: rgba(217, 119, 6, 0.30);
     --green: #059669;
     --green-dim: rgba(5, 150, 105, 0.12);
+
+    /* Premium Nav Icon Colors (Light Theme) */
+    --icon-projects: #0284C7; /* Sky blue */
+    --icon-job: #D97706;      /* Amber gold */
+    --icon-writing: #059669;  /* Emerald green */
+    --icon-github: #6D28D9;   /* Deep purple */
+    --icon-linkedin: #0A66C2; /* LinkedIn brand blue */
+    --icon-twitter: #1F2937;  /* Dark slate */
 }
 
 body {
@@ -260,40 +276,76 @@ h1 {
 
 /* ─── Navigation ────────────────────────────── */
 .nav-main {
-    display: flex;
-    gap: 28px;
+    display: inline-flex;
+    align-items: center;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    padding: 5px 6px;
+    border-radius: 32px;
+    gap: 4px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     flex-wrap: wrap;
-    font-size: 14px;
+}
+
+[data-theme="light"] .nav-main {
+    box-shadow: 0 4px 20px rgba(26, 23, 20, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 .nav-main a {
     color: var(--text-muted);
     font-weight: 500;
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 24px;
     position: relative;
-    transition: color 0.2s ease;
-    padding-bottom: 2px;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    letter-spacing: 0.1px;
 }
 
-.nav-main a::after {
-    content: "";
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background: var(--accent);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.25s ease;
+.nav-main .nav-icon {
+    width: 14px;
+    height: 14px;
+    opacity: 0.65;
+    transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
 .nav-main a:hover {
     color: var(--text);
+    background: var(--bg-tertiary);
+    transform: translateY(-1px);
 }
 
-.nav-main a:hover::after {
-    transform: scaleX(1);
+.nav-main a:hover .nav-icon {
+    opacity: 1;
+    transform: scale(1.05);
 }
+
+.nav-main a.active {
+    color: var(--accent);
+    background: var(--accent-dim);
+    border: 1px solid var(--border-accent);
+    font-weight: 600;
+}
+
+.nav-main a.active .nav-icon {
+    opacity: 1;
+    color: var(--accent);
+}
+
+/* Premium Nav Icon Brand Colors */
+.nav-main a[href*="projects"] .nav-icon { color: var(--icon-projects); }
+.nav-main a[href*="work"] .nav-icon { color: var(--icon-job); }
+.nav-main a[href*="blog"] .nav-icon { color: var(--icon-writing); }
+.nav-main a[href*="github"] .nav-icon { color: var(--icon-github); }
+.nav-main a[href*="linkedin"] .nav-icon { color: var(--icon-linkedin); }
+.nav-main a[href*="twitter"] .nav-icon,
+.nav-main a[href*="x.com"] .nav-icon { color: var(--icon-twitter); }
 
 /* ─── Sections ──────────────────────────────── */
 .section {
@@ -1159,7 +1211,25 @@ h2 {
     }
 
     .nav-main {
-        gap: 20px;
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        border-radius: 16px;
+        padding: 8px;
+        gap: 4px;
+    }
+
+    .nav-main a {
+        flex: 1 1 auto;
+        justify-content: center;
+        padding: 8px 10px !important;
+        font-size: 12px !important;
+        gap: 4px !important;
+    }
+
+    .nav-main .nav-icon {
+        width: 12px;
+        height: 12px;
     }
 
     .project {
