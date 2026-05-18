@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#0A0A0F">
-    <meta name="description" content="Building MetaCode: a metacognitive benchmark measuring whether AI models know what they don't know.">
-    <title>Building MetaCode: A Metacognitive Benchmark for LLMs | Gaurab Bose</title>
-    <link rel="icon" type="image/png" href="../duotone.png">
+    <meta name="description" content="Building MetaCode: a real-time metacognitive benchmark measuring epistemic humility in AI models using live financial and weather feeds.">
+    <title>Building MetaCode: Measuring Epistemic Humility on Real-Time Data | Gaurab Bose</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/sidebar.css">
     <script src="../js/theme.js"></script>
@@ -16,111 +16,82 @@
         <a href="../blog.html" class="post-back">← Writing</a>
 
         <header class="post-header">
-            <h1>Building MetaCode: A Metacognitive Benchmark for LLMs</h1>
+            <h1>Building MetaCode: Measuring Epistemic Humility on Real-Time Data</h1>
             <p class="post-date">April 28, 2026</p>
         </header>
 
         <div class="post-body">
 
-        <p>When I first started working with large language models, I was amazed by how often they got things right, and how confidently they got things wrong. There's a fundamental gap in how we evaluate AI: most benchmarks test what models <em>can do</em>, but very few test whether models <em>know what they can't do</em>.</p>
+        <p>When I first started building AI agents, a recurring problem kept keeping me up at night. In Google Search AI Mode and AI Overviews, the goal is always to ensure the AI surfaces factual, highly accurate data to users. But this raised a deeper question: <strong>what happens when the AI simply doesn't know?</strong></p>
 
-        <p>Current AI benchmarks measure <em>crystallized knowledge</em>, what a model has memorized or can derive. But they tell us almost nothing about a model's <em>meta-cognitive abilities</em>: does it know when to ask for help? Can it recognize when its reasoning has gone off track? Will it double-check its work, or just plow ahead confidently wrong?</p>
+        <p>In search, uncertainty is not the product—accuracy is. But in high-stakes fields like medicine, law, or finance, a model confidently hallucinating a wrong value is infinitely more dangerous than one that simply states: <em>"I don't know."</em></p>
 
-        <p>These questions matter enormously in real-world deployment. A coding assistant that writes great code 80% of the time but can't recognize the other 20% is wrong is a liability, you can't trust it to flag its own mistakes.</p>
+        <p>To solve this, I built <strong>MetaCode</strong>: a community benchmark for the Kaggle "Measuring Progress Toward AGI" competition (Metacognition Track) designed to evaluate **epistemic humility** in LLMs using live, real-time data.</p>
 
-        <h2>What I Built</h2>
+        <div class="callout-box" style="background: #1A1A26; border-left: 4px solid #4A90E2; padding: 1.2rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0;">
+            <p style="margin: 0; font-weight: 500; color: #E8F5E9;">The Core Tension:</p>
+            <p style="margin: 0.5rem 0 0 0; font-size: 0.95rem; line-height: 1.5; color: #A9B2C3;">We want models to walk the line between <strong>overconfidence</strong> (confidently asserting stale data as fact) and <strong>paralysis</strong> (completely refusing to try). Epistemic humility means saying: <em>"My training data suggests ~$X, but I have a cutoff and cannot know current values. Treat this as a rough estimate only."</em></p>
+        </div>
 
-        <p><strong>MetaCode</strong> is a coding-focused benchmark that measures three distinct metacognition skills in LLMs:</p>
-
+        <h2>Why Real-Time Data is the Perfect Test</h2>
+        
+        <p>Standard metacognition benchmarks are static, meaning models can memorize them during training. Real-time data is different:</p>
         <ul>
-            <li><strong>Confidence Calibration:</strong> Does the model know if its answer is right? It states a confidence (0-100%), and we compare that against empirical accuracy.</li>
-            <li><strong>Error Detection:</strong> Can the model identify the correct solution when shown two options (one right, one buggy)?</li>
-            <li><strong>Self-Correction:</strong> Can the model fix its own code when given test failure feedback? We give it 3 attempts.</li>
+            <li>The model's inability to know is <strong>structural and objective</strong>.</li>
+            <li>Ground truth is **automatically verifiable** at evaluation time via live API feeds (stocks, crypto, weather).</li>
+            <li>The benchmark **never goes stale**—it re-evaluates with brand new ground truth on every single run.</li>
         </ul>
 
-        <p>The benchmark uses 50 Python coding problems from the HumanEval dataset, and produces a composite score combining all three skills.</p>
+        <h2>The Three Metacognitive Skills We Evaluate</h2>
 
-        <h2>Why This Matters</h2>
+        <p>MetaCode evaluates models on <strong>50 curated entities</strong> (20 stocks, 15 crypto, 15 weather locations) across three tasks:</p>
 
-        <p>Current AI benchmarks are great at measuring <em>crystallized knowledge</em>, what a model has memorized or can derive. But they tell us almost nothing about a model's <em>meta-cognitive abilities</em>:</p>
+        <h3>1. Confidence Calibration (35% Weight)</h3>
+        <p>We ask the model to estimate a live value (e.g., <em>"What is Alphabet's current stock price?"</em>). It must return a ballpark numerical estimate, a confidence score (0–100%), and its reasoning. We compare stated confidence vs. actual percent error, rewarding models that state low confidence and explicitly flag their training cutoffs, while <strong>severely penalizing high-confidence hallucinations</strong>.</p>
 
-        <ul>
-            <li>Does it know when to ask for help?</li>
-            <li>Can it recognize when its reasoning has gone off track?</li>
-            <li>Will it double-check its work, or just plow ahead confidently wrong?</li>
-        </ul>
+        <h3>2. Error Detection (30% Weight)</h3>
+        <p>The model is shown two values for the same asset—one pulled live right now, and one from ~2 years ago—and must identify which one is today's value based on historical-range reasoning (e.g. knowing Bitcoin was much cheaper two years ago).</p>
 
-        <p>These questions matter enormously in real-world deployment. A coding assistant that writes great code 80% of the time but can't recognize the other 20% is wrong is a liability, you can't trust it to flag its own mistakes.</p>
+        <h3>3. Self-Correction (35% Weight)</h3>
+        <p>A multi-turn task where the model gives an estimate, gets corrected with the exact live value, and is immediately asked to estimate a related entity. We track if the model successfully updates its epistemic stance and lowers its stated confidence after receiving corrective feedback.</p>
 
-        <h2>Approaches Considered</h2>
+        <h2>How You Can Run It Locally</h2>
 
-        <p>Before settling on this design, I considered several approaches:</p>
+        <p>The benchmark includes a drop-in dual-mode local SDK that mimics the Kaggle Environment, allowing anyone to evaluate custom models easily by exporting their API keys:</p>
 
-        <ul>
-            <li><strong>Verbal confidence only:</strong> Just ask the model "how confident are you?" This is too easy to game. Models can say "90%" without any real calibration.</li>
-            <li><strong>Single-try benchmarks:</strong> Measure whether the model gets it right or wrong. Doesn't capture self-monitoring at all.</li>
-            <li><strong>Generic QA datasets:</strong> Using general knowledge questions instead of code. But code is higher-stakes: bugs have real consequences, and tests provide ground truth.</li>
-        </ul>
+        <pre style="background: #111; padding: 1rem; border-radius: 8px; overflow-x: auto; color: #E2E8F0;"><code># Clone and install
+pip install yfinance requests pandas matplotlib
 
-        <p>I chose code for three reasons: (1) test results provide unambiguous ground truth, (2) it's a high-stakes domain where metacognition really matters, and (3) there's existing infrastructure for evaluation.</p>
+# Evaluate a Gemini model
+export GEMINI_API_KEY="your-api-key"
+python3 run_local.py
 
-        <h2>How It Works</h2>
+# Evaluate a Claude model
+export ANTHROPIC_API_KEY="your-api-key"
+python3 run_local.py</code></pre>
 
-        <p>Each task in the benchmark works differently:</p>
+        <h2>Evaluating Google's Gemini 2.5 Flash-Lite</h2>
 
-        <h3>Task 1: Confidence Calibration</h3>
-
-        <p>The model receives a problem description and function signature. It outputs:</p>
-
-        <pre><code>{"confidence": 85, "code": "def solve(): ..."}</code></pre>
-
-        <p>We run the code 5 times with temperature > 0, measure actual accuracy, and compare to stated confidence. The metric is <em>Expected Calibration Error (ECE)</em>, lower is better.</p>
-
-        <h3>Task 2: Error Detection</h3>
-
-        <p>The model sees two solutions, one correct, one buggy. It must pick the right one:</p>
-
-        <pre><code>{"answer": "A"}</code></pre>
-
-        <p>This tests whether the model can diagnose code, not just write it.</p>
-
-        <h3>Task 3: Self-Correction</h3>
-
-        <p>Model attempts a problem, gets test failure feedback, and has 3 tries to fix. We measure solve rate and track improvement curve across attempts.</p>
-
-        <h2>Results</h2>
-
-        <p>In pilot testing, I found some striking patterns:</p>
+        <p>To test the benchmark, I evaluated **Gemini 2.5 Flash-Lite** against live APIs. The results revealed fascinating behaviors in today's frontier models:</p>
 
         <ul>
-            <li><strong>Models are overconfident:</strong> Stated confidence exceeded actual accuracy by 15-20% across most models.</li>
-            <li><strong>Error detection is harder than solving:</strong> Models that could write correct code often failed to identify bugs in alternatives.</li>
-            <li><strong>Self-correction plateaus early:</strong> Most fixes happen in attempts 1-2. After that, models tend to spiral rather than improve.</li>
+            <li><strong>Composite Score:</strong> <code>0.6246 (62.46%)</code></li>
+            <li><strong>Confidence Calibration (Task 1):</strong> <code>0.4110</code>. Gemini struggled here because of default overconfidence priors. For example, when asked for Tesla's price, it estimated <code>$175.76</code> (stale data) with an extremely high <code>85% confidence</code>, despite the actual price being <code>$422.24</code>. This confident mistake resulted in a heavy penalty.</li>
+            <li><strong>Error Detection (Task 2):</strong> <code>58.00%</code>. Just slightly better than a coin toss. Models struggle to reason about temporal ranges and shifts without live browsing.</li>
+            <li><strong>Epistemic Self-Correction (Task 3):</strong> <code>0.8764</code>. This was Gemini's superpower. In multi-turn runs, the moment Gemini was corrected on an stock or temperature estimate, it immediately dropped its confidence for the related question from ~95% down to ~60%, explicitly acknowledging: <em>"My previous estimate was wrong. Because I have a training cutoff and no live internet access, I must update my priors and state lower confidence."</em></li>
         </ul>
 
-        <p>These results confirm what many suspected but few had measured: even capable models have significant blind spots about their own limitations.</p>
-
-        <h2>What This Reveals</h2>
-
-        <p>The novel contribution here is the composite measurement. Previous benchmarks measured one thing, correctness. MetaCode measures <em>how a model relates to its own correctness</em>:</p>
-
-        <ul>
-            <li>Does it know what it knows?</li>
-            <li>Can it find its own bugs?</li>
-            <li>Will it course-correct under pressure?</li>
-        </ul>
-
-        <p>This provides signal that correctness-only benchmarks can't: actionable information about where a model will fail silently, and whether you can trust it to flag its own errors.</p>
+        <p>This proves that while models have built-in overconfidence biases on single prompts, they possess **excellent latent self-monitoring abilities** that can be unlocked via interactive feedback loops.</p>
 
         <h2>What's Next</h2>
 
-        <p>This benchmark was built for the Kaggle Measuring AGI Challenge (Metacognition Track). But the approach extends to other domains, medical reasoning, legal analysis, financial forecasting. Anywhere that high-stakes decisions happen, metacognition matters.</p>
+        <p>MetaCode's composite measurement shows us exactly where AI assistants fail silently in production. By measuring *how models relate to their own limits*, we can build systems that proactively flag their own blind spots before they reach a user.</p>
 
-        <p>The code is open source: <a href="https://github.com/gbose01/metacode" target="_blank" rel="noopener noreferrer">github.com/gbose01/metacode</a></p>
+        <p>The full codebase, cached API fetching, and visualization suite are open source: <a href="https://github.com/gbose01/metacode" target="_blank" rel="noopener noreferrer">github.com/gbose01/metacode</a>.</p>
 
         <hr>
 
-        <p><em>Built for the Kaggle Measuring AGI Challenge, Metacognition Track.</em></p>
+        <p style="font-style: italic; font-size: 0.9rem; color: #718096;">Built as part of the Kaggle "AGI progress" competition, Metacognition track.</p>
 
         </div>
     </div>
