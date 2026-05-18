@@ -200,6 +200,15 @@ h1 {
     color: var(--text-muted);
     line-height: 1.6;
     margin-top: 0;
+    margin-bottom: 8px;
+    letter-spacing: 0.1px;
+}
+
+.hero-education {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-top: 0;
     margin-bottom: 0;
     letter-spacing: 0.1px;
 }
