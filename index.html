@@ -15,6 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/sidebar.css">
     <script src="js/theme.js"></script>
+    <script src="js/projects.js"></script>
     <style>
         .layout {
             max-width: 1080px;
@@ -59,6 +60,28 @@
 
                     <p class="hero-formerly"><strong>Formerly</strong> · Google Cloud &nbsp;·&nbsp; PayPal &nbsp;·&nbsp; Zillow</p>
 
+                    <div class="builder-dashboard">
+                        <a href="#projects" class="metric-card">
+                            <span class="metric-value">10+</span>
+                            <span class="metric-label">Shipped Projects</span>
+                        </a>
+                        <div class="metric-divider"></div>
+                        <a href="#projects" class="metric-card">
+                            <span class="metric-value">5+</span>
+                            <span class="metric-label">AI Collaborations</span>
+                        </a>
+                        <div class="metric-divider"></div>
+                        <a href="#writing" class="metric-card">
+                            <span class="metric-value">20+</span>
+                            <span class="metric-label">Articles Published</span>
+                        </a>
+                        <div class="metric-divider"></div>
+                        <a href="projects.html" class="metric-card">
+                            <span class="metric-value">8+</span>
+                            <span class="metric-label">Core Tech Stacks</span>
+                        </a>
+                    </div>
+
                     <nav class="nav-main">
                         <a href="projects.html">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
@@ -87,109 +110,253 @@
 
             <!-- ─── PROJECTS ─── -->
             <section class="section" id="projects">
-                <h2>Projects</h2>
+                <div class="section-header-with-toggle">
+                    <h2>Projects</h2>
+                    <div class="project-view-toggle">
+                        <button class="toggle-btn active" data-view="featured" aria-label="Spotlight Featured Projects">Spotlight</button>
+                        <button class="toggle-btn" data-view="compact" aria-label="Compact Project Vault Directory">Compact Vault</button>
+                    </div>
+                </div>
 
-                <!-- Homepage: five spotlight projects; rest on projects.html. -->
-                <div class="projects-list">
+                <!-- Featured Showcase View -->
+                <div id="projects-featured-view" class="fade-in-visible">
+                    <div class="projects-list">
 
-                    <article class="project">
-                        <div class="project-header">
-                            <h3><a href="https://github.com/gbose01/grove_keepers_game" target="_blank" rel="noopener noreferrer">Grove Keepers</a><span class="project-year">2026</span></h3>
-                            <div class="project-header-actions">
-                                <span class="building-badge"><span class="pulse-dot" style="width:6px;height:6px;"></span> Currently building</span>
+                        <article class="project">
+                            <div class="project-header">
+                                <h3><a href="https://github.com/gbose01/grove_keepers_game" target="_blank" rel="noopener noreferrer">Grove Keepers</a><span class="project-year">2026</span></h3>
+                                <div class="project-header-actions">
+                                    <span class="building-badge"><span class="pulse-dot" style="width:6px;height:6px;"></span> Currently building</span>
+                                    <span class="ai-badge">⚡ Built with AI agents</span>
+                                </div>
+                            </div>
+                            <p>Tower-defense loop in Godot 4: elemental totems on concentric rings, waves, seeds and upgrades. Built with Claude Code, Claude Design, and Cursor alongside Godot; playable web soon while the repo stays public.</p>
+                            <div class="tags">
+                                <span class="tag">Godot 4</span>
+                                <span class="tag">GDScript</span>
+                                <span class="tag">Claude Code</span>
+                                <span class="tag">Claude Design</span>
+                                <span class="tag">Cursor</span>
+                                <span class="tag">Game design</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/gbose01/grove_keepers_game" class="project-link" target="_blank" rel="noopener noreferrer">🔗 GitHub</a>
+                                <a href="blog/building-grove-keepers.html" class="project-link project-link-post">✍️ Blog post</a>
+                            </div>
+                        </article>
+
+                        <article class="project">
+                            <div class="project-header">
+                                <h3><a href="https://github.com/gbose01/metacode" target="_blank" rel="noopener noreferrer">MetaCode</a><span class="project-year">2026</span></h3>
+                                <div class="project-header-actions">
+                                    <span class="building-badge"><span class="pulse-dot" style="width:6px;height:6px;"></span> Currently building</span>
+                                    <span class="ai-badge">⚡ Built with AI agents</span>
+                                </div>
+                            </div>
+                            <p>A metacognitive coding benchmark measuring confidence calibration, error detection, and self-correction in frontier models. Built for the Kaggle AGI Challenge.</p>
+                            <div class="tags">
+                                <span class="tag">Python</span>
+                                <span class="tag">LLM Evaluation</span>
+                                <span class="tag">Metacognition</span>
+                                <span class="tag">Kaggle AGI</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/gbose01/metacode" class="project-link" target="_blank" rel="noopener noreferrer">🔗 GitHub</a>
+                                <a href="blog/2026-04-28-metacode-benchmark.html" class="project-link project-link-post">✍️ Blog post</a>
+                            </div>
+                        </article>
+
+                        <article class="project">
+                            <div class="project-header">
+                                <h3><a href="https://github.com/gbose01/LLM-cost-tool" target="_blank" rel="noopener noreferrer">LLM Cost Tool</a><span class="project-year">2026</span></h3>
                                 <span class="ai-badge">⚡ Built with AI agents</span>
                             </div>
-                        </div>
-                        <p>Tower-defense loop in Godot 4: elemental totems on concentric rings, waves, seeds and upgrades. Built with Claude Code, Claude Design, and Cursor alongside Godot; playable web soon while the repo stays public.</p>
-                        <div class="tags">
-                            <span class="tag">Godot 4</span>
-                            <span class="tag">GDScript</span>
-                            <span class="tag">Claude Code</span>
-                            <span class="tag">Claude Design</span>
-                            <span class="tag">Cursor</span>
-                            <span class="tag">Game design</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/gbose01/grove_keepers_game" class="project-link" target="_blank" rel="noopener noreferrer">🔗 GitHub</a>
-                            <a href="blog/building-grove-keepers.html" class="project-link project-link-post">✍️ Blog post</a>
-                        </div>
-                    </article>
+                            <p>Real-time cost observability dashboard for LLM API usage, tracks spend, latency, and token burn across sessions.</p>
+                            <div class="tags">
+                                <span class="tag">SQLite</span>
+                                <span class="tag">Node.js</span>
+                                <span class="tag">Observability</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/gbose01/LLM-cost-tool" class="project-link" target="_blank" rel="noopener noreferrer">🔗 GitHub</a>
+                                <a href="blog/2026-03-15-cost-observability-tool.html" class="project-link project-link-post">✍️ Blog post</a>
+                            </div>
+                        </article>
 
-                    <article class="project">
-                        <div class="project-header">
-                            <h3><a href="https://github.com/gbose01/metacode" target="_blank" rel="noopener noreferrer">MetaCode</a><span class="project-year">2026</span></h3>
-                            <div class="project-header-actions">
-                                <span class="building-badge"><span class="pulse-dot" style="width:6px;height:6px;"></span> Currently building</span>
+                        <article class="project">
+                            <div class="project-header">
+                                <h3><a href="https://github.com/gbose01/portradar" target="_blank" rel="noopener noreferrer">PortRadar</a><span class="project-year">2026</span></h3>
                                 <span class="ai-badge">⚡ Built with AI agents</span>
                             </div>
-                        </div>
-                        <p>A metacognitive coding benchmark measuring confidence calibration, error detection, and self-correction in frontier models. Built for the Kaggle AGI Challenge.</p>
-                        <div class="tags">
-                            <span class="tag">Python</span>
-                            <span class="tag">LLM Evaluation</span>
-                            <span class="tag">Metacognition</span>
-                            <span class="tag">Kaggle AGI</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/gbose01/metacode" class="project-link" target="_blank" rel="noopener noreferrer">🔗 GitHub</a>
-                            <a href="blog/2026-04-28-metacode-benchmark.html" class="project-link project-link-post">✍️ Blog post</a>
-                        </div>
-                    </article>
+                            <p>Terminal UI that unifies host processes and Docker container ports in a single view. Idea to shipped in one afternoon.</p>
+                            <div class="tags">
+                                <span class="tag">Node.js</span>
+                                <span class="tag">TUI</span>
+                                <span class="tag">Docker</span>
+                                <span class="tag">Systems</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/gbose01/portradar" class="project-link" target="_blank" rel="noopener noreferrer">🔗 GitHub</a>
+                                <a href="blog/building-portradar-ai.html" class="project-link project-link-post">✍️ Blog post</a>
+                            </div>
+                        </article>
 
-                    <article class="project">
-                        <div class="project-header">
-                            <h3><a href="https://github.com/gbose01/LLM-cost-tool" target="_blank" rel="noopener noreferrer">LLM Cost Tool</a><span class="project-year">2026</span></h3>
-                            <span class="ai-badge">⚡ Built with AI agents</span>
-                        </div>
-                        <p>Real-time cost observability dashboard for LLM API usage, tracks spend, latency, and token burn across sessions.</p>
-                        <div class="tags">
-                            <span class="tag">SQLite</span>
-                            <span class="tag">Node.js</span>
-                            <span class="tag">Observability</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/gbose01/LLM-cost-tool" class="project-link" target="_blank" rel="noopener noreferrer">🔗 GitHub</a>
-                            <a href="blog/2026-03-15-cost-observability-tool.html" class="project-link project-link-post">✍️ Blog post</a>
-                        </div>
-                    </article>
+                        <article class="project">
+                            <div class="project-header">
+                                <h3><a href="https://github.com/gbose01/rag-paper-summarizer" target="_blank" rel="noopener noreferrer">RAG Paper Summarizer</a><span class="project-year">2024</span></h3>
+                            </div>
+                            <p>Retrieval-augmented generation pipeline for extracting structured insights from academic papers. Beats naive summarization by grounding responses in retrieved chunks.</p>
+                            <div class="tags">
+                                <span class="tag">RAG</span>
+                                <span class="tag">NLP</span>
+                                <span class="tag">Python</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/gbose01/rag-paper-summarizer" class="project-link" target="_blank" rel="noopener noreferrer">🔗 GitHub</a>
+                            </div>
+                        </article>
 
-                    <article class="project">
-                        <div class="project-header">
-                            <h3><a href="https://github.com/gbose01/portradar" target="_blank" rel="noopener noreferrer">PortRadar</a><span class="project-year">2026</span></h3>
-                            <span class="ai-badge">⚡ Built with AI agents</span>
-                        </div>
-                        <p>Terminal UI that unifies host processes and Docker container ports in a single view. Idea to shipped in one afternoon.</p>
-                        <div class="tags">
-                            <span class="tag">Node.js</span>
-                            <span class="tag">TUI</span>
-                            <span class="tag">Docker</span>
-                            <span class="tag">Systems</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/gbose01/portradar" class="project-link" target="_blank" rel="noopener noreferrer">🔗 GitHub</a>
-                            <a href="blog/building-portradar-ai.html" class="project-link project-link-post">✍️ Blog post</a>
-                        </div>
-                    </article>
+                    </div>
+                </div>
 
-                    <article class="project">
-                        <div class="project-header">
-                            <h3><a href="https://github.com/gbose01/rag-paper-summarizer" target="_blank" rel="noopener noreferrer">RAG Paper Summarizer</a><span class="project-year">2024</span></h3>
+                <!-- Compact Vault Directory View -->
+                <div id="projects-compact-view" style="display: none;">
+                    <div class="compact-directory">
+                        <div class="compact-row compact-header-row">
+                            <span class="c-year">Year</span>
+                            <span class="c-title">Project</span>
+                            <span class="c-tech">Core Technologies</span>
+                            <span class="c-status">Status</span>
+                            <span class="c-links">Links</span>
                         </div>
-                        <p>Retrieval-augmented generation pipeline for extracting structured insights from academic papers. Beats naive summarization by grounding responses in retrieved chunks.</p>
-                        <div class="tags">
-                            <span class="tag">RAG</span>
-                            <span class="tag">NLP</span>
-                            <span class="tag">Python</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/gbose01/rag-paper-summarizer" class="project-link" target="_blank" rel="noopener noreferrer">🔗 GitHub</a>
-                        </div>
-                    </article>
 
+                        <div class="compact-row">
+                            <span class="c-year">2026</span>
+                            <span class="c-title"><a href="https://github.com/gbose01/grove_keepers_game" target="_blank" rel="noopener noreferrer">Grove Keepers</a></span>
+                            <span class="c-tech">Godot 4 · GDScript · Game design</span>
+                            <span class="c-status">
+                                <span class="building-badge"><span class="pulse-dot" style="width:5px;height:5px;"></span> Building</span>
+                                <span class="ai-badge">⚡ AI</span>
+                            </span>
+                            <span class="c-links">
+                                <a href="https://github.com/gbose01/grove_keepers_game" target="_blank" rel="noopener noreferrer">Git</a> · 
+                                <a href="blog/building-grove-keepers.html">Blog</a>
+                            </span>
+                        </div>
+
+                        <div class="compact-row">
+                            <span class="c-year">2026</span>
+                            <span class="c-title"><a href="https://github.com/gbose01/metacode" target="_blank" rel="noopener noreferrer">MetaCode</a></span>
+                            <span class="c-tech">Python · LLM Evaluation · Kaggle AGI</span>
+                            <span class="c-status">
+                                <span class="building-badge"><span class="pulse-dot" style="width:5px;height:5px;"></span> Building</span>
+                                <span class="ai-badge">⚡ AI</span>
+                            </span>
+                            <span class="c-links">
+                                <a href="https://github.com/gbose01/metacode" target="_blank" rel="noopener noreferrer">Git</a> · 
+                                <a href="blog/2026-04-28-metacode-benchmark.html">Blog</a>
+                            </span>
+                        </div>
+
+                        <div class="compact-row">
+                            <span class="c-year">2026</span>
+                            <span class="c-title"><a href="https://github.com/gbose01/LLM-cost-tool" target="_blank" rel="noopener noreferrer">LLM Cost Tool</a></span>
+                            <span class="c-tech">SQLite · Node.js · Observability</span>
+                            <span class="c-status">
+                                <span class="ai-badge">⚡ AI</span>
+                            </span>
+                            <span class="c-links">
+                                <a href="https://github.com/gbose01/LLM-cost-tool" target="_blank" rel="noopener noreferrer">Git</a> · 
+                                <a href="blog/2026-03-15-cost-observability-tool.html">Blog</a>
+                            </span>
+                        </div>
+
+                        <div class="compact-row">
+                            <span class="c-year">2026</span>
+                            <span class="c-title"><a href="https://github.com/gbose01/portradar" target="_blank" rel="noopener noreferrer">PortRadar</a></span>
+                            <span class="c-tech">Node.js · TUI · Docker · Systems</span>
+                            <span class="c-status">
+                                <span class="ai-badge">⚡ AI</span>
+                            </span>
+                            <span class="c-links">
+                                <a href="https://github.com/gbose01/portradar" target="_blank" rel="noopener noreferrer">Git</a> · 
+                                <a href="blog/building-portradar-ai.html">Blog</a>
+                            </span>
+                        </div>
+
+                        <div class="compact-row">
+                            <span class="c-year">2024</span>
+                            <span class="c-title"><a href="https://github.com/gbose01/rag-paper-summarizer" target="_blank" rel="noopener noreferrer">RAG Summarizer</a></span>
+                            <span class="c-tech">RAG · NLP · Python</span>
+                            <span class="c-status">-</span>
+                            <span class="c-links">
+                                <a href="https://github.com/gbose01/rag-paper-summarizer" target="_blank" rel="noopener noreferrer">Git</a>
+                            </span>
+                        </div>
+
+                        <div class="compact-row">
+                            <span class="c-year">2024</span>
+                            <span class="c-title"><a href="https://github.com/gbose01/First-Game" target="_blank" rel="noopener noreferrer">First Game</a></span>
+                            <span class="c-tech">Godot · GDScript · Game Dev</span>
+                            <span class="c-status">-</span>
+                            <span class="c-links">
+                                <a href="https://github.com/gbose01/First-Game" target="_blank" rel="noopener noreferrer">Git</a>
+                            </span>
+                        </div>
+
+                        <div class="compact-row">
+                            <span class="c-year">2021</span>
+                            <span class="c-title"><a href="https://github.com/gbose01/mynt-nft" target="_blank" rel="noopener noreferrer">Mynt NFT</a></span>
+                            <span class="c-tech">Solidity · JavaScript · Blockchain</span>
+                            <span class="c-status">
+                                <span class="handcoded-badge">⌨️ Hand</span>
+                            </span>
+                            <span class="c-links">
+                                <a href="https://github.com/gbose01/mynt-nft" target="_blank" rel="noopener noreferrer">Git</a> · 
+                                <a href="blog/mynt-nft.html">Blog</a>
+                            </span>
+                        </div>
+
+                        <div class="compact-row">
+                            <span class="c-year">2018</span>
+                            <span class="c-title"><a href="https://github.com/gbose01/Optimized-Cricket-Fantasy-League-Team" target="_blank" rel="noopener noreferrer">Cricket Optimizer</a></span>
+                            <span class="c-tech">R · Linear Programming · Sports</span>
+                            <span class="c-status">
+                                <span class="handcoded-badge">⌨️ Hand</span>
+                            </span>
+                            <span class="c-links">
+                                <a href="https://github.com/gbose01/Optimized-Cricket-Fantasy-League-Team" target="_blank" rel="noopener noreferrer">Git</a>
+                            </span>
+                        </div>
+
+                        <div class="compact-row">
+                            <span class="c-year">2018</span>
+                            <span class="c-title"><a href="https://github.com/gbose01/InvestAI" target="_blank" rel="noopener noreferrer">InvestAI</a></span>
+                            <span class="c-tech">ML · Finance · R · Clustering</span>
+                            <span class="c-status">
+                                <span class="handcoded-badge">⌨️ Hand</span>
+                            </span>
+                            <span class="c-links">
+                                <a href="https://github.com/gbose01/InvestAI" target="_blank" rel="noopener noreferrer">Git</a>
+                            </span>
+                        </div>
+
+                        <div class="compact-row">
+                            <span class="c-year">2018</span>
+                            <span class="c-title"><a href="https://github.com/gbose01/Fraud-Detection" target="_blank" rel="noopener noreferrer">Fraud Detection</a></span>
+                            <span class="c-tech">XGBoost · Python · Security</span>
+                            <span class="c-status">
+                                <span class="handcoded-badge">⌨️ Hand</span>
+                            </span>
+                            <span class="c-links">
+                                <a href="https://github.com/gbose01/Fraud-Detection" target="_blank" rel="noopener noreferrer">Git</a>
+                            </span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="section-footer">
-                    <a href="projects.html" class="show-more">All projects →</a>
+                    <a href="projects.html" class="show-more">All projects (Interactive Directory) →</a>
                 </div>
             </section>
 
@@ -275,7 +442,7 @@
                 <span class="sidebar-trait">Open source enthusiast</span>
                 <span class="sidebar-trait">AI agent herder</span>
             </div>
-            <div class="sidebar-section">
+            <div class="sidebar-section" id="writing">
                 <p class="sidebar-title">Recent writing</p>
                 <div class="sidebar-writing">
 
