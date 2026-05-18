@@ -137,7 +137,7 @@ a:hover {
 
 /* ─── Hero ──────────────────────────────────── */
 .hero {
-    padding: 0 0 56px;
+    padding: 0 0 20px;
 }
 
 .hero-eyebrow {
@@ -200,7 +200,7 @@ h1 {
     color: var(--text-muted);
     line-height: 1.6;
     margin-top: 0;
-    margin-bottom: 36px;
+    margin-bottom: 0;
     letter-spacing: 0.1px;
 }
 
