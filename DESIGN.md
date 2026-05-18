@@ -52,7 +52,7 @@ Uses CSS custom properties (see `css/sidebar.css`):
 
 ### 1. Global Static Capsule Navigation
 - **Desktop Viewports (`> 600px`)**: The `.nav-main` header is positioned statically directly underneath the `<p class="hero-statement">` subheader introduction container:
-  - CSS: `display: inline-flex; position: relative; margin-top: 0; margin-bottom: 32px; flex-wrap: nowrap;`
+  - CSS: `display: inline-flex; position: relative; margin-top: 0; margin-bottom: 36px; flex-wrap: nowrap;`
   - Styled as an elegant capsule pill containing custom SVG branding icons.
   - Reverted layout paddings back to `60px 24px` (releasing extra top margin buffers) to ensure natural flow.
   - Links utilize an enforced `white-space: nowrap !important;` property to guarantee multi-word titles (such as "Day Job") sit strictly on a single line.
@@ -63,6 +63,7 @@ Uses CSS custom properties (see `css/sidebar.css`):
 - Stripped away visual badge capsule chips and borders entirely to prevent shape overload with the navigation bar.
 - Unified primary role (Google Search), work history (Google Cloud, Zillow, PayPal), and academic highlights (Stanford MBA, UChicago BS in Statistics & Economics) into a single, extremely punchy and high-density line (`.hero-credentials`) directly beneath the navigation capsule.
 - Sized text elegantly at `13px` with muted tone (`var(--text-muted)`), strong accent on current role, and fully consistent custom-styled bold separators (`.divider-dot` at `font-weight: 700`) throughout the line, letting the primary navigation dock capture 100% of visual focus.
+- Fine-tuned spacing to avoid whitespace gaps on desktop and mobile: `.hero` bottom padding is reduced to `20px`, and `.hero-credentials` bottom margin is set to `0`, ensuring a perfectly balanced `76px` total vertical gap before the PROJECTS section header text begins.
 
 
 ### 2. Homepage Dual-Mode Project Catalog
