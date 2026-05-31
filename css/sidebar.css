@@ -641,7 +641,19 @@ h2 {
 }
 
 .project-header h3 {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
     margin-bottom: 0;
+}
+
+.project-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    flex-shrink: 0;
+    object-fit: contain;
 }
 
 .project-header-actions {
@@ -807,6 +819,14 @@ h2 {
     margin-bottom: 48px;
     padding-bottom: 32px;
     border-bottom: 1px solid var(--border);
+}
+
+.post-project-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    display: block;
 }
 
 .post-header h1 {
