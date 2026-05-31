@@ -80,14 +80,34 @@ body {
         gap: 40px;
     }
 
+    main {
+        display: contents;
+    }
+
+    .hero {
+        order: 1;
+    }
+
+    #lab {
+        order: 2;
+    }
+
     .sidebar {
-        order: -1;
+        order: 3;
         position: relative;
         top: 0;
         background: var(--bg-elevated);
         padding: 24px;
         border-radius: 12px;
         border: 1px solid var(--border);
+    }
+
+    #work {
+        order: 4;
+    }
+
+    .footer {
+        order: 5;
     }
 
     .sidebar-list {
@@ -1175,31 +1195,6 @@ h2 {
 .work-subrole + .work-subrole {
     padding-top: 14px;
     border-top: 1px solid var(--border);
-}
-
-/* ─── Mobile ─────────────────────────────────── */
-@media (max-width: 900px) {
-    .sidebar {
-        order: 2;
-        position: relative;
-        top: 0;
-        background: var(--bg-elevated);
-        padding: 24px;
-        border-radius: 12px;
-        border: 1px solid var(--border);
-    }
-
-    .sidebar-list {
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 12px;
-    }
-
-    .sidebar-item {
-        flex-direction: row;
-        align-items: center;
-        gap: 8px;
-    }
 }
 
 @media (max-width: 600px) {
