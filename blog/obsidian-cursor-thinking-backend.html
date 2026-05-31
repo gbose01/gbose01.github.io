@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0A0A0F">
+    <meta name="description" content="How I turned an Obsidian vault into a persistent memory and identity layer for every Cursor session, across every project, without bloating context.">
+    <title>Obsidian as My Thinking Backend for Cursor | Gaurab Bose</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/sidebar.css">
+    <script src="../js/theme.js"></script>
+</head>
+<body>
+    <div class="post-container">
+        <a href="../blog.html" class="post-back">← Writing</a>
+
+        <header class="post-header">
+            <h1>Obsidian as My Thinking Backend for Cursor</h1>
+            <p class="post-date">May 30, 2026</p>
+        </header>
+
+        <div class="post-body">
+
+        <p>Every Cursor session starts cold. The agent has no idea who you are, what you're building, what decisions you've already made, or how you like to write. You either re-explain everything, paste in a wall of context, or accept that you're collaborating with someone with permanent amnesia.</p>
+
+        <p>I wanted something different. A vault that carries my identity, preferences, project state, and process procedures into any AI session automatically. Not just Cursor. Claude, Gemini, whatever comes next. The files stay; the tools rotate.</p>
+
+        <p>This is how I built that.</p>
+
+        <h2>Definitions</h2>
+
+        <p>A few terms worth pinning before going further.</p>
+
+        <p><strong>Ideaverse.</strong> My personal knowledge vault. Plain markdown files at <code>C:\Ideaverse</code>, opened in Obsidian. Not a notes app. A structured context space: projects, writing, daily notes, process skills, health, finances. The key property is that it works with any tool that can read text files. Obsidian is the UI; the vault is the thing.</p>
+
+        <p><strong>File over AI.</strong> The organizing philosophy. Knowledge lives in the files, not in any model's memory or any tool's database. When Claude loses context, when Cursor resets, when I switch from one AI to another, the vault is still there. Concrete consequence: I never rely on a model to "remember" something that matters. I write it down.</p>
+
+        <p><strong>MCP (Model Context Protocol).</strong> An open standard for giving AI tools access to external data sources. An MCP server exposes tools that an AI client can call at runtime. In this setup: the vault is a data source, an MCP server sits in front of it, and Cursor calls the server to retrieve context on demand.</p>
+
+        <p><strong>Thinking backend.</strong> The vault is not passive storage. It carries: who I am (for the AI), what my current projects are and their status, how I like to write (Writing Rules), what procedures to follow for recurring tasks (Skills), and privacy boundaries (what the AI may and may not read). Every AI session that connects to it starts informed.</p>
+
+        <h2>Why I needed this</h2>
+
+        <p>The standard workarounds for AI context management all have the same failure mode: they scale to one project, then break.</p>
+
+        <p><code>CLAUDE.md</code> or <code>AGENTS.md</code> files in each repo work. Until you have eight repos and each file has drifted independently. Now you're maintaining eight copies of "who I am" in slightly different words.</p>
+
+        <p>Long Cursor User Rules (the Settings UI) inject context into every session. But that context is flat, always-on, and hard to version. You end up with a 2,000-character block that pollutes every session whether it's relevant or not.</p>
+
+        <p>System prompts per-tool solve nothing cross-tool. What I tell Claude in its system prompt doesn't follow me to Cursor. What Cursor knows doesn't follow me to a Gemini API call.</p>
+
+        <p>The real need was: one source of truth, tool-agnostic, retrievable on demand rather than always injected, and persistent across machine restarts, new repos, and new tools. The vault is that source of truth. The MCP layer is how AI tools query it without loading it all at once.</p>
+
+        <h2>How I built it</h2>
+
+        <h3>The AI OS: three files</h3>
+
+        <p>The vault has a lot of content. The AI doesn't need most of it at session start. The whole startup footprint is three files:</p>
+
+        <ul>
+            <li><code>Meta/Me.md</code> — who I am, how to work with me, context boundaries (what work AI may read vs. home AI)</li>
+            <li><code>Meta/Vault Map.md</code> — vault structure, naming conventions, how to create and retrieve notes, maintenance rules</li>
+            <li><code>Meta/Skills Map.md</code> — index of process skills; read the matching skill on demand, not all at once</li>
+        </ul>
+
+        <p>Every entry point (<code>AGENTS.md</code>, <code>CLAUDE.md</code> at the vault root, per-repo pointers) forwards to these three. Any model, any tool, same three files. The rest of the vault enters context only when needed.</p>
+
+        <h3>The MCP server</h3>
+
+        <p>The vault doesn't inject itself. It waits to be asked.</p>
+
+        <p>I wrote a zero-dependency Node.js MCP server at <code>Meta/_infra/ideaverse-mcp/server.js</code>. No npm installs. It speaks JSON-RPC 2.0 over stdio and exposes three tools:</p>
+
+        <ul>
+            <li><code>ideaverse_search(query, scope, limit)</code> — keyword scoring across all vault notes; returns ranked snippets with file paths. Title matches score 5x, tag matches 3x, body occurrence 1x each. Capped at 15 results.</li>
+            <li><code>ideaverse_get(path, section)</code> — fetch one note or one section of a note by path. Section-level fetches keep token cost low; I set a hard 8,000-character cap.</li>
+            <li><code>ideaverse_map(area, scope)</code> — return a compact routing index: one line per note (path, title, type, tags, one-sentence summary). Cheap. Use this to discover what exists before deciding what to fetch.</li>
+        </ul>
+
+        <p>The mental model: <code>ideaverse_map</code> is the table of contents, <code>ideaverse_search</code> is the index, <code>ideaverse_get</code> is the chapter. Progressive disclosure. You don't load the book; you navigate it.</p>
+
+        <p>Scope filtering is built into all three tools. Default scope is <code>personal</code>, which excludes work notes and sensitive Finances/Health content. I can pass <code>sensitive</code> or <code>professional</code> explicitly. This means the AI doesn't accidentally surface work context in a personal session or health data when I'm debugging code.</p>
+
+        <h3>Global registration</h3>
+
+        <p>The server is registered once in <code>~/.cursor/mcp.json</code>:</p>
+
+        <pre><code>{
+  "mcpServers": {
+    "ideaverse": {
+      "command": "node",
+      "args": ["C:\\Ideaverse\\Meta\\_infra\\ideaverse-mcp\\server.js"]
+    }
+  }
+}</code></pre>
+
+        <p>That's it. One config file, all workspaces. When I open a <code>C:\Projects\portradar</code> session or a <code>C:\Projects\metacode</code> session, the vault is already available. I never have to copy a config file into a new repo.</p>
+
+        <h3>Global rules</h3>
+
+        <p><code>~/.cursor/rules/gaurab-workflow.mdc</code> has <code>alwaysApply: true</code>. It tells every Cursor session: use the ideaverse MCP tools for personal context; read <code>Me.md</code> at session start; on "sync" load the sync skill; on "capture" load the capture skill.</p>
+
+        <p>There are also <code>agent-conduct.mdc</code> (communication and code standards), <code>git.mdc</code> (commit protocol, loaded on demand), and <code>pr.mdc</code> (PR protocol, loaded on demand). All in <code>~/.cursor/rules/</code>. None of them are repo-specific.</p>
+
+        <p>The rule in Settings UI is just a short pointer to this folder. Not a paste of the actual content.</p>
+
+        <h3>Skills</h3>
+
+        <p>Skills are markdown files in <code>Meta/Skills/</code>. Each one is a reusable procedure: <code>sync.md</code>, <code>capture.md</code>, <code>daily-note.md</code>, <code>journal-triage.md</code>, <code>projects-pull.md</code>, <code>website-sync.md</code>, <code>initialize-harness.md</code>.</p>
+
+        <p>An AI reads a skill when it needs to perform that procedure. Not before. The Skills Map is the index; each skill is the full instructions.</p>
+
+        <p>Cursor discovers skills via thin pointer files in <code>~/.cursor/skills/{name}/SKILL.md</code>. Each pointer just says: "read the real skill at <code>C:\Ideaverse\Meta\Skills\{name}.md</code>." One copy of the actual skill. No drift.</p>
+
+        <p>Because the skill files are plain markdown, they work with Claude, Cursor, Gemini, or anything else that can read a file. Write once; run anywhere.</p>
+
+        <h3>Sync pipelines</h3>
+
+        <p>A few automation pieces keep the vault current:</p>
+
+        <ul>
+            <li><strong>projects-pull:</strong> scans every git repo under <code>C:\Projects</code>, reads the remote URL, last commit date, language, and README summary, and writes structured status back into the corresponding vault note. Run this after shipping code; the vault reflects it.</li>
+            <li><strong>journal-triage:</strong> takes the <code>## Captured</code> sections from daily notes and routes them to their proper destinations (project notes, writing ideas, personal todos).</li>
+            <li><strong>midnight-sync-loop:</strong> PowerShell loop that runs after midnight, calls the Obsidian URI for remotely-save sync, then runs the vault rebuild scripts. Vault is current by morning.</li>
+            <li><strong>website-sync:</strong> when a project's status or a blog post's metadata changes in the vault, this propagates to gbose.dev.</li>
+        </ul>
+
+        <p>The vault is the source of truth. Code status and site content are downstream.</p>
+
+        <p>Here is the architecture as a diagram:</p>
+
+        <pre>Obsidian Vault (C:\Ideaverse)
+         |
+         v
+ideaverse-mcp server.js
+         |
+         v
+~/.cursor/mcp.json  &lt;---  registered once, all workspaces
+         |
+         v
+Cursor Agent Session  &lt;---  ~/.cursor/rules/ (alwaysApply)
+         ^
+         |
+~/.cursor/skills/  &lt;---  point to  Meta/Skills/*.md</pre>
+
+        <h2>What it has made possible</h2>
+
+        <p>The most concrete change: I open a Cursor session in any repo and the agent already knows who I am. It knows my writing rules before drafting anything. It knows the project status before suggesting next steps. It knows which parts of the vault are off-limits without me specifying.</p>
+
+        <p>A few specific examples from the last few weeks:</p>
+
+        <p>When I was writing the website redesign post, the agent read <code>Writing Rules.md</code> before drafting a word. No em dashes in the output. Concrete voice. It matched existing post tone because the rules were explicit and in context, not implicit in my head.</p>
+
+        <p>When I say "sync," a four-phase pipeline runs: scan git repos and update vault, triage daily captures, rebuild vault index, optionally push to gbose.dev. One word. The skill file has the full instructions. I don't repeat them every session.</p>
+
+        <p>When I start work on a new side project, I run "projects pull." The vault note for that project gets git metadata automatically. Status stays current without manual updates.</p>
+
+        <p>The blog post you are reading was drafted in a session where the agent had the full writing rules, vault conventions, and my tone in context from the start. The file ended up in the right folder with the right frontmatter because that structure is documented in <code>Vault Map.md</code> and the agent read it.</p>
+
+        <p>The larger thing: I am not re-establishing context with every session. Identity is persistent. Procedures are persistent. Voice is persistent. The vault carries continuity across sessions the way human memory carries it across days.</p>
+
+        <h2>Pitfalls and challenges</h2>
+
+        <p><strong>Context bloat is the real risk.</strong> The naive version of this system injects the whole vault into every session. That's expensive, slow, and counterproductive. Getting progressive disclosure right took a few iterations. The current design: three small startup files plus on-demand MCP calls. Total startup cost is a few thousand tokens; full-session cost depends on what you ask.</p>
+
+        <p><strong>Vault drift.</strong> YAML frontmatter inconsistencies, broken wikilinks, notes that reference projects that no longer exist. The sync scripts catch some of this. But drift is slow and cumulative. I run a sync-check script periodically, but the vault still has notes I haven't touched in months that are probably wrong.</p>
+
+        <p><strong>Windows path issues.</strong> <code>mcp.json</code> requires double backslashes (<code>C:\\Ideaverse\\...</code>). Obvious once you know, annoying to debug when you don't. The server path, the skill paths, and the rule paths all need this. I've hit this more than once after a machine migration.</p>
+
+        <p><strong>Automation fragility.</strong> The midnight sync loop depends on Windows Task Scheduler triggering a PowerShell script that fires an Obsidian URI for remotely-save sync. It works. But if Obsidian isn't open, the sync plugin doesn't run. If the plugin times out, the loop continues anyway. The automation covers the common case well and the edge cases poorly.</p>
+
+        <p><strong>AI OS freshness.</strong> <code>Me.md</code> and <code>Vault Map.md</code> are the foundation every session stands on. If they're stale, every session inherits bad context. When I add a new area to the vault or change how I want the AI to behave, I have to remember to update the maps. This is not automatic. I've had sessions where the agent followed outdated instructions because I forgot to update <code>Me.md</code> after a workflow change.</p>
+
+        <h2>What I still need to improve</h2>
+
+        <p><strong>Semantic search.</strong> The current <code>ideaverse_search</code> scores keyword matches: title, tags, body frequency. It misses conceptual connections. If I search for "shipping side projects" it won't surface a note titled "Building PortRadar" unless those exact words appear. I explored QMD with vector search for OpenClaw (see the earlier post on that). Wiring that into the MCP is the next meaningful search upgrade.</p>
+
+        <p><strong>Richer project metadata.</strong> <code>projects-pull</code> gets git remote, last commit date, and README summary. It doesn't get CI status, open issues, deployment health, or PR count. The vault project notes are informed about code, but not about the full state of a project.</p>
+
+        <p><strong>Smarter context selection.</strong> The agent sometimes fetches more than it needs. A better manifest with richer summaries would let <code>ideaverse_map</code> be more selective before the agent decides what to fetch with <code>ideaverse_get</code>. Right now the routing is decent but not tight.</p>
+
+        <p><strong>Automated session capture.</strong> When a session produces something worth keeping (a decision, a finding, an idea), I have to say "capture this" explicitly. A heartbeat approach (saving session summaries at regular intervals or before context compaction) would close the loop without depending on me remembering.</p>
+
+        <p><strong>Structural boundary enforcement.</strong> The Professional/Personal separation is documented in <code>Me.md</code> and enforced by scope parameters in the MCP. But it's trust-based: the AI reads the rules and follows them. If I forget to pass the right scope, or if an AI doesn't read <code>Me.md</code> carefully, the boundary can blur. Making the scope enforcement structural (vault-level ACL rather than AI-level instruction) would be more robust.</p>
+
+        <p>The system works today. Sessions start informed, procedures run reliably, and the vault compounds over time. The gaps above are real, but they're improvements to something that already functions. That's a better place to be than the alternative, which was starting fresh every time.</p>
+
+        <p><em>The vault is at <code>C:\Ideaverse</code>. The MCP server is at <code>Meta/_infra/ideaverse-mcp/server.js</code>. The setup doc lives at <code>Meta/Cursor Setup.md</code>.</em></p>
+
+        </div>
+    </div>
+</body>
+</html>
