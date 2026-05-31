@@ -49,13 +49,7 @@
     font-size: 12.5px;
     color: var(--devlab-muted);
     font-family: var(--devlab-mono);
-}
-
-.devlab .rule {
-    height: 1px;
-    background: var(--devlab-line);
-    border: 0;
-    margin: 30px 0 26px;
+    margin-bottom: 22px;
 }
 
 .devlab .grid {
@@ -89,15 +83,24 @@
 .devlab .top {
     display: flex;
     align-items: flex-start;
-    gap: 11px;
+    gap: 14px;
 }
 
 .devlab .project-icon {
     flex: none;
-    width: 42px;
-    height: 42px;
-    border-radius: 10px;
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
     object-fit: cover;
+    box-shadow:
+        0 2px 12px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="light"] .devlab .project-icon {
+    box-shadow:
+        0 3px 14px rgba(26, 23, 20, 0.14),
+        0 0 0 1px rgba(0, 0, 0, 0.08);
 }
 
 .devlab .head {
@@ -351,5 +354,19 @@
 
     .devlab .lead {
         font-size: 14px;
+    }
+
+    .devlab .stat {
+        margin-bottom: 18px;
+    }
+
+    .devlab .project-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 11px;
+    }
+
+    .devlab .top {
+        gap: 12px;
     }
 }
