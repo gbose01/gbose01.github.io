@@ -209,7 +209,7 @@ h1 {
     color: var(--text-muted);
     line-height: 1.6;
     margin-top: 0;
-    margin-bottom: 0;
+    margin-bottom: 24px;
     letter-spacing: 0.1px;
 }
 
@@ -296,7 +296,7 @@ h1 {
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     flex-wrap: nowrap;
     margin-top: 0;
-    margin-bottom: 32px;
+    margin-bottom: 0;
 }
 
 [data-theme="light"] .nav-main {
@@ -349,7 +349,8 @@ h1 {
 }
 
 /* Premium Nav Icon Brand Colors */
-.nav-main a[href*="projects"] .nav-icon { color: var(--icon-projects); }
+.nav-main a[href*="projects"] .nav-icon,
+.nav-main a[href="#lab"] .nav-icon { color: var(--icon-projects); }
 .nav-main a[href*="work"] .nav-icon { color: var(--icon-job); }
 .nav-main a[href*="blog"] .nav-icon { color: var(--icon-writing); }
 .nav-main a[href*="github"] .nav-icon { color: var(--icon-github); }
@@ -1410,6 +1411,26 @@ h2 {
     height: 28px;
     background: var(--border);
     flex-shrink: 0;
+}
+
+/* ─── Section intro (Dev Lab, etc.) ─────── */
+.section-intro {
+    margin-bottom: 24px;
+}
+
+.section-lede {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin: 8px 0 0;
+    max-width: 520px;
+}
+
+.section-stats {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin: 6px 0 0;
+    letter-spacing: 0.2px;
 }
 
 /* ─── Section Header & Toggle TABS ─── */
