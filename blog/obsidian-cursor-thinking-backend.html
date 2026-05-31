@@ -26,7 +26,80 @@
 
         <p>I wanted something different. A vault that carries my identity, preferences, project state, and process procedures into any AI session automatically. Not just Cursor. Claude, Gemini, whatever comes next. The files stay; the tools rotate.</p>
 
+        <p>If you've read my earlier post on <a href="qmd-obsidian-setup.html">Architecting AI Memory with QMD and Obsidian</a>, this builds on that work. Same vault philosophy. Different problem, and a much broader solution.</p>
+
         <p>This is how I built that.</p>
+
+        <h2>Building on QMD + Obsidian (and what's different)</h2>
+
+        <p>In April I wrote about pairing my Obsidian vault with QMD inside OpenClaw. That setup solved a real problem: <strong>memory retrieval</strong>. QMD runs hybrid search (BM25 + vector similarity + reranking) over the vault every five minutes, so when I asked "what did we discuss about X," relevant notes surfaced without me copy-pasting them. OpenClaw's heartbeat and auto-flush kept new context flowing into the vault between sessions.</p>
+
+        <p>It worked. For OpenClaw. In one container. For one agent.</p>
+
+        <p>The Ideaverse setup I run today is the next layer. Same Obsidian vault as the storage layer. Different architecture on top, and a wider job description.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>QMD + OpenClaw (April)</th>
+                    <th>Ideaverse + Cursor (now)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Primary job</strong></td>
+                    <td>Surface relevant notes from past context</td>
+                    <td>Carry identity, structure, procedures, and project state into every session</td>
+                </tr>
+                <tr>
+                    <td><strong>Retrieval</strong></td>
+                    <td>Hybrid search (BM25 + vectors + reranking)</td>
+                    <td>Keyword search via custom MCP (simpler, no npm deps)</td>
+                </tr>
+                <tr>
+                    <td><strong>Scope</strong></td>
+                    <td>One OpenClaw agent in Docker</td>
+                    <td>Every Cursor workspace globally, plus any MCP-capable tool</td>
+                </tr>
+                <tr>
+                    <td><strong>Startup context</strong></td>
+                    <td>Agent workspace + indexed vault</td>
+                    <td>Three briefing files (<code>Me.md</code>, <code>Vault Map.md</code>, <code>Skills Map.md</code>)</td>
+                </tr>
+                <tr>
+                    <td><strong>Procedures</strong></td>
+                    <td>Implicit in agent config</td>
+                    <td>Explicit Skills (<code>sync</code>, <code>capture</code>, <code>projects-pull</code>, etc.) any AI can read</td>
+                </tr>
+                <tr>
+                    <td><strong>Boundaries</strong></td>
+                    <td>Vault folders by topic</td>
+                    <td>Structural scope filtering (<code>personal</code> / <code>professional</code> / <code>sensitive</code>)</td>
+                </tr>
+                <tr>
+                    <td><strong>Downstream sync</strong></td>
+                    <td>None</td>
+                    <td>Vault → git status → gbose.dev via automated pipelines</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>The honest tradeoff: <strong>search got simpler before it gets better again.</strong> QMD's semantic retrieval beats my current keyword scorer for fuzzy questions like "what did we decide about port conflicts." I know that. Wiring QMD (or something like it) into the Ideaverse MCP is still on the list. But the system as a whole is more capable than QMD alone ever was, because retrieval was only one piece of the problem.</p>
+
+        <p>What the Ideaverse layer adds that QMD didn't:</p>
+
+        <p><strong>Identity, not just memory.</strong> QMD helps an agent find notes. It doesn't tell the agent who I am, how I like to work, or what tone to write in. The three-file AI OS (<code>Me.md</code>, <code>Vault Map.md</code>, <code>Skills Map.md</code>) loads that before any search happens. Every session starts with briefing, not amnesia.</p>
+
+        <p><strong>Procedures, not just retrieval.</strong> Skills are executable runbooks. When I say "sync," the agent loads a four-phase pipeline. When I say "capture this," it knows exactly where today's note lives. QMD could surface a skill file; it couldn't tell the agent to follow one.</p>
+
+        <p><strong>Cross-tool, not container-locked.</strong> QMD lived inside OpenClaw's Docker world. The Ideaverse MCP registers once in <code>~/.cursor/mcp.json</code> and works from PortRadar, MetaCode, or any repo I open. Skills are plain markdown, so Claude Code or Gemini can read them too. One vault, many tools.</p>
+
+        <p><strong>Scope and privacy by design.</strong> The MCP server filters what gets retrieved: work notes, finances, and health stay out of default personal scope. QMD indexed the whole vault path. Useful for recall, risky for boundaries.</p>
+
+        <p><strong>The vault compounds outward.</strong> Projects pull git status from <code>C:\Projects</code>. Journal captures triage into the right notes. Blog metadata propagates to gbose.dev. QMD made the vault readable. Ideaverse makes it operational.</p>
+
+        <p>So: QMD was the right first move for agent memory. Ideaverse is the move from "my agent can remember" to "every AI session I open already knows who I am, how I work, and what I'm building." The search layer will catch up. The rest already did.</p>
 
         <h2>Definitions</h2>
 
@@ -174,7 +247,7 @@ Cursor Agent Session  &lt;---  ~/.cursor/rules/ (alwaysApply)
 
         <h2>What I still need to improve</h2>
 
-        <p><strong>Semantic search.</strong> The current <code>ideaverse_search</code> scores keyword matches: title, tags, body frequency. It misses conceptual connections. If I search for "shipping side projects" it won't surface a note titled "Building PortRadar" unless those exact words appear. I explored QMD with vector search for OpenClaw (see the earlier post on that). Wiring that into the MCP is the next meaningful search upgrade.</p>
+        <p><strong>Semantic search.</strong> The current <code>ideaverse_search</code> scores keyword matches: title, tags, body frequency. It misses conceptual connections. If I search for "shipping side projects" it won't surface a note titled "Building PortRadar" unless those exact words appear. My earlier QMD setup handled this better with hybrid BM25 + vector search inside OpenClaw. Wiring that retrieval quality into the Ideaverse MCP is the next meaningful search upgrade.</p>
 
         <p><strong>Richer project metadata.</strong> <code>projects-pull</code> gets git remote, last commit date, and README summary. It doesn't get CI status, open issues, deployment health, or PR count. The vault project notes are informed about code, but not about the full state of a project.</p>
 
