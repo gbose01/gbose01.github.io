@@ -44,8 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var filterPills = document.querySelectorAll('.filter-pill');
         var projectItems = document.querySelectorAll('.projects-page-list .project');
 
-        var activePill = document.querySelector('.filter-pill.active');
-        var currentCategory = activePill ? activePill.getAttribute('data-category') : 'agent-built';
+        var currentCategory = 'all';
         var searchQuery = '';
 
         // Listen for keyboard shortcut "/" to focus search
@@ -122,7 +121,5 @@ document.addEventListener('DOMContentLoaded', function () {
                 noResultsMsg.parentNode.removeChild(noResultsMsg);
             }
         }
-
-        applyFilterAndSearch();
     }
 });

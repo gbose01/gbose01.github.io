@@ -140,14 +140,6 @@ a:hover {
     padding: 0 0 20px;
 }
 
-.hero-eyebrows {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    margin-bottom: 28px;
-}
-
 .hero-eyebrow {
     display: inline-flex;
     align-items: center;
@@ -156,27 +148,11 @@ a:hover {
     font-weight: 500;
     color: var(--green);
     letter-spacing: 0.5px;
-    margin-bottom: 0;
+    margin-bottom: 28px;
     background: var(--green-dim);
     padding: 5px 12px;
     border-radius: 20px;
     border: 1px solid rgba(16, 185, 129, 0.15);
-}
-
-.hero-eyebrow--lab {
-    color: var(--accent);
-    background: var(--accent-dim);
-    border: 1px solid var(--border-accent);
-}
-
-.lab-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--accent);
-    flex-shrink: 0;
-    box-shadow: 0 0 0 0 var(--accent-glow);
-    animation: pulse-amber 2.5s infinite;
 }
 
 .status-dot {
@@ -252,77 +228,18 @@ h1 {
     opacity: 1;
 }
 
-/* ─── Callouts (building, dev lab) ──────────── */
-.currently-building,
-.dev-lab-callout {
+/* ─── Currently Building ────────────────────── */
+.currently-building {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-bottom: 32px;
+    margin-bottom: 44px;
     padding: 16px 20px;
     background: var(--bg-elevated);
     border: 1px solid var(--border);
     border-left: 2px solid var(--accent);
     border-radius: 0 8px 8px 0;
-    max-width: 560px;
-}
-
-.currently-building {
-    margin-bottom: 44px;
     max-width: 480px;
-}
-
-.dev-lab-callout p {
-    font-size: 14px;
-    line-height: 1.6;
-    color: var(--text-muted);
-    margin: 0;
-}
-
-.dev-lab-callout p strong {
-    color: var(--text);
-    font-weight: 500;
-}
-
-.dev-lab-workflow {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 6px 4px;
-    font-size: 13px;
-    color: var(--text);
-    font-weight: 500;
-}
-
-.dev-lab-workflow .workflow-arrow {
-    color: var(--text-muted);
-    font-weight: 400;
-}
-
-.dev-lab-callout .lab-callout-link {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--accent);
-    text-decoration: none;
-}
-
-.dev-lab-callout .lab-callout-link:hover {
-    text-decoration: underline;
-}
-
-.section-lede {
-    font-size: 14px;
-    line-height: 1.6;
-    color: var(--text-muted);
-    margin: 8px 0 0;
-    max-width: 520px;
-}
-
-.section-stats {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 6px;
-    letter-spacing: 0.2px;
 }
 
 .cb-label {
@@ -1282,13 +1199,8 @@ h2 {
         font-size: 11px;
     }
 
-    .dev-lab-callout,
     .currently-building {
         max-width: 100%;
-    }
-
-    .section-header-with-toggle {
-        align-items: flex-start;
     }
 
 
@@ -1504,7 +1416,7 @@ h2 {
 .section-header-with-toggle {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: center;
     margin-bottom: 24px;
     flex-wrap: wrap;
     gap: 12px;
@@ -1512,11 +1424,6 @@ h2 {
 
 .section-header-with-toggle h2 {
     margin-bottom: 0;
-}
-
-.section-intro {
-    flex: 1;
-    min-width: 200px;
 }
 
 .project-view-toggle {
