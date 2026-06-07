@@ -935,6 +935,16 @@ h2 {
     color: var(--text);
 }
 
+.post-repo {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--accent);
+    padding: 14px 18px;
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 32px;
+    font-size: 15px;
+}
+
 .post-body p {
     margin-bottom: 24px;
 }
