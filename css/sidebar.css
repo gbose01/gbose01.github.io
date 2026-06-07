@@ -446,6 +446,7 @@ h1 {
 .nav-main a[href*="linkedin"] .nav-icon { color: var(--icon-linkedin); }
 .nav-main a[href*="twitter"] .nav-icon,
 .nav-main a[href*="x.com"] .nav-icon { color: var(--icon-twitter); }
+.nav-main a[href*="play.gbose"] .nav-icon { color: var(--green); }
 
 .hero-divider {
     height: 1px;
@@ -688,21 +689,6 @@ h2 {
 }
 
 /* ─── Project CTAs ───────────────────────────── */
-.project-hub-link {
-    margin-top: 8px;
-    font-size: 12px;
-}
-
-.project-hub-link a {
-    color: var(--accent);
-    font-weight: 600;
-    text-decoration: none;
-}
-
-.project-hub-link a:hover {
-    text-decoration: underline;
-}
-
 .project-links {
     display: flex;
     gap: 8px;
