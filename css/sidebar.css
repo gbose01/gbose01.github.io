@@ -230,7 +230,7 @@ a:hover {
 
 /* ─── Hero ──────────────────────────────────── */
 .hero {
-    padding: 0 0 20px;
+    padding: 0;
 }
 
 .hero-eyebrow {
@@ -461,7 +461,7 @@ h1 {
     height: 1px;
     background: var(--border);
     margin-top: 32px;
-    margin-bottom: 48px;
+    margin-bottom: 32px;
 }
 
 /* Touch devices: icons stay vivid without hover */
@@ -571,11 +571,6 @@ h2 {
         position: sticky;
         top: 60px;
         height: fit-content;
-    }
-
-    /* Rail kicker ↔ Dev Lab kicker — shared horizontal gridline */
-    .sidebar-section {
-        margin-top: 300px;
     }
 
     /* Writing list — title/date as one unit, divider centered between entries */
