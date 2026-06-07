@@ -110,7 +110,7 @@ main {
 
     .hero {
         padding-bottom: 0;
-        margin-bottom: 12px;
+        margin-bottom: 0;
     }
 
     .hero-education {
@@ -120,6 +120,11 @@ main {
     .nav-main {
         margin-top: 0;
         margin-bottom: 0;
+    }
+
+    .hero-divider {
+        margin-top: 12px;
+        margin-bottom: 20px;
     }
 
     .section {
@@ -140,16 +145,28 @@ main {
         top: auto;
         width: 100%;
         height: auto;
-        background: var(--bg-elevated);
-        padding: 24px;
-        border-radius: 12px;
-        border: 1px solid var(--border);
-        margin-bottom: 28px;
+        background: transparent;
+        padding: 28px 0;
+        border-radius: 0;
+        border: none;
+        border-top: 1px solid var(--border);
+        margin-bottom: 0;
         animation: none;
+    }
+
+    .sidebar .profile-photo-wrap,
+    .sidebar .sidebar-traits {
+        display: none;
     }
 
     .sidebar-section {
         margin-bottom: 0;
+    }
+
+    .sidebar-title {
+        margin-bottom: 20px;
+        padding-bottom: 0;
+        border-bottom: none;
     }
 
     #work {
@@ -430,6 +447,13 @@ h1 {
 .nav-main a[href*="twitter"] .nav-icon,
 .nav-main a[href*="x.com"] .nav-icon { color: var(--icon-twitter); }
 
+.hero-divider {
+    height: 1px;
+    background: var(--border);
+    margin-top: 16px;
+    margin-bottom: 24px;
+}
+
 /* Touch devices: icons stay vivid without hover */
 @media (hover: none) and (pointer: coarse) {
     .nav-main .nav-icon {
@@ -532,10 +556,12 @@ h2 {
 }
 
 /* ─── Sidebar ───────────────────────────────── */
-.sidebar {
-    position: sticky;
-    top: 60px;
-    height: fit-content;
+@media (min-width: 901px) {
+    .sidebar {
+        position: sticky;
+        top: 60px;
+        height: fit-content;
+    }
 }
 
 .sidebar-section {
@@ -1241,6 +1267,10 @@ h2 {
         padding: 32px 16px;
     }
 
+    .sidebar {
+        padding: 20px 0;
+    }
+
     h1 {
         font-size: 36px;
         letter-spacing: -1.5px;
@@ -1273,7 +1303,12 @@ h2 {
 
     .hero {
         padding-bottom: 0;
-        margin-bottom: 8px;
+        margin-bottom: 0;
+    }
+
+    .hero-divider {
+        margin-top: 12px;
+        margin-bottom: 16px;
     }
 
     #mobile-menu-toggle {
