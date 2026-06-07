@@ -36,9 +36,49 @@
             border-top: none;
         }
 
-        @media (max-width: 600px) {
+        #work.section {
+            border-top: none;
+        }
+
+        @media (max-width: 900px) {
+            .section {
+                padding: 28px 0;
+            }
+
+            #lab.section {
+                padding-top: 0;
+                padding-bottom: 28px;
+                border-top: none;
+            }
+
+            #work.section {
+                padding-top: 0;
+                border-top: none;
+            }
+
             .hero {
-                padding-bottom: 24px;
+                padding-bottom: 0;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .section {
+                padding: 20px 0;
+            }
+
+            #lab.section {
+                padding-top: 0;
+                padding-bottom: 20px;
+            }
+
+            h1 {
+                margin-bottom: 10px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .layout {
+                padding: 32px 16px;
             }
         }
     </style>
@@ -187,6 +227,63 @@
                     <a href="projects.html">View the full project directory <span class="ct">+5 more</span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
                 </div>
             </section>
+
+            <!-- ─── SIDEBAR: Recent Writing ─── -->
+            <aside class="sidebar">
+                <div class="profile-photo-wrap">
+                    <img src="duotone.png" alt="Gaurab Bose" class="profile-photo">
+                </div>
+                <div class="sidebar-traits">
+                    <span class="sidebar-trait">Frontier product leader</span>
+                    <span class="sidebar-trait">Open source enthusiast</span>
+                    <span class="sidebar-trait">AI agent herder</span>
+                </div>
+                <div class="sidebar-section" id="writing">
+                    <p class="sidebar-title">Recent writing</p>
+                    <div class="sidebar-writing">
+
+                        <article class="sidebar-post">
+                            <a href="blog/obsidian-cursor-thinking-backend.html" class="sidebar-post-title">Obsidian as My Thinking Backend for Cursor</a>
+                            <span class="sidebar-post-date">May 30, 2026</span>
+                        </article>
+
+                        <article class="sidebar-post">
+                            <a href="blog/building-grove-keepers.html" class="sidebar-post-title">Building Grove Keepers: Shipping My First Game with AI</a>
+                            <span class="sidebar-post-date">May 7, 2026</span>
+                        </article>
+
+                        <article class="sidebar-post">
+                            <a href="blog/2026-04-30-redesign-with-claude-code.html" class="sidebar-post-title">Redesigning My Website with Claude Code</a>
+                            <span class="sidebar-post-date">Apr 30, 2026</span>
+                        </article>
+
+                        <article class="sidebar-post">
+                            <a href="blog/2026-04-28-metacode-benchmark.html" class="sidebar-post-title">Building MetaCode: A Metacognitive Benchmark for LLMs</a>
+                            <span class="sidebar-post-date">Apr 28, 2026</span>
+                        </article>
+
+                        <article class="sidebar-post">
+                            <a href="blog/qmd-obsidian-setup.html" class="sidebar-post-title">Setting Up QMD with Obsidian for Better AI Memory</a>
+                            <span class="sidebar-post-date">Apr 7, 2026</span>
+                        </article>
+
+                        <article class="sidebar-post">
+                            <a href="blog/2026-03-15-cost-observability-tool.html" class="sidebar-post-title">Building a Cost Observability Tool for My AI Agent</a>
+                            <span class="sidebar-post-date">Mar 15, 2026</span>
+                        </article>
+
+                        <article class="sidebar-post">
+                            <a href="blog/building-portradar-ai.html" class="sidebar-post-title">Building PortRadar: Shipping a Developer Tool in Hours with AI</a>
+                            <span class="sidebar-post-date">Mar 13, 2026</span>
+                        </article>
+
+                    </div>
+                    <div class="section-footer">
+                        <a href="blog.html" class="show-more">All writing →</a>
+                    </div>
+                </div>
+            </aside>
+
             <!-- ─── DAY JOB ─── -->
             <section class="section" id="work">
                 <h2>Day Job</h2>
@@ -258,62 +355,6 @@
             </section>
 
         </main>
-
-        <!-- ─── SIDEBAR: Recent Writing ─── -->
-        <aside class="sidebar">
-            <div class="profile-photo-wrap">
-                <img src="duotone.png" alt="Gaurab Bose" class="profile-photo">
-            </div>
-            <div class="sidebar-traits">
-                <span class="sidebar-trait">Frontier product leader</span>
-                <span class="sidebar-trait">Open source enthusiast</span>
-                <span class="sidebar-trait">AI agent herder</span>
-            </div>
-            <div class="sidebar-section" id="writing">
-                <p class="sidebar-title">Recent writing</p>
-                <div class="sidebar-writing">
-
-                    <article class="sidebar-post">
-                        <a href="blog/obsidian-cursor-thinking-backend.html" class="sidebar-post-title">Obsidian as My Thinking Backend for Cursor</a>
-                        <span class="sidebar-post-date">May 30, 2026</span>
-                    </article>
-
-                    <article class="sidebar-post">
-                        <a href="blog/building-grove-keepers.html" class="sidebar-post-title">Building Grove Keepers: Shipping My First Game with AI</a>
-                        <span class="sidebar-post-date">May 7, 2026</span>
-                    </article>
-
-                    <article class="sidebar-post">
-                        <a href="blog/2026-04-30-redesign-with-claude-code.html" class="sidebar-post-title">Redesigning My Website with Claude Code</a>
-                        <span class="sidebar-post-date">Apr 30, 2026</span>
-                    </article>
-
-                    <article class="sidebar-post">
-                        <a href="blog/2026-04-28-metacode-benchmark.html" class="sidebar-post-title">Building MetaCode: A Metacognitive Benchmark for LLMs</a>
-                        <span class="sidebar-post-date">Apr 28, 2026</span>
-                    </article>
-
-                    <article class="sidebar-post">
-                        <a href="blog/qmd-obsidian-setup.html" class="sidebar-post-title">Setting Up QMD with Obsidian for Better AI Memory</a>
-                        <span class="sidebar-post-date">Apr 7, 2026</span>
-                    </article>
-
-                    <article class="sidebar-post">
-                        <a href="blog/2026-03-15-cost-observability-tool.html" class="sidebar-post-title">Building a Cost Observability Tool for My AI Agent</a>
-                        <span class="sidebar-post-date">Mar 15, 2026</span>
-                    </article>
-
-                    <article class="sidebar-post">
-                        <a href="blog/building-portradar-ai.html" class="sidebar-post-title">Building PortRadar: Shipping a Developer Tool in Hours with AI</a>
-                        <span class="sidebar-post-date">Mar 13, 2026</span>
-                    </article>
-
-                </div>
-                <div class="section-footer">
-                    <a href="blog.html" class="show-more">All writing →</a>
-                </div>
-            </div>
-        </aside>
 
         <!-- ─── FOOTER ─── -->
         <footer class="footer">

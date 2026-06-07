@@ -136,82 +136,56 @@
 
 .devlab .badges {
     display: flex;
-    gap: 6px;
+    gap: 8px;
     flex-wrap: wrap;
-    margin-top: 7px;
+    align-items: center;
+    margin-top: 2px;
 }
 
 .devlab .badge {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    font-size: 10.5px;
-    font-weight: 600;
-    padding: 3px 9px;
-    border-radius: 999px;
+    gap: 3px;
+    font-size: 10px;
+    font-weight: 500;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: transparent;
     white-space: nowrap;
+    color: var(--devlab-muted);
 }
 
 .devlab .badge.featured {
-    color: #fff;
-    background: var(--devlab-orange);
-    border: 1px solid var(--devlab-orange);
+    color: var(--devlab-muted);
 }
 
 .devlab .badge.build {
-    color: #2E7D48;
-    background: rgba(63, 158, 94, 0.10);
-    border: 1px solid rgba(63, 158, 94, 0.28);
-}
-
-[data-theme="light"] .devlab .badge.build {
-    color: #2E7D48;
-}
-
-:not([data-theme="light"]) .devlab .badge.build {
-    color: var(--devlab-green);
-    background: rgba(16, 185, 129, 0.10);
-    border: 1px solid rgba(16, 185, 129, 0.28);
+    color: var(--devlab-muted);
 }
 
 .devlab .badge.ai {
-    color: var(--devlab-orange);
-    background: rgba(245, 158, 11, 0.09);
-    border: 1px solid rgba(245, 158, 11, 0.30);
-}
-
-[data-theme="light"] .devlab .badge.ai {
-    background: rgba(226, 118, 46, 0.09);
-    border: 1px solid rgba(226, 118, 46, 0.30);
+    color: var(--devlab-muted);
 }
 
 .devlab .badge.handcoded {
     color: var(--devlab-muted);
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid var(--devlab-line);
-}
-
-[data-theme="light"] .devlab .badge.handcoded {
-    background: rgba(0, 0, 0, 0.012);
 }
 
 .devlab .star {
-    width: 9px;
-    height: 9px;
+    width: 7px;
+    height: 7px;
+    opacity: 0.45;
+    color: var(--devlab-orange);
 }
 
 .devlab .dot {
-    width: 6px;
-    height: 6px;
+    width: 4px;
+    height: 4px;
     border-radius: 50%;
     background: var(--devlab-green);
+    opacity: 0.45;
     display: inline-block;
-    animation: devlab-pulse 2.4s ease-in-out infinite;
-}
-
-@keyframes devlab-pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
 }
 
 .devlab .desc {
@@ -361,12 +335,25 @@
     }
 
     .devlab .project-icon {
-        width: 52px;
-        height: 52px;
-        border-radius: 11px;
+        width: 56px;
+        height: 56px;
+        border-radius: 12px;
     }
 
     .devlab .top {
         gap: 12px;
+    }
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .devlab .card:active {
+        border-color: rgba(245, 158, 11, 0.55);
+        box-shadow: 0 10px 26px -16px rgba(0, 0, 0, 0.45);
+        transform: translateY(-2px);
+    }
+
+    [data-theme="light"] .devlab .card:active {
+        border-color: rgba(226, 118, 46, 0.55);
+        box-shadow: 0 10px 26px -16px rgba(80, 50, 20, 0.4);
     }
 }
