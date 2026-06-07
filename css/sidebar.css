@@ -688,6 +688,21 @@ h2 {
 }
 
 /* ─── Project CTAs ───────────────────────────── */
+.project-hub-link {
+    margin-top: 8px;
+    font-size: 12px;
+}
+
+.project-hub-link a {
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.project-hub-link a:hover {
+    text-decoration: underline;
+}
+
 .project-links {
     display: flex;
     gap: 8px;
