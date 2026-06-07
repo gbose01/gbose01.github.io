@@ -21,6 +21,8 @@ html {
     --border-accent: rgba(245, 158, 11, 0.25);
     --green: #10B981;
     --green-dim: rgba(16, 185, 129, 0.1);
+    --green-glow: rgba(16, 185, 129, 0.4);
+    --green-border: rgba(16, 185, 129, 0.15);
 
     /* Premium Nav Icon Colors (Dark Theme) */
     --icon-projects: #38BDF8; /* Electric blue */
@@ -45,6 +47,8 @@ html {
     --border-accent: rgba(217, 119, 6, 0.30);
     --green: #059669;
     --green-dim: rgba(5, 150, 105, 0.12);
+    --green-glow: rgba(5, 150, 105, 0.4);
+    --green-border: rgba(5, 150, 105, 0.18);
 
     /* Premium Nav Icon Colors (Light Theme) */
     --icon-projects: #0284C7; /* Sky blue */
@@ -68,7 +72,7 @@ body {
 .layout {
     display: grid;
     grid-template-columns: 1fr 320px;
-    gap: 80px;
+    gap: 64px;
     max-width: 1100px;
     margin: 0 auto;
     padding: 60px 24px;
@@ -237,11 +241,11 @@ a:hover {
     font-weight: 500;
     color: var(--green);
     letter-spacing: 0.5px;
-    margin-bottom: 28px;
+    margin-bottom: 24px;
     background: var(--green-dim);
     padding: 5px 12px;
     border-radius: 20px;
-    border: 1px solid rgba(16, 185, 129, 0.15);
+    border: 1px solid var(--green-border);
 }
 
 .status-dot {
@@ -249,15 +253,15 @@ a:hover {
     height: 7px;
     border-radius: 50%;
     background: var(--green);
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+    box-shadow: 0 0 0 0 var(--green-glow);
     animation: pulse-green 2.5s infinite;
     flex-shrink: 0;
 }
 
 @keyframes pulse-green {
-    0%   { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
-    70%  { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    0%   { box-shadow: 0 0 0 0 var(--green-glow); }
+    70%  { box-shadow: 0 0 0 6px transparent; }
+    100% { box-shadow: 0 0 0 0 transparent; }
 }
 
 h1 {
@@ -266,7 +270,7 @@ h1 {
     letter-spacing: -2px;
     line-height: 1.1;
     color: var(--text);
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .hero-statement {
@@ -284,12 +288,18 @@ h1 {
 }
 
 /* ─── Hero Credentials ──────────────────────── */
+.hero-credentials-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 30px;
+}
+
 .hero-credentials {
     font-size: 13px;
     color: var(--text-muted);
     line-height: 1.6;
-    margin-top: 0;
-    margin-bottom: 8px;
+    margin: 0;
     letter-spacing: 0.1px;
 }
 
@@ -297,8 +307,7 @@ h1 {
     font-size: 13px;
     color: var(--text-muted);
     line-height: 1.6;
-    margin-top: 0;
-    margin-bottom: 24px;
+    margin: 0;
     letter-spacing: 0.1px;
 }
 
@@ -451,8 +460,8 @@ h1 {
 .hero-divider {
     height: 1px;
     background: var(--border);
-    margin-top: 21px;
-    margin-bottom: 31px;
+    margin-top: 32px;
+    margin-bottom: 48px;
 }
 
 /* Touch devices: icons stay vivid without hover */
@@ -562,6 +571,33 @@ h2 {
         position: sticky;
         top: 60px;
         height: fit-content;
+    }
+
+    /* Rail kicker ↔ Dev Lab kicker — shared horizontal gridline */
+    .sidebar-section {
+        margin-top: 300px;
+    }
+
+    /* Writing list — title/date as one unit, divider centered between entries */
+    .sidebar-post {
+        gap: 4px;
+        padding: 0 0 5px;
+        margin-bottom: 5px;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .sidebar-post:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+        margin-bottom: 0;
+    }
+
+    .sidebar-section .section-footer {
+        margin-top: 24px;
+    }
+
+    .sidebar .show-more {
+        padding: 8px 16px;
     }
 }
 
@@ -1049,7 +1085,7 @@ h2 {
 
 /* ─── Profile Photo ─────────────────────────── */
 .profile-photo-wrap {
-    margin-bottom: 28px;
+    margin-bottom: 20px;
     text-align: center;
 }
 
@@ -1128,8 +1164,8 @@ h2 {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 6px;
-    margin-bottom: 28px;
+    gap: 8px;
+    margin-bottom: 40px;
 }
 
 .sidebar-trait {
@@ -1315,6 +1351,7 @@ h2 {
         flex-direction: column;
         gap: 8px;
         margin-top: 24px;
+        margin-bottom: 0;
     }
 
     .hero-credentials,

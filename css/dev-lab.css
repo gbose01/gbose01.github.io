@@ -6,7 +6,11 @@
     --devlab-muted: #7A7585;
     --devlab-line: rgba(255, 255, 255, 0.07);
     --devlab-orange: #F59E0B;
-    --devlab-green: #10B981;
+    --devlab-orange-dim: rgba(245, 158, 11, 0.10);
+    --devlab-orange-border: rgba(245, 158, 11, 0.25);
+    --devlab-chip-ink: #A8A4A0;
+    --devlab-chip-neutral-bg: rgba(255, 255, 255, 0.04);
+    --devlab-chip-neutral-border: rgba(255, 255, 255, 0.08);
     --devlab-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     --devlab-cols: 2;
     --devlab-clamp: 3;
@@ -21,7 +25,11 @@
     --devlab-muted: #928D82;
     --devlab-line: #E6E1D5;
     --devlab-orange: #E2762E;
-    --devlab-green: #3F9E5E;
+    --devlab-orange-dim: rgba(226, 118, 46, 0.10);
+    --devlab-orange-border: rgba(226, 118, 46, 0.28);
+    --devlab-chip-ink: #2B2A27;
+    --devlab-chip-neutral-bg: #EDE9E0;
+    --devlab-chip-neutral-border: #E0DBD0;
 }
 
 .devlab * {
@@ -145,47 +153,58 @@
 .devlab .badge {
     display: inline-flex;
     align-items: center;
-    gap: 3px;
+    gap: 4px;
     font-size: 10px;
     font-weight: 500;
-    padding: 0;
-    border: none;
-    border-radius: 0;
-    background: transparent;
+    padding: 3px 8px;
+    border: 1px solid transparent;
+    border-radius: 5px;
     white-space: nowrap;
-    color: var(--devlab-muted);
 }
 
+/* Featured — quiet editorial neutral (no color budget) */
 .devlab .badge.featured {
-    color: var(--devlab-muted);
+    color: var(--devlab-chip-ink);
+    background: var(--devlab-chip-neutral-bg);
+    border-color: var(--devlab-chip-neutral-border);
 }
 
+/* Currently building — loudest badge; alive signal */
 .devlab .badge.build {
-    color: var(--devlab-muted);
+    color: var(--green);
+    background: var(--green-dim);
+    border-color: var(--green-border);
+    font-weight: 600;
 }
 
+/* AI — amber tinted-outline, same weight class as build */
 .devlab .badge.ai {
-    color: var(--devlab-muted);
+    color: var(--devlab-orange);
+    background: var(--devlab-orange-dim);
+    border-color: var(--devlab-orange-border);
 }
 
 .devlab .badge.handcoded {
     color: var(--devlab-muted);
+    background: transparent;
+    border-color: var(--devlab-line);
 }
 
 .devlab .star {
     width: 7px;
     height: 7px;
-    opacity: 0.45;
-    color: var(--devlab-orange);
+    opacity: 0.55;
+    color: currentColor;
 }
 
 .devlab .dot {
-    width: 4px;
-    height: 4px;
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
-    background: var(--devlab-green);
-    opacity: 0.45;
-    display: inline-block;
+    background: var(--green);
+    flex-shrink: 0;
+    box-shadow: 0 0 0 0 var(--green-glow);
+    animation: pulse-green 2.5s infinite;
 }
 
 .devlab .desc {
@@ -337,6 +356,30 @@
 .devlab .devlab-more svg {
     width: 14px;
     height: 14px;
+}
+
+/* Desktop spacing — even grid field, explicit card rhythm */
+@media (min-width: 901px) {
+    .devlab .grid {
+        gap: 16px;
+    }
+
+    .devlab .card {
+        gap: 0;
+    }
+
+    .devlab .desc {
+        margin-top: 14px;
+    }
+
+    .devlab .tags {
+        margin-top: 14px;
+    }
+
+    .devlab .foot {
+        margin-top: 16px;
+        padding-top: 0;
+    }
 }
 
 @media (max-width: 640px) {
