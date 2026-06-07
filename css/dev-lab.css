@@ -272,6 +272,24 @@
     background: rgba(226, 118, 46, 0.07);
 }
 
+.devlab .lnk.play {
+    color: #7dbc75;
+    border-color: rgba(125, 188, 117, 0.35);
+}
+
+[data-theme="light"] .devlab .lnk.play {
+    color: #5a9a52;
+    border-color: rgba(90, 154, 82, 0.35);
+}
+
+.devlab .lnk.play:hover {
+    background: rgba(125, 188, 117, 0.08);
+}
+
+[data-theme="light"] .devlab .lnk.play:hover {
+    background: rgba(90, 154, 82, 0.08);
+}
+
 .devlab .lnk svg {
     width: 12px;
     height: 12px;
@@ -330,18 +348,57 @@
         font-size: 14px;
     }
 
-    .devlab .stat {
-        margin-bottom: 18px;
-    }
-
     .devlab .project-icon {
         width: 56px;
         height: 56px;
         border-radius: 12px;
     }
+}
+
+/* Mobile spacing — 8px scale, gap encodes grouping */
+@media (max-width: 600px) {
+    .devlab .kicker {
+        margin: 0;
+    }
+
+    .devlab .lead {
+        margin: 12px 0 0;
+        max-width: none;
+    }
+
+    .devlab .stat {
+        margin: 8px 0 0;
+    }
+
+    .devlab .grid {
+        margin-top: 24px;
+        gap: 16px;
+    }
+
+    .devlab .card {
+        padding: 20px;
+        gap: 0;
+    }
 
     .devlab .top {
         gap: 12px;
+    }
+
+    .devlab .badges {
+        margin-top: 8px;
+    }
+
+    .devlab .desc {
+        margin-top: 14px;
+    }
+
+    .devlab .tags {
+        margin-top: 14px;
+    }
+
+    .devlab .foot {
+        margin-top: 16px;
+        padding-top: 0;
     }
 }
 
