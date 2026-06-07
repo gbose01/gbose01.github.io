@@ -461,7 +461,7 @@ h1 {
     height: 1px;
     background: var(--border);
     margin-top: 32px;
-    margin-bottom: 32px;
+    margin-bottom: 26px;
 }
 
 /* Touch devices: icons stay vivid without hover */
