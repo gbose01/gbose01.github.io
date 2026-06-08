@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0A0A0F">
+    <meta name="description" content="On a multi-week agent build, chat context resets every session. Root-level docs like ARCHITECTURE.md and COMMONMISTAKES.md are how the model kept state.">
+    <title>Living Docs: Giving Your Agent a Memory That Survives Sessions | Gaurab Bose</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/sidebar.css">
+    <script src="../js/theme.js"></script>
+</head>
+<body>
+    <div class="post-container">
+        <a href="../blog.html" class="post-back">← Writing</a>
+
+        <header class="post-header">
+            <img src="../icons/projects/grove-keepers-128.png" alt="" class="post-project-icon" width="64" height="64">
+            <h1>Living Docs: Giving Your Agent a Memory That Survives Sessions</h1>
+            <p class="post-date">Jun 8, 2026</p>
+        </header>
+
+        <div class="post-body">
+
+        <p>I spent several weeks building a complex UI project with Claude Code and Cursor. Dozens of sessions. Context windows that rolled over. New chats that started cold.</p>
+
+        <p>The code shipped. What kept the build from dissolving into drift was not better prompting. It was a small set of markdown files at the repo root that the agent read before every serious edit.</p>
+
+        <p><code>ARCHITECTURE.md</code>. <code>ECONOMY.md</code>. <code>DESIGN_RULES.md</code>. <code>COMMONMISTAKES.md</code>.</p>
+
+        <p>These were not documentation in the usual sense. They were <strong>memory for the co-builder</strong>. A way to preserve structure, domain rules, visual constraints, and lessons already paid for so I did not re-teach them in every new session.</p>
+
+        <p>This post is about that layer. If you read my <a href="building-grove-keepers.html">first Grove Keepers write-up</a>, that piece covered the full build story. This one zooms in on the doc stack that made multi-week agentic work possible.</p>
+
+        <h2>Chat is session memory. Files are project memory.</h2>
+
+        <p>Every agent session starts with amnesia. You can paste summaries, attach files, or write increasingly long system prompts. That scales to an afternoon. It does not scale to a month.</p>
+
+        <p>What breaks first on long builds:</p>
+
+        <ul>
+            <li><strong>Structural drift.</strong> The agent adds a manager, wires a signal the wrong way, or duplicates a pattern you already rejected three sessions ago.</li>
+            <li><strong>Domain re-litigation.</strong> You explain the reward curve, the failure consolation rate, or the color token rules again because the new chat never saw the old one.</li>
+            <li><strong>Repeat bugs.</strong> The model confidently reintroduces a fix you already discovered. Camera coordinate spaces. GUI input order. Language syntax it defaults to from training data.</li>
+        </ul>
+
+        <p>The instinct is to solve this with more context in the prompt. That hits token limits and still vanishes when the session ends.</p>
+
+        <p>The fix I landed on: <strong>write the state down in files the agent can re-read on demand.</strong> Not after the project ships. From week one, updated as often as the code.</p>
+
+        <p>Same philosophy I use in my Obsidian vault (<a href="obsidian-cursor-thinking-backend.html">file over AI</a>). The repo version is just project-scoped memory: one codebase, one truth, readable by any agent session that opens the folder.</p>
+
+        <h2>The doc stack</h2>
+
+        <p>Here is what lived at the root of the project and what each file was for.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>File</th>
+                    <th>What it remembers</th>
+                    <th>When the agent reads it</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>ARCHITECTURE.md</code></td>
+                    <td>Scene tree, autoload graph, signal wiring, module ownership, data flows</td>
+                    <td>Before adding nodes, scripts, or cross-module connections</td>
+                </tr>
+                <tr>
+                    <td><code>ECONOMY.md</code></td>
+                    <td>Formulas, tuning curves, balance invariants, what "fair" means at early vs. late progression</td>
+                    <td>Before touching any number that affects feel</td>
+                </tr>
+                <tr>
+                    <td><code>DESIGN_RULES.md</code></td>
+                    <td>Typography scale, spacing grid, color language, non-negotiable visual patterns</td>
+                    <td>Before editing UI scripts or drawn overlays</td>
+                </tr>
+                <tr>
+                    <td><code>COMMONMISTAKES.md</code></td>
+                    <td>Symptom, root cause, fix, prevention rule for every non-obvious bug</td>
+                    <td>First stop when debugging; append after every painful fix</td>
+                </tr>
+                <tr>
+                    <td><code>CLAUDE.md</code></td>
+                    <td>Index and session contract: which files exist, when to update them, build checklist</td>
+                    <td>Auto-read at session start (Claude Code convention)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>Supporting docs (<code>COLOR_OVERHAUL.md</code>, <code>UI_TEARDOWN.md</code>, <code>DESIGN_MOCK_PROMPT.md</code>, <code>IMPLEMENTATION_HANDOFF.md</code>) carried specialized context. The four files above were the <strong>core memory</strong>. Everything else pointed back to them.</p>
+
+        <h2>ARCHITECTURE.md: where the system lives</h2>
+
+        <p>This was the most valuable file. Not a diagram in a wiki nobody opens. A living reference the agent was told to read instead of grepping the whole repo.</p>
+
+        <p>It contained:</p>
+
+        <ul>
+            <li><strong>Scene tree</strong> with node names, parent paths, and which script owned each piece</li>
+            <li><strong>Autoload dependency graph</strong> and load order (what can call what on startup)</li>
+            <li><strong>Signal graph</strong> listing every <code>EventBus</code> connection and its consumer</li>
+            <li><strong>Design system layer</strong> pointing to <code>Palette.gd</code> and <code>UITheme.gd</code> as the only sources for visual tokens</li>
+        </ul>
+
+        <p>The header said what mattered most:</p>
+
+        <blockquote>
+            <p>Update this after every session that changes nodes, scripts, signals, or resources.<br>
+            This is the authoritative reference for how the game is wired together.</p>
+        </blockquote>
+
+        <p>That was not aspirational. It was the rule. When the agent added a new HUD listener or moved a node, updating <code>ARCHITECTURE.md</code> was part of finishing the task. If the doc drifted, the next session would wire features against a fiction.</p>
+
+        <p><strong>Why this works for agents:</strong> models are good at local edits and bad at holding global structure in working memory. A single file that answers "what connects to what" prevents the agent from inventing plausible-but-wrong wiring. When I said "add a listener for seeds changed," the agent could look up the existing <code>EventBus.seeds_changed</code> graph and attach to the pattern already there.</p>
+
+        <p><strong>What I would copy:</strong> one <code>ARCHITECTURE.md</code> per repo. Scene or module tree, dependency order, event/API graph, and a hard rule: structural changes do not merge without a doc update.</p>
+
+        <h2>ECONOMY.md: domain spec as contract</h2>
+
+        <p>Architecture covers wiring. Domain docs cover <strong>meaning</strong>: the numbers and rules that define how the product should feel.</p>
+
+        <p><code>ECONOMY.md</code> opened with:</p>
+
+        <blockquote>
+            <p>All formulas live in <code>scripts/core/EconomyConfig.gd</code> as static methods.<br>
+            Read this before touching any system that involves numbers.</p>
+        </blockquote>
+
+        <p>It documented five interlocking systems (enemy scaling, damage scaling, seed rewards, upgrade costs, grid unlock gates) with the actual formulas, safety invariants, and explicit bans. Example invariant: a level-1 unit must clear a baseline enemy in under four seconds at any wave. Example ban: never add seed income that bypasses the reward curve.</p>
+
+        <p>When balance felt wrong, I edited <code>EconomyConfig.gd</code> and checked the doc still described reality. When the agent tuned a reward or cost, I pointed it at <code>ECONOMY.md</code> first so it did not improvise a second economy in a corner of the codebase.</p>
+
+        <p><strong>Why this works for agents:</strong> without a domain spec, the model optimizes for locally plausible numbers. Each session can nudge rewards, costs, and scaling in slightly different directions until the system incoheres. A single markdown contract gives the agent the same constraints a game designer would hand a junior engineer.</p>
+
+        <p><strong>What I would copy:</strong> if your project has tunable behavior (pricing, scoring, permissions, rollout percentages), put the formulas and invariants in one <code>DOMAIN.md</code> or <code>ECONOMY.md</code>. Code implements it. The doc explains why the numbers exist.</p>
+
+        <h2>DESIGN_RULES.md: constraints the agent cannot infer from code</h2>
+
+        <p>Implementation agents love magic numbers. <code>#FFAA33</code> padding of 26px. A fourth font size that "looks fine here."</p>
+
+        <p><code>DESIGN_RULES.md</code> was the constraint surface for visual work:</p>
+
+        <ul>
+            <li>Two token files only: <code>Palette.gd</code> for color, <code>UITheme.gd</code> for type, spacing, motion</li>
+            <li>Eight allowed type sizes. Eight-point spacing grid. No rogue hex codes.</li>
+            <li>Color language rules (amber for success affordance, green reserved for nature motifs, not "go" buttons)</li>
+        </ul>
+
+        <p>It also pointed to Cursor rule files that enforced the same constraints in specific paths. The markdown was the human-readable spec. The rules were the automated guardrail. Both had to agree.</p>
+
+        <p><strong>Why this works for agents:</strong> visual consistency is not recoverable from screenshots in chat. By the time you are three weeks in, the agent has seen hundreds of partial UI states. Without a written design contract, each new screen drifts. <code>DESIGN_RULES.md</code> gave a single answer to "what size is a caption?" and "what color means affordable?"</p>
+
+        <p><strong>What I would copy:</strong> if agents touch UI, write <code>DESIGN_RULES.md</code> before the implementation marathon. Link it from your agent entry file. Pair it with linter rules or Cursor rules for the paths where drift is most expensive.</p>
+
+        <h2>COMMONMISTAKES.md: institutional memory for repeat failures</h2>
+
+        <p>This file paid for itself fastest.</p>
+
+        <p>Every entry followed the same shape:</p>
+
+        <pre><code>Symptom → Root cause → Fix → Prevention rule</code></pre>
+
+        <p>Some entries were language gotchas the model kept reintroducing (Python f-strings in GDScript, <code>len()</code> instead of <code>.size()</code>). Others were project-specific bugs that took real time to diagnose:</p>
+
+        <ul>
+            <li><strong>Camera vs. mouse space:</strong> comparing <code>global_position</code> on world nodes to raw screen mouse coords silently broke all click hit-tests after a <code>Camera2D</code> was added. Prevention: always convert through <code>get_canvas_transform().affine_inverse()</code>.</li>
+            <li><strong>GUI eating world clicks:</strong> full-screen overlays with <code>mouse_filter=STOP</code> did not block <code>_input()</code> on world nodes because GUI processes later. Prevention: use <code>_unhandled_input()</code> for world hit-tests when UI can be on screen.</li>
+        </ul>
+
+        <p>The header instruction:</p>
+
+        <blockquote>
+            <p>CHECK THIS FIRST when debugging. Add a new entry every time you hit a non-obvious error or a fix that took more than one attempt.</p>
+        </blockquote>
+
+        <p>Agents repeat mistakes. That is not a character flaw. It is what happens when each session sees the fixed code but not the debugging story. <code>COMMONMISTAKES.md</code> preserved the story. After entry 016 existed, I stopped losing an hour to the same input-order bug every time a new chat tried to wire click handling.</p>
+
+        <p><strong>Why this works for agents:</strong> it is an append-only error log written for retrieval. Short, searchable, actionable. The model does not need to have lived through the bug. It needs to read entry 015 before touching input code.</p>
+
+        <p><strong>What I would copy:</strong> start <code>COMMONMISTAKES.md</code> on day one with five likely failures for your stack. Add one entry per painful fix. Tell the agent to read it before debugging and append after fixing.</p>
+
+        <h2>CLAUDE.md: the index that wires it together</h2>
+
+        <p>Individual docs help. An <strong>entry file</strong> that tells the agent they exist helps more.</p>
+
+        <p><code>CLAUDE.md</code> at the repo root (Claude Code reads this automatically) was the table of contents:</p>
+
+        <ul>
+            <li>Which companion files exist and what each is for</li>
+            <li>The update rule for <code>ARCHITECTURE.md</code> after structural changes</li>
+            <li>The "check first" rule for <code>COMMONMISTAKES.md</code> when debugging</li>
+            <li>The "read before UI work" rule for <code>DESIGN_RULES.md</code></li>
+        </ul>
+
+        <p>Think of it as <code>AGENTS.md</code> for a single project: not the memory itself, but the map to the memory.</p>
+
+        <p>If you use Cursor instead of Claude Code, the same content can live in <code>.cursor/rules</code> or a root <code>AGENTS.md</code>. The format matters less than the contract: <strong>at session start, the agent knows which files carry state.</strong></p>
+
+        <h2>How I used these in practice</h2>
+
+        <p>A typical implementation request looked like this:</p>
+
+        <ol>
+            <li><strong>Scope the change.</strong> "Add a panel that shows totem stats on long-press."</li>
+            <li><strong>Load structure.</strong> "Read <code>ARCHITECTURE.md</code> BattleUI section and <code>DESIGN_RULES.md</code> type scale. Propose the node placement and tokens before writing code."</li>
+            <li><strong>Implement under constraints.</strong> Agent edits scripts; uses <code>Palette.*</code> and <code>UITheme.*</code> only.</li>
+            <li><strong>Update memory.</strong> If a new signal or node was added, patch <code>ARCHITECTURE.md</code> in the same session.</li>
+            <li><strong>Log failures.</strong> If we hit a new GDScript or input bug, append <code>COMMONMISTAKES.md</code> before moving on.</li>
+        </ol>
+
+        <p>That five-step loop was slower per task than "just vibe code it." It was faster per <strong>project</strong> because I stopped re-explaining the same system every Tuesday.</p>
+
+        <p>Token cost also improved. Pointing at one section of <code>ARCHITECTURE.md</code> beat pasting chat transcripts or <code>@</code>-mentioning fifteen files.</p>
+
+        <h2>Keeping docs alive (or they become harmful)</h2>
+
+        <p>Stale docs are worse than no docs. The agent will trust them and build the wrong thing with confidence.</p>
+
+        <p>Rules that kept the stack honest:</p>
+
+        <ul>
+            <li><strong>Structural change → update <code>ARCHITECTURE.md</code> before session end.</strong> Non-negotiable.</li>
+            <li><strong>Formula change → update <code>ECONOMY.md</code> in the same PR as <code>EconomyConfig.gd</code>.</strong></li>
+            <li><strong>New visual pattern → extend <code>DESIGN_RULES.md</code> before copying it elsewhere.</strong></li>
+            <li><strong>Painful bug → append <code>COMMONMISTAKES.md</code> or the bug will recur.</strong></li>
+        </ul>
+
+        <p>I treated doc drift like a failing test. If the architecture file did not match the scene tree, we stopped feature work and fixed the doc first.</p>
+
+        <h2>How this connects to vault-level memory</h2>
+
+        <p>Repo docs solve <strong>one project across weeks</strong>.</p>
+
+        <p>My Obsidian vault solves <strong>identity, procedures, and cross-project context across months</strong> (<a href="qmd-obsidian-setup.html">QMD + Obsidian</a>, then <a href="obsidian-cursor-thinking-backend.html">Ideaverse + Cursor MCP</a>).</p>
+
+        <p>Different scope. Same idea: <strong>the model is stateless; the files are not.</strong></p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Layer</th>
+                    <th>Scope</th>
+                    <th>Examples</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Repo root docs</td>
+                    <td>One codebase</td>
+                    <td><code>ARCHITECTURE.md</code>, <code>ECONOMY.md</code>, <code>COMMONMISTAKES.md</code></td>
+                </tr>
+                <tr>
+                    <td>Vault / MCP</td>
+                    <td>All projects, identity, skills</td>
+                    <td><code>Me.md</code>, <code>Vault Map.md</code>, <code>Skills Map.md</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>You need both if you ship multiple things with agents. Project docs keep the agent aligned inside the repo. Vault docs keep the agent aligned across repos.</p>
+
+        <h2>Starter set for your next agent build</h2>
+
+        <p>You do not need ten files on day one. You need four habits:</p>
+
+        <ol>
+            <li><strong><code>ARCHITECTURE.md</code></strong> when the codebase has more than one module and anything talks via events or shared state.</li>
+            <li><strong><code>DOMAIN.md</code></strong> (or <code>ECONOMY.md</code>, <code>BILLING.md</code>, <code>PERMISSIONS.md</code>) when tunable rules define product feel.</li>
+            <li><strong><code>DESIGN_RULES.md</code></strong> when agents touch UI and you care about consistency.</li>
+            <li><strong><code>COMMONMISTAKES.md</code></strong> from the first week, appended every time a fix takes more than one attempt.</li>
+        </ol>
+
+        <p>Plus an <strong>entry file</strong> (<code>CLAUDE.md</code>, <code>AGENTS.md</code>, or Cursor rules) that tells the agent these exist and when to read them.</p>
+
+        <p>The writing takes an hour upfront. The payoff is not prettier documentation. It is that session forty still knows what session four decided.</p>
+
+        <h2>Closing</h2>
+
+        <p>The hardest part of my build was not syntax. The agent typed plenty of syntax. The hard part was <strong>continuity</strong>: making a stateless collaborator behave like it remembered the system we were building.</p>
+
+        <p>Chat could not carry that. Markdown at the repo root could.</p>
+
+        <p>If you are building with agents for more than a weekend, invest in the doc stack before you invest in a bigger context window. <code>ARCHITECTURE.md</code> is not paperwork. It is how the model knows where it is.</p>
+
+        </div>
+    </div>
+</body>
+</html>
