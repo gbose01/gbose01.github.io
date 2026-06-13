@@ -63,7 +63,7 @@ Uses CSS custom properties (see `css/sidebar.css`):
 - Stripped away visual badge capsule chips and borders entirely to prevent shape overload with the navigation bar.
 - Split career milestones (`.hero-credentials`) and academic credentials (`.hero-education`) into two parallel, perfectly aligned, high-density rows directly beneath the navigation capsule, using distinct emoji indicators (`💼` for professional history and `🎓` for education).
 - Sized both rows elegantly at `13px` with a muted tone (`var(--text-muted)`) and 100% consistent custom-styled bold dot separators (`.divider-dot` at `font-weight: 700`) throughout both lines, letting the primary navigation dock capture 100% of visual focus.
-- Fine-tuned spacing to avoid whitespace gaps: `.hero` bottom padding is reduced to `20px`, `.hero-credentials` bottom margin is set to `8px`, and `.hero-education` bottom margin is set to `0`, ensuring a perfectly balanced `76px` total vertical gap before the PROJECTS section header text begins.
+- Fine-tuned spacing to avoid whitespace gaps: `.hero` bottom padding is set to `45px` on the homepage, `.hero-credentials` bottom margin is set to `8px`, and `.hero-education` bottom margin is set to `0`, ensuring a perfectly balanced `83px` total vertical gap (45px hero bottom padding + 38px section top padding) before the PROJECTS section header text begins.
 
 
 ### 2. Homepage Dual-Mode Project Catalog

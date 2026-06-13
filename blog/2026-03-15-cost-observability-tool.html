@@ -24,11 +24,11 @@
 
         <div class="post-body">
 
-        <p>I run an AI agent (OpenClaw) on Discord that helps me with coding, writing, and daily tasks. Every message triggers an LLM API call, and here's the thing: <strong>I had no idea how much each conversation was costing me.</strong></p>
+        <p>I run an AI agent (OpenClaw) on Discord that helps me with coding, writing, and daily tasks. Most LLM platforms give you a single aggregated billing chart, but that tells you nothing about <em>where</em> the money actually goes.</p>
 
-        <p>Was that blog post draft I asked for worth $0.02 or $0.50? Which channel was eating through my API quota? Did something weird happen last Tuesday that blew up my bill?</p>
+        <p>I keep different workflows in different Discord channels: one for development, one for blogging, and one for scheduled background heartbeats. What I needed to know was the exact cost <em>per channel</em>. How much was I spending on dev vs. blogging vs. background tasks? Standard dashboards could not show me that.</p>
 
-        <p>The OpenClaw framework logs everything to JSONL files, rich data with token counts, costs, model info, but there's no dashboard to actually <em>see</em> it. So I built one.</p>
+        <p>The OpenClaw framework logs everything to JSONL files, rich data with token counts, costs, model info, but there's no dashboard to actually <em>see</em> the per-channel breakdown. So I built one.</p>
 
         <h2>What I Built</h2>
 
