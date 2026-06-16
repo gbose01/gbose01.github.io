@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#0A0A0F">
-    <meta name="description" content="Fine-tuning Nemotron for the Kaggle Model Reasoning Challenge taught me that leaderboard gaps are mostly a compute budget problem—not a skill gap.">
+    <meta name="description" content="Fine-tuning Nemotron for the Kaggle Model Reasoning Challenge taught me that leaderboard gaps map to compute budget tiers: $5, $100, and $15,000.">
     <title>The $5, $100, and $15,000 Ways to Win a Kaggle Reasoning Competition | Gaurab Bose</title>
     <link rel="icon" type="image/png" href="../favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -26,47 +26,71 @@
 
         <p class="post-repo"><strong>Source code:</strong> <a href="https://github.com/gbose01/nemotron_kaggle" target="_blank" rel="noopener noreferrer">github.com/gbose01/nemotron_kaggle</a></p>
 
-        <p>There are three ways to compete in a Kaggle reasoning challenge: spend <strong>$5</strong>, <strong>$100</strong>, or <strong>$15,000</strong>. I learned this the hard way—not from a tutorial, but from fine-tuning NVIDIA's Nemotron model for the Model Reasoning Challenge and landing a <strong>0.62</strong> score while the top of the leaderboard hit <strong>0.90</strong>.</p>
+        <p>Kaggle reasoning competitions have three realistic budget tiers: about <strong>$5</strong>, about <strong>$100</strong>, and about <strong>$15,000</strong>. I learned that mapping after fine-tuning NVIDIA's Nemotron-3-Nano-30B for the Model Reasoning Challenge and landing a <strong>0.62</strong> score while the leaderboard topped out around <strong>0.90</strong>.</p>
 
-        <p>That 0.28 gap looks like a skill problem. It isn't. With a learner-tier budget, I proved the pipeline works. Closing the gap to 0.90 is a compute problem—roughly three orders of magnitude more data generation and training spend. Here's the framework I wish I'd had before I started.</p>
+        <p>That 0.28 gap looks like a skill problem until you price out what the top teams actually did. I spent roughly <strong>$5</strong> on a RunPod RTX 4090, shipped a valid LoRA adapter, and proved the full pipeline works. Closing the rest of the gap is mostly a data-generation and training-spend problem.</p>
 
-        <h2>From Measuring Models to Training One</h2>
+        <h2>From Benchmarking to Fine-Tuning</h2>
 
-        <p>After building <strong>MetaCode</strong>—a benchmark for measuring whether AI models know what they don't know—I wanted to go further. Evaluating performance is only half the problem. The next step is learning how to train a model to be better at specific things.</p>
+        <p>After building <strong>MetaCode</strong>, a Kaggle benchmark for measuring whether models know what they don't know, I wanted the other half of the loop: actually updating model weights to improve reasoning.</p>
 
-        <p>I entered the NVIDIA Nemotron Model Reasoning Challenge on Kaggle. The goal was to take an open-source base model (Nemotron-3-Nano-30B) and improve its chain-of-thought reasoning—not just score it, but actually update its weights.</p>
+        <p>The Nemotron challenge is a fine-tuning competition, not an API bake-off. You start from <code>NVIDIA/Nemotron-3-Nano-30B-Base</code>, enrich training rows with chain-of-thought traces, and submit a LoRA adapter ZIP (rank ≤ 32). Kaggle scores you on <code>\boxed{Answer}</code> extraction with exact or numeric-tolerance matching.</p>
 
-        <p>The competition required enriching training examples with reasoning traces. A raw pair like <em>"What is the sum of the first five prime numbers?"</em> → <code>28</code> becomes something like: <em>"The first five primes are 2, 3, 5, 7, and 11. Adding them: 2 + 3 + 5 + 7 + 11 = 28."</em> I built scripts—with AI agents handling much of the generation—to produce those traces at scale, then fine-tuned the base model with 4-bit QLoRA supervised fine-tuning on the enriched dataset.</p>
+        <p>A raw training row like <em>"What is the sum of the first five prime numbers?"</em> with answer <code>28</code> becomes a trace like: <em>"The first five primes are 2, 3, 5, 7, and 11. Adding them: 2 + 3 + 5 + 7 + 11 = 28. \boxed{28}"</em></p>
 
-        <h2>What $5 Actually Buys You</h2>
+        <p>I used Cursor agents to build most of the repo: <code>generate_sft_dataset.py</code> for trace generation, <code>data_cleaner.py</code> for the CSV, <code>train_qlora.py</code> for 4-bit QLoRA SFT, and <code>pack_submission.py</code> to zip the adapter for upload.</p>
 
-        <p>The theory was straightforward. The execution was not. The vast majority of my time went to infrastructure: dependency conflicts, memory limits, and failed local runs. I pivoted three times before settling on RunPod—a single RTX 4090 for a few hours, without the setup overhead of a traditional cloud provider. Total compute bill: about <strong>$5</strong>.</p>
+        <h2>What Broke Before the $5 Run</h2>
 
-        <p>Shipping the fine-tuned model and submitting it was the real win. My final score was <strong>0.62</strong>. That is nowhere near the leaderboard's <strong>0.90</strong>, but for a learner project it did exactly what I needed: it proved that winning these competitions is actually a compute-cost game. The mechanics work at Tier 1. The leaderboard lives at Tier 3.</p>
+        <p>The training recipe was simple. The environment work was not.</p>
 
-        <h2>Three Budget Tiers</h2>
+        <p><strong>Attempt 1: local Windows.</strong> Dependency hell. <code>bitsandbytes</code>, <code>mamba-ssm</code>, and a 30B gated model do not play nicely on a laptop. I burned days on CUDA version mismatches and OOM errors before admitting this was a cloud problem.</p>
 
-        <p>Once I saw the scoreboard through a budget lens, the competition stopped looking mysterious. Kaggle reasoning challenges break down into three distinct tiers:</p>
+        <p><strong>Attempt 2: Kaggle Blackwell, internet off.</strong> The competition pushes you toward Kaggle's RTX PRO 6000 Blackwell pods, but internet is disabled on that accelerator. That means pre-staging wheels, mocking CUTLASS imports, patching Triton for Blackwell, and praying <code>mamba_ssm</code> imports cleanly. My <code>blackwell_env.py</code> file exists because of this path. I got smoke tests working, but the setup tax is brutal for a side project.</p>
 
-        <h3>Tier 1: The Learner ($10 or less)</h3>
+        <p><strong>Attempt 3: RunPod, internet on.</strong> This is what actually shipped. A single RTX 4090 for a few hours, with two fixes that mattered: pin <code>torch==2.4.1</code> and <code>triton==3.0.0</code> so <code>mamba-ssm</code> builds without upgrading PyTorch, and set <code>HF_HOME=/workspace/hf_cache</code> so the 60 GB model download lands on the volume disk instead of the tiny container partition.</p>
 
-        <p>This was my approach. Rely entirely on open-source datasets and minimal compute. The focus is getting a pipeline working—not topping the leaderboard. I used a cheap cloud GPU (a single RTX 4090 on RunPod) for a few hours to run QLoRA parameter-efficient fine-tuning on a small sample of data. The goal is learning the mechanics: data enrichment, training config, submission flow.</p>
+        <p>Total compute bill: about <strong>$5</strong>.</p>
 
-        <h3>Tier 2: The Solo Competitor (~$100)</h3>
+        <pre><code>python src/train_qlora.py --config src/train_config.yaml
+python src/pack_submission.py \
+  --source outputs/nemotron_lora_adapter \
+  --output submission.zip
+python src/verify_submission.py --submission submission.zip</code></pre>
 
-        <p>With a hundred bucks, efficiency is everything. Instead of generating your own data, you surgically curate and filter the best open-source datasets. You run micro-experiments on cheap hardware to find workable hyperparameters, then spend the bulk of the budget on a single high-quality supervised fine-tuning run—and perhaps one Direct Preference Optimization run—on an A100.</p>
+        <p>The real win was not the score. It was a <code>submission.zip</code> that passed verification and scored on the leaderboard at all.</p>
 
-        <p>The move that lets a solo builder punch above their weight: <strong>test-time compute</strong>. Kaggle gives you free inference. Generate 15 different answers per problem and submit the majority vote. You are not buying more training—you are buying more chances to be right at submission time. That trick is counterintuitive and underused at this tier.</p>
+        <h2>The Scoreboard Is a Budget Map</h2>
 
-        <h3>Tier 3: The State-of-the-Art Factory (~$15,000)</h3>
+        <p>My final score was <strong>0.62</strong>. The top of the board was around <strong>0.90</strong>. Once I stopped treating that gap as a mystery and started pricing out what each tier buys, the competition got legible.</p>
 
-        <p>This is how the top leaderboard spots are won. It is a shift from constrained efficiency to capability maximization. Nearly half this budget goes toward a "data factory"—renting massive 8× H100 clusters to run a 340B teacher model that generates hundreds of thousands of synthetic reasoning traces. You abandon QLoRA for full-parameter fine-tuning and use iterative self-play (STaR) loops where the model trains, evaluates its own answers, and retrains continuously.</p>
+        <blockquote>
+            <p>Leaderboard score is mostly a function of how much synthetic reasoning data you can afford to generate, not how clever your training script is.</p>
+        </blockquote>
 
-        <p>At this tier, infrastructure stops being the bottleneck because you throw money at it. The differentiator becomes data quality at scale—and the budget to generate it.</p>
+        <h3>Tier 1: Learner (~$5)</h3>
 
-        <h2>What Changed for Me</h2>
+        <p>This was my run. Open-source datasets, minimal compute, one goal: prove the pipeline end to end.</p>
 
-        <p>Learning to fine-tune an open-source model shifted my perspective on AI development. The barrier is no longer access to the models. The barrier is wrangling the infrastructure to get the data in, and then having the budget to train at scale.</p>
+        <p>I trained 4-bit QLoRA on a small SFT JSONL sample, packed the adapter, and submitted. You learn data enrichment, chat-template formatting, submission layout, and where the eval harness is picky (single backslash <code>\boxed{}</code>, tokenizer files bundled with the adapter). You are not buying leaderboard position. You are buying fluency in the mechanics.</p>
+
+        <h3>Tier 2: Solo competitor (~$100)</h3>
+
+        <p>If I had another hundred dollars, I would not spend it on more hyperparameter fishing. I would spend it on curation and one serious SFT run on an A100.</p>
+
+        <p>The lever I would test first is <strong>test-time compute</strong>. Kaggle gives you free inference at scoring time. My repo already has <code>consensus_inference.py</code> for multi-sample voting: generate 15 answers per problem, majority-vote the <code>\boxed{}</code> value. That buys accuracy without another training dollar. I did not push this hard on my $5 run, but it is the highest-ROI move I see at this tier.</p>
+
+        <h3>Tier 3: Leaderboard factory (~$15,000)</h3>
+
+        <p>The 0.90 scores come from a different game. Roughly half the budget goes to a data factory: rent 8× H100 clusters, run a 340B teacher model, and generate hundreds of thousands of synthetic reasoning traces. Then full-parameter or high-rank fine-tuning, STaR-style self-play loops, and iteration until the boxed-answer metric stops moving.</p>
+
+        <p>At that tier, infrastructure stops being the bottleneck because you throw money at it. The differentiator is data quality at scale, plus the budget to regenerate it when the metric plateaus.</p>
+
+        <h2>What I Took Away</h2>
+
+        <p>I build evaluation systems at Google and side projects like this in Cursor. The pattern is the same: the hard part is rarely "can we access a frontier model?" It is getting clean data through a reliable pipeline, then deciding how much compute each marginal accuracy point is worth.</p>
+
+        <p>MetaCode taught me how to measure reasoning limits. This competition taught me what it costs to move them. For a learner-tier budget, that is the right trade.</p>
 
         </div>
     </div>
