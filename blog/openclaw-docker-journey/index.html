@@ -29,6 +29,21 @@
         table { border-collapse: collapse; width: 100%; margin: 20px 0; }
         th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
         th { background: #f6f8fa; font-weight: 600; }
+        .post-figure { margin: 28px 0; }
+        .post-figure img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid #d0d7de;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        .post-figure figcaption {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #656d76;
+            line-height: 1.5;
+        }
     </style>
 </head>
 <body>
@@ -92,7 +107,18 @@
         <li><strong>Sub-agents:</strong> spawning isolated sessions for specific tasks</li>
         </ul>
 
-        <p>For my use case (personal assistant for coding, writing, random tasks), I went with a single main agent with sub-agent capability for heavy-lifting tasks.</p>
+        <p>For my use case (personal assistant for coding, writing, random tasks), I went with a single main agent with sub-agent capability for heavy-lifting tasks. I named him Jeeves.</p>
+
+        <h2>Jeeves in Discord</h2>
+
+        <p>Once the gateway was live, I connected Discord and gave Jeeves a first real task: audit my portfolio site. One message in, one minute later, a full report — broken internal links, duplicate HTML, bad social URLs, missing security attributes on external links.</p>
+
+        <figure class="post-figure">
+            <img src="images/jeeves-portfolio-audit-discord.png" alt="Discord conversation where Jeeves audits gbose01.github.io and returns critical issues including duplicate HTML, broken /gbose01/ link paths, and incorrect social links">
+            <figcaption>Jeeves auditing my portfolio from Discord — the kind of task that used to mean opening the repo, clicking around, and hoping I didn't miss anything.</figcaption>
+        </figure>
+
+        <p>That was the moment the setup stopped feeling like infrastructure and started feeling like having a staff engineer on call. Same agent, same workspace, reachable from whatever app I'm already in.</p>
 
         <h2>Model Selection</h2>
 
