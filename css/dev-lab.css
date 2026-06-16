@@ -13,7 +13,7 @@
     --devlab-chip-neutral-border: rgba(255, 255, 255, 0.08);
     --devlab-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     --devlab-cols: 2;
-    --devlab-clamp: 3;
+    --devlab-clamp: 2;
     width: 100%;
     color: var(--devlab-ink);
 }
@@ -223,6 +223,20 @@
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
+    opacity: 0;
+    visibility: hidden;
+    max-height: 0;
+    overflow: hidden;
+    margin-top: 0;
+    transition: opacity 0.15s ease, visibility 0.15s ease, max-height 0.2s ease, margin-top 0.15s ease;
+}
+
+.devlab .card:hover .tags,
+.devlab .card:focus-within .tags {
+    opacity: 1;
+    visibility: visible;
+    max-height: 48px;
+    margin-top: 10px;
 }
 
 .devlab .tag {
@@ -372,8 +386,9 @@
         margin-top: 14px;
     }
 
-    .devlab .tags {
-        margin-top: 14px;
+    .devlab .card:hover .tags,
+    .devlab .card:focus-within .tags {
+        margin-top: 12px;
     }
 
     .devlab .foot {
@@ -435,13 +450,24 @@
         margin-top: 14px;
     }
 
-    .devlab .tags {
-        margin-top: 14px;
+    .devlab .card:hover .tags,
+    .devlab .card:focus-within .tags {
+        margin-top: 10px;
     }
 
     .devlab .foot {
         margin-top: 16px;
         padding-top: 0;
+    }
+}
+
+/* Touch: stack stays secondary but discoverable without hover */
+@media (hover: none) {
+    .devlab .tags {
+        opacity: 0.55;
+        visibility: visible;
+        max-height: 48px;
+        margin-top: 8px;
     }
 }
 

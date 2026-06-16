@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0A0A0F">
+    <meta name="description" content="Fine-tuning Nemotron for the Kaggle Model Reasoning Challenge taught me that leaderboard gaps are mostly a compute budget problem—not a skill gap.">
+    <title>The $5, $100, and $15,000 Ways to Win a Kaggle Reasoning Competition | Gaurab Bose</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/sidebar.css">
+    <script src="../js/theme.js"></script>
+    <script src="../js/analytics.js"></script>
+</head>
+<body>
+    <div class="post-container">
+        <a href="../blog.html" class="post-back">← Writing</a>
+
+        <header class="post-header">
+            <img src="../icons/projects/nemotron-challenge-128.png" alt="" class="post-project-icon" width="64" height="64">
+            <h1>The $5, $100, and $15,000 Ways to Win a Kaggle Reasoning Competition</h1>
+            <p class="post-date">June 13, 2026</p>
+        </header>
+
+        <div class="post-body">
+
+        <p class="post-repo"><strong>Source code:</strong> <a href="https://github.com/gbose01/nemotron_kaggle" target="_blank" rel="noopener noreferrer">github.com/gbose01/nemotron_kaggle</a></p>
+
+        <p>There are three ways to compete in a Kaggle reasoning challenge: spend <strong>$5</strong>, <strong>$100</strong>, or <strong>$15,000</strong>. I learned this the hard way—not from a tutorial, but from fine-tuning NVIDIA's Nemotron model for the Model Reasoning Challenge and landing a <strong>0.62</strong> score while the top of the leaderboard hit <strong>0.90</strong>.</p>
+
+        <p>That 0.28 gap looks like a skill problem. It isn't. With a learner-tier budget, I proved the pipeline works. Closing the gap to 0.90 is a compute problem—roughly three orders of magnitude more data generation and training spend. Here's the framework I wish I'd had before I started.</p>
+
+        <h2>From Measuring Models to Training One</h2>
+
+        <p>After building <strong>MetaCode</strong>—a benchmark for measuring whether AI models know what they don't know—I wanted to go further. Evaluating performance is only half the problem. The next step is learning how to train a model to be better at specific things.</p>
+
+        <p>I entered the NVIDIA Nemotron Model Reasoning Challenge on Kaggle. The goal was to take an open-source base model (Nemotron-3-Nano-30B) and improve its chain-of-thought reasoning—not just score it, but actually update its weights.</p>
+
+        <p>The competition required enriching training examples with reasoning traces. A raw pair like <em>"What is the sum of the first five prime numbers?"</em> → <code>28</code> becomes something like: <em>"The first five primes are 2, 3, 5, 7, and 11. Adding them: 2 + 3 + 5 + 7 + 11 = 28."</em> I built scripts—with AI agents handling much of the generation—to produce those traces at scale, then fine-tuned the base model with 4-bit QLoRA supervised fine-tuning on the enriched dataset.</p>
+
+        <h2>What $5 Actually Buys You</h2>
+
+        <p>The theory was straightforward. The execution was not. The vast majority of my time went to infrastructure: dependency conflicts, memory limits, and failed local runs. I pivoted three times before settling on RunPod—a single RTX 4090 for a few hours, without the setup overhead of a traditional cloud provider. Total compute bill: about <strong>$5</strong>.</p>
+
+        <p>Shipping the fine-tuned model and submitting it was the real win. My final score was <strong>0.62</strong>. That is nowhere near the leaderboard's <strong>0.90</strong>, but for a learner project it did exactly what I needed: it proved that winning these competitions is actually a compute-cost game. The mechanics work at Tier 1. The leaderboard lives at Tier 3.</p>
+
+        <h2>Three Budget Tiers</h2>
+
+        <p>Once I saw the scoreboard through a budget lens, the competition stopped looking mysterious. Kaggle reasoning challenges break down into three distinct tiers:</p>
+
+        <h3>Tier 1: The Learner ($10 or less)</h3>
+
+        <p>This was my approach. Rely entirely on open-source datasets and minimal compute. The focus is getting a pipeline working—not topping the leaderboard. I used a cheap cloud GPU (a single RTX 4090 on RunPod) for a few hours to run QLoRA parameter-efficient fine-tuning on a small sample of data. The goal is learning the mechanics: data enrichment, training config, submission flow.</p>
+
+        <h3>Tier 2: The Solo Competitor (~$100)</h3>
+
+        <p>With a hundred bucks, efficiency is everything. Instead of generating your own data, you surgically curate and filter the best open-source datasets. You run micro-experiments on cheap hardware to find workable hyperparameters, then spend the bulk of the budget on a single high-quality supervised fine-tuning run—and perhaps one Direct Preference Optimization run—on an A100.</p>
+
+        <p>The move that lets a solo builder punch above their weight: <strong>test-time compute</strong>. Kaggle gives you free inference. Generate 15 different answers per problem and submit the majority vote. You are not buying more training—you are buying more chances to be right at submission time. That trick is counterintuitive and underused at this tier.</p>
+
+        <h3>Tier 3: The State-of-the-Art Factory (~$15,000)</h3>
+
+        <p>This is how the top leaderboard spots are won. It is a shift from constrained efficiency to capability maximization. Nearly half this budget goes toward a "data factory"—renting massive 8× H100 clusters to run a 340B teacher model that generates hundreds of thousands of synthetic reasoning traces. You abandon QLoRA for full-parameter fine-tuning and use iterative self-play (STaR) loops where the model trains, evaluates its own answers, and retrains continuously.</p>
+
+        <p>At this tier, infrastructure stops being the bottleneck because you throw money at it. The differentiator becomes data quality at scale—and the budget to generate it.</p>
+
+        <h2>What Changed for Me</h2>
+
+        <p>Learning to fine-tune an open-source model shifted my perspective on AI development. The barrier is no longer access to the models. The barrier is wrangling the infrastructure to get the data in, and then having the budget to train at scale.</p>
+
+        </div>
+    </div>
+</body>
+</html>
