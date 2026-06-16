@@ -14,23 +14,19 @@ html {
     --bg-tertiary: #1A1A24;
     --text: #F0EDE8;
     --text-muted: #7A7585;
-    --accent: #F59E0B;
-    --accent-dim: rgba(245, 158, 11, 0.1);
-    --accent-glow: rgba(245, 158, 11, 0.18);
+    --accent: #C8643C;
+    --accent-dim: rgba(200, 100, 60, 0.12);
+    --accent-glow: rgba(200, 100, 60, 0.22);
     --border: rgba(255, 255, 255, 0.07);
-    --border-accent: rgba(245, 158, 11, 0.25);
-    --green: #10B981;
-    --green-dim: rgba(16, 185, 129, 0.1);
-    --green-glow: rgba(16, 185, 129, 0.4);
-    --green-border: rgba(16, 185, 129, 0.15);
-
-    /* Premium Nav Icon Colors (Dark Theme) */
-    --icon-projects: #38BDF8; /* Electric blue */
-    --icon-job: #F59E0B;      /* Amber gold */
-    --icon-writing: #34D399;  /* Mint green */
-    --icon-github: #A78BFA;   /* Soft purple */
-    --icon-linkedin: #60A5FA; /* Bright blue */
-    --icon-twitter: #A1A1AA;  /* Sleek silver */
+    --border-accent: rgba(200, 100, 60, 0.28);
+    --green: #3F8F5B;
+    --green-dim: rgba(63, 143, 91, 0.12);
+    --green-glow: rgba(63, 143, 91, 0.35);
+    --green-border: rgba(63, 143, 91, 0.22);
+    --ink: #F0EDE8;
+    --tile: #1A1A24;
+    --chip-text: #7A7585;
+    --on-accent: #FFFFFF;
 }
 
 /* ─── Light Theme ────────────────────────────── */
@@ -40,23 +36,19 @@ html {
     --bg-tertiary: #E8E4DD;
     --text: #1A1714;
     --text-muted: #6B6560;
-    --accent: #D97706;
-    --accent-dim: rgba(217, 119, 6, 0.10);
-    --accent-glow: rgba(217, 119, 6, 0.35);
+    --accent: #C8643C;
+    --accent-dim: rgba(200, 100, 60, 0.10);
+    --accent-glow: rgba(200, 100, 60, 0.20);
     --border: rgba(0, 0, 0, 0.09);
-    --border-accent: rgba(217, 119, 6, 0.30);
-    --green: #059669;
-    --green-dim: rgba(5, 150, 105, 0.12);
-    --green-glow: rgba(5, 150, 105, 0.4);
-    --green-border: rgba(5, 150, 105, 0.18);
-
-    /* Premium Nav Icon Colors (Light Theme) */
-    --icon-projects: #0284C7; /* Sky blue */
-    --icon-job: #D97706;      /* Amber gold */
-    --icon-writing: #059669;  /* Emerald green */
-    --icon-github: #6D28D9;   /* Deep purple */
-    --icon-linkedin: #0A66C2; /* LinkedIn brand blue */
-    --icon-twitter: #1F2937;  /* Dark slate */
+    --border-accent: rgba(200, 100, 60, 0.28);
+    --green: #3F8F5B;
+    --green-dim: rgba(63, 143, 91, 0.10);
+    --green-glow: rgba(63, 143, 91, 0.30);
+    --green-border: rgba(63, 143, 91, 0.20);
+    --ink: #1F1D1A;
+    --tile: #EDEAE2;
+    --chip-text: #6B665E;
+    --on-accent: #FFFFFF;
 }
 
 body {
@@ -335,7 +327,7 @@ h1 {
     padding: 16px 20px;
     background: var(--bg-elevated);
     border: 1px solid var(--border);
-    border-left: 2px solid var(--accent);
+    border-left: 2px solid var(--green);
     border-radius: 0 8px 8px 0;
     max-width: 480px;
 }
@@ -345,7 +337,7 @@ h1 {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    color: var(--accent);
+    color: var(--green);
 }
 
 .cb-item {
@@ -360,23 +352,17 @@ h1 {
 }
 
 .cb-item:hover {
-    color: var(--accent);
+    color: var(--text);
 }
 
 .pulse-dot {
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: var(--accent);
+    background: var(--green);
     flex-shrink: 0;
-    box-shadow: 0 0 0 0 var(--accent-glow);
-    animation: pulse-amber 2.5s infinite;
-}
-
-@keyframes pulse-amber {
-    0%   { box-shadow: 0 0 0 0 var(--accent-glow); }
-    70%  { box-shadow: 0 0 0 6px rgba(245, 158, 11, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+    box-shadow: 0 0 0 0 var(--green-glow);
+    animation: pulse-green 2.5s infinite;
 }
 
 /* ─── Navigation ────────────────────────────── */
@@ -446,16 +432,9 @@ h1 {
     color: var(--accent);
 }
 
-/* Premium Nav Icon Brand Colors */
-.nav-main a[href*="projects"] .nav-icon,
-.nav-main a[href="#lab"] .nav-icon { color: var(--icon-projects); }
-.nav-main a[href*="work"] .nav-icon { color: var(--icon-job); }
-.nav-main a[href*="blog"] .nav-icon { color: var(--icon-writing); }
-.nav-main a[href*="github"] .nav-icon { color: var(--icon-github); }
-.nav-main a[href*="linkedin"] .nav-icon { color: var(--icon-linkedin); }
-.nav-main a[href*="twitter"] .nav-icon,
-.nav-main a[href*="x.com"] .nav-icon { color: var(--icon-twitter); }
-.nav-main a[href*="games"] .nav-icon { color: var(--green); }
+.nav-main a .nav-icon {
+    color: currentColor;
+}
 
 .hero-divider {
     height: 1px;
@@ -514,16 +493,20 @@ h2 {
     left: 0;
     width: 3px;
     height: 100%;
-    background: var(--accent);
+    background: var(--text-muted);
     opacity: 0;
     transition: opacity 0.25s ease;
 }
 
 .project:hover {
-    border-color: var(--border-accent);
+    border-color: rgba(255, 255, 255, 0.14);
     transform: translateY(-2px);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
     background: var(--bg-tertiary);
+}
+
+[data-theme="light"] .project:hover {
+    border-color: rgba(0, 0, 0, 0.14);
 }
 
 .project:hover::before {
@@ -744,19 +727,26 @@ h2 {
 }
 
 .project-link:hover {
-    border-color: var(--border-accent);
-    color: var(--accent);
-    background: var(--accent-dim);
+    border-color: rgba(255, 255, 255, 0.18);
+    color: var(--text);
+    background: var(--bg-tertiary);
 }
 
-.project-link-post {
-    background: var(--accent-dim);
-    border-color: var(--border-accent);
-    color: var(--accent);
+[data-theme="light"] .project-link:hover {
+    border-color: rgba(0, 0, 0, 0.16);
+    background: var(--bg-elevated);
 }
 
-.project-link-post:hover {
-    background: var(--accent-glow);
+.project-link-primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--on-accent);
+}
+
+.project-link-primary:hover {
+    background: #B85A36;
+    border-color: #B85A36;
+    color: var(--on-accent);
 }
 
 /* ─── Project Year ───────────────────────────── */
@@ -791,6 +781,9 @@ h2 {
     border-radius: 6px;
     flex-shrink: 0;
     object-fit: contain;
+    background: var(--tile);
+    padding: 3px;
+    box-shadow: none;
 }
 
 .project-header-actions {
@@ -803,14 +796,13 @@ h2 {
 }
 
 .ai-badge,
-.handcoded-badge,
-.building-badge {
+.handcoded-badge {
     display: inline-flex;
     align-items: center;
     gap: 4px;
     font-size: 10px;
     font-weight: 500;
-    color: var(--text-muted);
+    color: var(--chip-text);
     background: transparent;
     border: none;
     padding: 0;
@@ -820,14 +812,29 @@ h2 {
     flex-shrink: 0;
 }
 
+.building-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--green);
+    background: var(--green-dim);
+    border: 1px solid var(--green-border);
+    padding: 3px 8px;
+    border-radius: 5px;
+    letter-spacing: 0;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
 .building-badge .pulse-dot {
-    width: 4px;
-    height: 4px;
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
     background: var(--green);
-    opacity: 0.45;
-    animation: none;
-    box-shadow: none;
+    animation: pulse-green 2.5s infinite;
+    box-shadow: 0 0 0 0 var(--green-glow);
 }
 
 .tags {
@@ -842,9 +849,9 @@ h2 {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.8px;
-    color: var(--text-muted);
-    background: var(--bg-tertiary);
-    border: 1px solid var(--border);
+    color: var(--chip-text);
+    background: var(--tile);
+    border: none;
     padding: 2px 6px;
     border-radius: 4px;
 }
@@ -858,7 +865,7 @@ h2 {
 
 .project-featured::before {
     opacity: 1;
-    background: linear-gradient(180deg, var(--accent) 0%, rgba(245, 158, 11, 0.3) 100%);
+    background: linear-gradient(180deg, var(--text-muted) 0%, rgba(107, 102, 94, 0.3) 100%);
     width: 2px;
 }
 
@@ -901,8 +908,12 @@ h2 {
 
 .show-more:hover {
     background: var(--bg-tertiary);
-    border-color: var(--border-accent);
-    color: var(--accent);
+    border-color: rgba(255, 255, 255, 0.14);
+    color: var(--text);
+}
+
+[data-theme="light"] .show-more:hover {
+    border-color: rgba(0, 0, 0, 0.14);
 }
 
 .section-footer {
@@ -1504,8 +1515,12 @@ h2 {
 }
 
 .builder-dashboard:hover {
-    border-color: var(--border-accent);
-    box-shadow: 0 6px 24px rgba(245, 158, 11, 0.06);
+    border-color: rgba(255, 255, 255, 0.14);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .builder-dashboard:hover {
+    border-color: rgba(0, 0, 0, 0.12);
 }
 
 .metric-card {
@@ -1705,23 +1720,30 @@ h2 {
     flex-wrap: wrap;
 }
 
-.c-status .building-badge,
+.c-status .building-badge {
+    padding: 3px 8px;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--green);
+    background: var(--green-dim);
+    border: 1px solid var(--green-border);
+}
+
 .c-status .ai-badge,
 .c-status .handcoded-badge {
     padding: 0;
     font-size: 10px;
     font-weight: 500;
-    color: var(--text-muted);
+    color: var(--chip-text);
     background: transparent;
     border: none;
 }
 
 .c-status .building-badge .pulse-dot {
-    width: 4px;
-    height: 4px;
-    opacity: 0.45;
-    animation: none;
-    box-shadow: none;
+    width: 5px;
+    height: 5px;
+    animation: pulse-green 2.5s infinite;
+    box-shadow: 0 0 0 0 var(--green-glow);
 }
 
 .c-links {
@@ -1809,10 +1831,10 @@ h2 {
 }
 
 .filter-pill.active {
-    background: var(--accent-dim);
-    color: var(--accent);
-    border-color: var(--border-accent);
-    box-shadow: 0 2px 6px var(--accent-glow);
+    background: var(--tile);
+    color: var(--ink);
+    border-color: var(--border);
+    box-shadow: none;
 }
 
 /* ─── Animation Rules ─── */

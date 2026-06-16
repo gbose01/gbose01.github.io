@@ -5,12 +5,6 @@
     --devlab-ink2: #9A9590;
     --devlab-muted: #7A7585;
     --devlab-line: rgba(255, 255, 255, 0.07);
-    --devlab-orange: #F59E0B;
-    --devlab-orange-dim: rgba(245, 158, 11, 0.10);
-    --devlab-orange-border: rgba(245, 158, 11, 0.25);
-    --devlab-chip-ink: #A8A4A0;
-    --devlab-chip-neutral-bg: rgba(255, 255, 255, 0.04);
-    --devlab-chip-neutral-border: rgba(255, 255, 255, 0.08);
     --devlab-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     --devlab-cols: 2;
     --devlab-clamp: 2;
@@ -24,12 +18,6 @@
     --devlab-ink2: #56544E;
     --devlab-muted: #928D82;
     --devlab-line: #E6E1D5;
-    --devlab-orange: #E2762E;
-    --devlab-orange-dim: rgba(226, 118, 46, 0.10);
-    --devlab-orange-border: rgba(226, 118, 46, 0.28);
-    --devlab-chip-ink: #2B2A27;
-    --devlab-chip-neutral-bg: #EDE9E0;
-    --devlab-chip-neutral-border: #E0DBD0;
 }
 
 .devlab * {
@@ -41,7 +29,7 @@
     font-size: 11px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--devlab-orange);
+    color: var(--accent);
     font-weight: 600;
 }
 
@@ -78,14 +66,14 @@
 }
 
 .devlab .card:hover {
-    border-color: rgba(245, 158, 11, 0.55);
+    border-color: rgba(255, 255, 255, 0.14);
     box-shadow: 0 10px 26px -16px rgba(0, 0, 0, 0.45);
     transform: translateY(-2px);
 }
 
 [data-theme="light"] .devlab .card:hover {
-    border-color: rgba(226, 118, 46, 0.55);
-    box-shadow: 0 10px 26px -16px rgba(80, 50, 20, 0.4);
+    border-color: rgba(0, 0, 0, 0.12);
+    box-shadow: 0 10px 26px -16px rgba(80, 50, 20, 0.18);
 }
 
 .devlab .top {
@@ -100,15 +88,9 @@
     height: 56px;
     border-radius: 12px;
     object-fit: cover;
-    box-shadow:
-        0 2px 12px rgba(0, 0, 0, 0.35),
-        0 0 0 1px rgba(255, 255, 255, 0.1);
-}
-
-[data-theme="light"] .devlab .project-icon {
-    box-shadow:
-        0 3px 14px rgba(26, 23, 20, 0.14),
-        0 0 0 1px rgba(0, 0, 0, 0.08);
+    background: var(--tile);
+    padding: 4px;
+    box-shadow: none;
 }
 
 .devlab .head {
@@ -118,7 +100,7 @@
 
 .devlab .nameline {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     gap: 8px;
     flex-wrap: wrap;
 }
@@ -132,7 +114,20 @@
 }
 
 .devlab a.pname:hover {
-    color: var(--devlab-orange);
+    color: var(--accent);
+}
+
+.devlab .featured-star {
+    display: inline-flex;
+    align-items: center;
+    color: var(--chip-text);
+    line-height: 0;
+}
+
+.devlab .featured-star .star {
+    width: 11px;
+    height: 11px;
+    opacity: 0.65;
 }
 
 .devlab .pyear {
@@ -162,14 +157,7 @@
     white-space: nowrap;
 }
 
-/* Featured — quiet editorial neutral (no color budget) */
-.devlab .badge.featured {
-    color: var(--devlab-chip-ink);
-    background: var(--devlab-chip-neutral-bg);
-    border-color: var(--devlab-chip-neutral-border);
-}
-
-/* Currently building — loudest badge; alive signal */
+/* Currently building — live status (green only) */
 .devlab .badge.build {
     color: var(--green);
     background: var(--green-dim);
@@ -177,24 +165,19 @@
     font-weight: 600;
 }
 
-/* AI — amber tinted-outline, same weight class as build */
+/* AI — neutral borderless chip */
 .devlab .badge.ai {
-    color: var(--devlab-orange);
-    background: var(--devlab-orange-dim);
-    border-color: var(--devlab-orange-border);
+    color: var(--chip-text);
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-weight: 500;
 }
 
 .devlab .badge.handcoded {
     color: var(--devlab-muted);
     background: transparent;
     border-color: var(--devlab-line);
-}
-
-.devlab .star {
-    width: 7px;
-    height: 7px;
-    opacity: 0.55;
-    color: currentColor;
 }
 
 .devlab .dot {
@@ -244,16 +227,12 @@
     font-size: 10px;
     letter-spacing: 0.02em;
     text-transform: uppercase;
-    color: var(--devlab-muted);
-    border: 1px solid var(--devlab-line);
-    background: rgba(255, 255, 255, 0.02);
+    color: var(--chip-text);
+    border: none;
+    background: var(--tile);
     border-radius: 5px;
     padding: 3px 7px;
     white-space: nowrap;
-}
-
-[data-theme="light"] .devlab .tag {
-    background: rgba(0, 0, 0, 0.012);
 }
 
 .devlab .foot {
@@ -282,45 +261,24 @@
 .devlab .lnk:hover {
     border-color: rgba(255, 255, 255, 0.2);
     color: var(--devlab-ink);
+    background: transparent;
 }
 
 [data-theme="light"] .devlab .lnk:hover {
-    border-color: rgba(0, 0, 0, 0.2);
+    border-color: rgba(0, 0, 0, 0.16);
+    color: var(--devlab-ink);
 }
 
-.devlab .lnk.blog {
-    color: var(--devlab-orange);
-    border-color: rgba(245, 158, 11, 0.30);
+.devlab .lnk-primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--on-accent);
 }
 
-[data-theme="light"] .devlab .lnk.blog {
-    border-color: rgba(226, 118, 46, 0.30);
-}
-
-.devlab .lnk.blog:hover {
-    background: rgba(245, 158, 11, 0.07);
-}
-
-[data-theme="light"] .devlab .lnk.blog:hover {
-    background: rgba(226, 118, 46, 0.07);
-}
-
-.devlab .lnk.play {
-    color: #7dbc75;
-    border-color: rgba(125, 188, 117, 0.35);
-}
-
-[data-theme="light"] .devlab .lnk.play {
-    color: #5a9a52;
-    border-color: rgba(90, 154, 82, 0.35);
-}
-
-.devlab .lnk.play:hover {
-    background: rgba(125, 188, 117, 0.08);
-}
-
-[data-theme="light"] .devlab .lnk.play:hover {
-    background: rgba(90, 154, 82, 0.08);
+.devlab .lnk-primary:hover {
+    background: #B85A36;
+    border-color: #B85A36;
+    color: var(--on-accent);
 }
 
 .devlab .lnk svg {
@@ -350,14 +308,14 @@
 }
 
 .devlab .devlab-more a:hover {
-    border-color: rgba(245, 158, 11, 0.55);
+    border-color: rgba(255, 255, 255, 0.18);
     transform: translateY(-1px);
     box-shadow: 0 8px 20px -14px rgba(0, 0, 0, 0.4);
 }
 
 [data-theme="light"] .devlab .devlab-more a:hover {
-    border-color: rgba(226, 118, 46, 0.55);
-    box-shadow: 0 8px 20px -14px rgba(80, 50, 20, 0.4);
+    border-color: rgba(0, 0, 0, 0.14);
+    box-shadow: 0 8px 20px -14px rgba(80, 50, 20, 0.12);
 }
 
 .devlab .devlab-more .ct {
@@ -473,13 +431,13 @@
 
 @media (hover: none) and (pointer: coarse) {
     .devlab .card:active {
-        border-color: rgba(245, 158, 11, 0.55);
+        border-color: rgba(255, 255, 255, 0.14);
         box-shadow: 0 10px 26px -16px rgba(0, 0, 0, 0.45);
         transform: translateY(-2px);
     }
 
     [data-theme="light"] .devlab .card:active {
-        border-color: rgba(226, 118, 46, 0.55);
-        box-shadow: 0 10px 26px -16px rgba(80, 50, 20, 0.4);
+        border-color: rgba(0, 0, 0, 0.12);
+        box-shadow: 0 10px 26px -16px rgba(80, 50, 20, 0.18);
     }
 }
