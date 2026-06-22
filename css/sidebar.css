@@ -64,7 +64,8 @@ body {
 .layout {
     display: grid;
     grid-template-columns: 1fr 320px;
-    gap: 64px;
+    column-gap: 64px;
+    row-gap: 32px;
     max-width: 1100px;
     margin: 0 auto;
     padding: 60px 24px;
@@ -120,7 +121,7 @@ main {
 
     .hero-divider {
         margin-top: 16px;
-        margin-bottom: 26px;
+        margin-bottom: 13px;
     }
 
     .section {
@@ -440,7 +441,7 @@ h1 {
     height: 1px;
     background: var(--border);
     margin-top: 32px;
-    margin-bottom: 26px;
+    margin-bottom: 13px;
 }
 
 /* Touch devices: icons stay vivid without hover */
@@ -1420,7 +1421,7 @@ h2 {
 
     .hero-divider {
         margin-top: 32px;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
 
     #mobile-menu-toggle {
