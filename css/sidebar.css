@@ -1089,6 +1089,50 @@ h2 {
     margin: 48px 0;
 }
 
+.post-body table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 28px 0;
+    font-size: 14px;
+}
+
+.post-body th,
+.post-body td {
+    border: 1px solid var(--border);
+    padding: 10px 12px;
+    text-align: left;
+}
+
+.post-body th {
+    background: var(--bg-elevated);
+    color: var(--text);
+    font-weight: 600;
+}
+
+.post-body td {
+    color: var(--text-muted);
+}
+
+.post-body .post-figure {
+    margin: 28px 0;
+}
+
+.post-body .post-figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.post-body .post-figure figcaption {
+    margin-top: 10px;
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
 /* ─── Profile Photo ─────────────────────────── */
 .profile-photo-wrap {
     margin-bottom: 20px;
