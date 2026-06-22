@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#0A0A0F">
-    <meta name="description" content="Setting up QMD with Obsidian for better AI memory management in OpenClaw.">
-    <title>Setting Up QMD with Obsidian for Better AI Memory | Gaurab Bose</title>
+    <meta name="description" content="How I wired Obsidian and QMD into OpenClaw so past context surfaces on its own, without babysitting remember-this prompts.">
+    <title>I Stopped Telling My AI to Remember Things | Gaurab Bose</title>
     <link rel="icon" type="image/png" href="../favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/sidebar.css">
@@ -17,35 +17,118 @@
         <a href="../blog.html" class="post-back">← Writing</a>
 
         <header class="post-header">
-            <h1>Architecting AI Memory: Hybrid Search with QMD and Obsidian</h1>
+            <h1>I Stopped Telling My AI to Remember Things</h1>
             <p class="post-date">April 7, 2026</p>
         </header>
 
         <div class="post-body">
 
-        <p>I've been thinking about how to make my AI assistant remember more of our conversations. Not just the forced "save this to memory" prompts, but a system that actually surfaces relevant context when we talk.</p>
+        <p>For a while I treated AI memory like a sticky note problem. "Remember that we decided X." "Save this to memory." It worked until it didn't.</p>
 
-        <p>Enter QMD, a local-first search sidecar that combines BM25, vector search, and reranking. Combined with my existing Obsidian vault, it's become a pretty solid memory system.</p>
+        <p>The agent would remember the last thing I asked it to save and forget everything else. Or it would confidently recall a detail that never made it out of the chat log. Or I'd start a fresh session and paste the same three paragraphs of context again, like a very tired onboarding doc.</p>
 
-        <h2>What is QMD?</h2>
+        <p>I wanted memory that compounded. Not prompts I had to babysit.</p>
 
-        <p>QMD is a search engine that runs alongside OpenClaw. It handles:</p>
+        <p>This post is about the first system that actually worked for me: my Obsidian vault, indexed by <strong>QMD</strong>, wired into <strong>OpenClaw</strong> (my self-hosted agent). If you use Cursor instead of OpenClaw, the storage layer is the same idea. I wrote about the next layer <a href="obsidian-cursor-thinking-backend.html">here</a>.</p>
+
+        <h2>Chat is short-term memory. Files are long-term memory.</h2>
+
+        <p>Every agent session starts cold. You can stretch that with longer context windows, pasted summaries, or clever system prompts. That buys you a day. It does not buy you a month.</p>
+
+        <p>The failure mode I kept hitting:</p>
 
         <ul>
-            <li><strong>BM25:</strong> classic keyword search</li>
-            <li><strong>Vector search:</strong> semantic similarity</li>
-            <li><strong>Reranking:</strong> improving initial results</li>
+            <li><strong>Re-explaining.</strong> I'd already scoped PortRadar, tuned a Discord channel, or decided how cost logs should roll up. New chat, same conversation from zero.</li>
+            <li><strong>Lost decisions.</strong> The agent would propose an approach we'd explicitly rejected last week.</li>
+            <li><strong>No retrieval.</strong> Even when I <em>did</em> save something, I had to remember what I saved and where. The assistant didn't go find it.</li>
         </ul>
 
-        <p>The killer feature: it indexes directories outside the workspace. My Obsidian vault now lives at <code>~/.openclaw/workspace-records/obsidian_vault</code>, and QMD indexes it automatically every 5 minutes.</p>
+        <p>The fix wasn't "remember harder." It was <strong>write things down in markdown the agent can search</strong>, and <strong>automate what goes into that store</strong>.</p>
 
-        <h2>The Setup</h2>
+        <p>Obsidian was already where I kept notes. QMD made the vault searchable inside OpenClaw. Heartbeat and auto-flush made sure new context actually landed in the vault without me typing "save this" every ten minutes.</p>
 
-        <p>Installation was straightforward:</p>
+        <h2>What QMD does (without the textbook)</h2>
+
+        <p>QMD is a local search sidecar for OpenClaw. In plain terms: it reads my markdown files on a schedule and answers "what notes match this question?"</p>
+
+        <p>Under the hood it blends keyword search, semantic similarity, and reranking. I don't think about those layers day to day. I think about outcomes:</p>
+
+        <ul>
+            <li>I ask what we discussed about a topic.</li>
+            <li>QMD returns the relevant note(s).</li>
+            <li>The agent reads them and continues with actual history instead of guessing.</li>
+        </ul>
+
+        <p>The feature that mattered most: QMD can index paths <strong>outside</strong> the agent's workspace. My vault lives on the host, mounted into the container. QMD re-indexes it every few minutes. The agent workspace stays operational. The vault stays the durable record.</p>
+
+        <h2>Before and after</h2>
+
+        <p><strong>Before:</strong> I opened a new OpenClaw thread about my cost dashboard. The agent suggested building a SQLite + Chart.js pipeline from scratch. We'd already scoped that build, named the JSONL fields, and decided which Discord channels to track. All of that lived in a session summary I'd never written down properly. I pasted notes manually. Again.</p>
+
+        <p><strong>After:</strong> I asked what we'd already decided about cost observability. QMD surfaced a session note with the channel breakdown, the spike threshold idea, and the "no third-party analytics" constraint. The agent picked up mid-stream instead of restarting.</p>
+
+        <p>That one moment sold me. Memory stopped being a prompt I repeated and became a system that went and looked.</p>
+
+        <p>It is not magic. Vague questions still miss. Stale notes still rank. I'll get to that.</p>
+
+        <h2>What I changed in the vault (three rules, not a remodel)</h2>
+
+        <p>I already had an Obsidian vault: Finance, Health, Records, Reviews, Travel. Fine for humans. Rough for search and agents.</p>
+
+        <p>I did not need a perfect PKM system. I needed three habits:</p>
+
+        <ol>
+            <li><strong>Keep folders relatively flat.</strong> Deep nesting makes retrieval worse. If I can't guess which folder a note lives in, search shouldn't have to either.</li>
+            <li><strong>Add frontmatter and tags on anything an agent should find.</strong> Title and tags beat a clever filename buried three levels down.</li>
+            <li><strong>Separate AI session notes from personal records.</strong> Session summaries and project context go in their own area. I don't want "what we decided about PortRadar" indexed next to tax docs.</li>
+        </ol>
+
+        <p>I added a Work/ area for projects, an ai/ area for session summaries, and frontmatter on the files agents touch most. I skipped the fantasy of tagging all 200 notes in a weekend. I tagged what retrieval needed first and expanded over time.</p>
+
+        <h2>How notes get in without me asking</h2>
+
+        <p>Search only helps if the vault stays current. I did not trust myself to append notes after every session.</p>
+
+        <p>Two automations carried most of the load:</p>
+
+        <p><strong>Heartbeat (every ~30 minutes):</strong> the agent reviews recent session transcripts, pulls out decisions, context, and learnings worth keeping, and writes them to the vault. Not everything. Just what would hurt to lose.</p>
+
+        <p><strong>Auto-flush (before context compaction):</strong> when a long session gets summarized to free tokens, important context gets written to disk first. Compaction stops being amnesia by another name.</p>
+
+        <p>The heartbeat instruction is boring on purpose: review transcripts, identify what's worth saving, write it to Obsidian. Boring is durable. Fancy prompts drift.</p>
+
+        <p>This is the part most "AI memory" posts skip. Setup is a weekend. <strong>Ingestion is the product.</strong> A beautiful index of notes you never update is just an empty filing cabinet.</p>
+
+        <h2>What still breaks</h2>
+
+        <p>I want to be honest because overstating retrieval is how you lose trust in the whole stack.</p>
+
+        <ul>
+            <li><strong>Stale notes win.</strong> If I changed a decision in code but not in the vault, QMD happily surfaces the old version. The agent then builds confidently on bad context. Same lesson I hit later with <a href="living-docs-agent-memory.html">living docs in a repo</a>: stale memory is worse than none.</li>
+            <li><strong>Vague queries miss.</strong> "What were we doing?" is weak. "What did we decide about Discord channel cost tracking?" works.</li>
+            <li><strong>Garbage in, garbage out.</strong> Heartbeat occasionally saves something too generic to be useful. I prune when I notice.</li>
+            <li><strong>Search is not identity.</strong> QMD answers "what notes match?" It does not tell the agent who I am, how I write, or which procedures to follow. That needed a different layer (see below).</li>
+        </ul>
+
+        <p>None of that made me rip it out. It made me treat the vault like a product: ingest, index, prune, repeat.</p>
+
+        <h2>Where I went next</h2>
+
+        <p>QMD solved <strong>retrieval</strong> inside OpenClaw. One agent, one container, past context on demand.</p>
+
+        <p>My setup today goes further: the same Obsidian vault is the thinking backend for <strong>Cursor</strong> across every repo, with briefing files, skills, and scope rules so any session knows how to work with me without loading the whole vault. I wrote that up in <a href="obsidian-cursor-thinking-backend.html">Obsidian as My Thinking Backend for Cursor</a>.</p>
+
+        <p>Same philosophy in both posts: <strong>file over AI.</strong> Tools rotate. Plain markdown stays. QMD was the first time that actually felt automatic instead of manual.</p>
+
+        <p>If you're running OpenClaw with Obsidian, QMD plus heartbeat is still the combo I'd start with. Get ingestion working before you optimize search.</p>
+
+        <h2>Setup (if you want to try this)</h2>
+
+        <p>Install QMD:</p>
 
         <pre><code>npm install -g @tobilu/qmd</code></pre>
 
-        <p>Then a config patch to enable it:</p>
+        <p>Point it at your vault in OpenClaw config (paths live on the host mount):</p>
 
         <pre><code>{
   "memory": {
@@ -60,68 +143,9 @@
   }
 }</code></pre>
 
-        <h2>Vault Structure Review</h2>
+        <p>Adjust the path to wherever your vault is mounted inside the container. Re-index on a short interval while you're iterating.</p>
 
-        <p>I had an existing Obsidian vault with folders: Finance, Health, Records, Reviews, Travel. Solid structure, but it was missing:</p>
-
-        <ul>
-            <li>YAML frontmatter on most files</li>
-            <li>A Work/ folder for projects</li>
-            <li>Consistent tagging</li>
-        </ul>
-
-        <p>Claude Sonnet (running as a subagent) reviewed the structure and gave solid feedback:</p>
-
-        <ul>
-            <li>Keep folders flat, nesting hurts retrieval</li>
-            <li>Frontmatter with tags helps QMD's hybrid search</li>
-            <li>Keep AI notes in a <em>separate</em> collection from personal records</li>
-        </ul>
-
-        <h2>What's New in the Vault</h2>
-
-        <p>After implementing the changes:</p>
-
-        <ul>
-            <li>YAML frontmatter added to 8 existing files</li>
-            <li>Work/ folder created with GitHub projects template</li>
-            <li>ai/ folder added for session summaries</li>
-            <li>Index files cleaned up and linked</li>
-        </ul>
-
-        <h2>Continuous Note-Taking</h2>
-
-        <p>The real question: how do I keep adding to the vault without asking?</p>
-
-        <p>Two approaches:</p>
-
-        <ol>
-            <li><strong>Heartbeat:</strong> Every 30 minutes, I now check session transcripts for new info worth saving</li>
-            <li><strong>Auto-flush:</strong> Before context compaction, important context gets saved automatically</li>
-        </ol>
-
-        <p>The heartbeat task looks like:</p>
-
-        <pre><code>## Session Note-Taking
-- Review recent session transcripts
-- Identify new information worth saving to Obsidian vault
-- Save key decisions, context, and learnings to vault</code></pre>
-
-        <h2>Results</h2>
-
-        <p>Now when I ask "what did we discuss about..." or reference something from past sessions, QMD surfaces it. The retrieval isn't perfect, but it's far better than the alternative (nothing).</p>
-
-        <p>The key insight: building a memory system isn't about one big setup, it's about small, consistent habits. The heartbeat ensures those habits happen.</p>
-
-        <h2>What's Next</h2>
-
-        <ul>
-            <li>Add more session summaries manually at first</li>
-            <li>Let the heartbeat pick up patterns over time</li>
-            <li>Maybe a separate QMD collection for code-related notes</li>
-        </ul>
-
-        <p>If you're running OpenClaw and wanting better memory, QMD + Obsidian is a solid combo.</p>
+        <p>Then wire heartbeat and auto-flush so the vault grows without "remember this" prompts. That matters more than perfect folder taxonomy on day one.</p>
 
         </div>
     </div>
