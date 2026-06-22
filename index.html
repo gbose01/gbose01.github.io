@@ -84,6 +84,54 @@
                 padding: 32px 16px;
             }
         }
+
+        /* ─── Layout experiment: nav above h1, status chip under photo ─── */
+        .hero-inner--nav-first .nav-main--hero-top {
+            margin-bottom: 24px;
+        }
+
+        .hero-inner--nav-first h1 {
+            margin-top: 0;
+        }
+
+        .hero-eyebrow--sidebar {
+            display: inline-flex;
+            justify-content: center;
+            width: 100%;
+            margin: 0 0 20px;
+            text-align: center;
+            font-size: 11px;
+            line-height: 1.35;
+        }
+
+        @media (max-width: 900px) {
+            .hero-inner--nav-first .nav-main--hero-top {
+                margin-bottom: 24px;
+            }
+
+            .sidebar .profile-photo-wrap,
+            .sidebar .hero-eyebrow--sidebar {
+                display: block;
+            }
+
+            .sidebar .profile-photo-wrap {
+                margin-bottom: 16px;
+            }
+
+            .sidebar .hero-eyebrow--sidebar {
+                margin-bottom: 24px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero-inner--nav-first .nav-main--hero-top {
+                margin-bottom: 0;
+            }
+
+            .hero-inner--nav-first h1 {
+                margin-top: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -94,29 +142,9 @@
 
             <!-- ─── HERO ─── -->
             <section class="hero">
-                <div class="hero-inner">
+                <div class="hero-inner hero-inner--nav-first">
 
-                    <div class="hero-eyebrow">
-                        <span class="status-dot"></span>
-                        Currently shipping AI Search features at Google
-                    </div>
-
-                    <h1>Hi, I'm Gaurab 👋</h1>
-
-                    <p class="hero-statement">
-                        I'm a PM shaping AI Search for billions. Here: I herd AI agents to ship whatever I'm curious about.
-                    </p>
-
-                    <div class="hero-credentials-group">
-                        <p class="hero-credentials">
-                            💼 Google Search <span class="divider-dot">·</span> Google Cloud <span class="divider-dot">·</span> Zillow <span class="divider-dot">·</span> PayPal
-                        </p>
-                        <p class="hero-education">
-                            🎓 Stanford MBA <span class="divider-dot">·</span> University of Chicago BS in Statistics &amp; Economics
-                        </p>
-                    </div>
-
-                    <nav class="nav-main">
+                    <nav class="nav-main nav-main--hero-top">
                         <a href="#lab">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
                             Dev Lab
@@ -142,6 +170,21 @@
                             Games
                         </a>
                     </nav>
+
+                    <h1>Hi, I'm Gaurab 👋</h1>
+
+                    <p class="hero-statement">
+                        I'm a PM shaping AI Search for billions. Here: I herd AI agents to ship whatever I'm curious about.
+                    </p>
+
+                    <div class="hero-credentials-group">
+                        <p class="hero-credentials">
+                            💼 Google Search <span class="divider-dot">·</span> Google Cloud <span class="divider-dot">·</span> Zillow <span class="divider-dot">·</span> PayPal
+                        </p>
+                        <p class="hero-education">
+                            🎓 Stanford MBA <span class="divider-dot">·</span> University of Chicago BS in Statistics &amp; Economics
+                        </p>
+                    </div>
 
                     <div class="hero-divider" aria-hidden="true"></div>
 
@@ -239,6 +282,10 @@
             <aside class="sidebar" id="writing" aria-label="Recent writing">
                 <div class="profile-photo-wrap">
                     <img src="duotone.png" alt="Gaurab Bose" class="profile-photo">
+                </div>
+                <div class="hero-eyebrow hero-eyebrow--sidebar">
+                    <span class="status-dot"></span>
+                    Currently shipping AI Search features at Google
                 </div>
                 <div class="sidebar-traits">
                     <span class="sidebar-trait">Frontier product leader</span>

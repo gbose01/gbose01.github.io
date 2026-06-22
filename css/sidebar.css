@@ -368,64 +368,76 @@ h1 {
 
 /* ─── Navigation ────────────────────────────── */
 .nav-main {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    background: var(--bg-elevated);
-    border: 1px solid var(--border);
-    padding: 5px 6px;
-    border-radius: 32px;
-    gap: 4px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.02);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
+    gap: 0;
+    padding: 0 0 14px;
     margin-top: 0;
     margin-bottom: 0;
-}
-
-[data-theme="light"] .nav-main {
-    box-shadow: 0 4px 20px rgba(26, 23, 20, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    border-bottom: 1px solid var(--border);
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
 }
 
 .nav-main a {
     color: var(--text-muted);
     font-weight: 500;
     font-size: 13px;
-    padding: 6px 14px;
-    border-radius: 24px;
+    padding: 2px 0;
+    margin-right: 22px;
+    border-radius: 0;
     position: relative;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: color 0.2s ease;
     display: flex;
     align-items: center;
     gap: 6px;
     letter-spacing: 0.1px;
     white-space: nowrap !important;
+    background: transparent;
+    border: none;
+}
+
+.nav-main a:last-child {
+    margin-right: 0;
 }
 
 .nav-main .nav-icon {
     width: 14px;
     height: 14px;
-    opacity: 0.65;
-    transition: opacity 0.25s ease, transform 0.25s ease;
+    opacity: 0.55;
+    transition: opacity 0.2s ease;
 }
 
 .nav-main a:hover {
     color: var(--text);
-    background: var(--bg-tertiary);
-    transform: translateY(-1px);
+    background: transparent;
+    transform: none;
 }
 
 .nav-main a:hover .nav-icon {
-    opacity: 1;
-    transform: scale(1.05);
+    opacity: 0.85;
+    transform: none;
 }
 
 .nav-main a.active {
     color: var(--accent);
-    background: var(--accent-dim);
-    border: 1px solid var(--border-accent);
+    background: transparent;
+    border: none;
     font-weight: 600;
+}
+
+.nav-main a.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -15px;
+    height: 2px;
+    background: var(--accent);
 }
 
 .nav-main a.active .nav-icon {
@@ -551,6 +563,10 @@ h2 {
 
 /* ─── Sidebar ───────────────────────────────── */
 @media (min-width: 901px) {
+    #lab {
+        margin-top: -32px;
+    }
+
     .sidebar {
         position: sticky;
         top: 60px;
@@ -1425,57 +1441,97 @@ h2 {
     }
 
     #mobile-menu-toggle {
-        display: none;
-    }
-
-    .nav-main {
-        position: static;
-        display: inline-flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
+        position: fixed;
+        top: 20px;
+        left: 24px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 1px solid var(--border);
+        background: var(--bg-elevated);
+        color: var(--text-muted);
+        cursor: pointer;
+        display: flex;
         align-items: center;
-        width: 100%;
-        max-width: 100%;
-        overflow-x: auto;
-        overflow-y: hidden;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-        opacity: 1;
-        transform: none;
-        pointer-events: auto;
-        padding: 5px 6px;
-        border-radius: 32px;
-        margin-top: 32px;
-        margin-bottom: 0;
-        gap: 4px;
-        z-index: auto;
-    }
-
-    .nav-main::-webkit-scrollbar {
-        display: none;
-    }
-
-    [data-theme="light"] .nav-main {
-        box-shadow: 0 4px 20px rgba(26, 23, 20, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.4);
-    }
-
-    .nav-main a {
-        width: auto;
         justify-content: center;
-        padding: 6px 12px;
-        font-size: 12px;
-        border-radius: 24px;
-        flex-shrink: 0;
-        background: transparent;
+        transition: all 0.2s ease;
+        z-index: 100;
+        padding: 0;
     }
 
-    .nav-main a:hover {
+    #mobile-menu-toggle:hover {
+        border-color: var(--border-accent);
+        color: var(--accent);
         background: var(--bg-tertiary);
     }
 
+    .nav-main {
+        position: fixed;
+        top: 70px;
+        left: 16px;
+        right: 16px;
+        width: calc(100% - 32px);
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: stretch;
+        background: var(--bg-elevated);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 12px 8px;
+        margin: 0;
+        gap: 4px;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        z-index: 99;
+        overflow: visible;
+        opacity: 0;
+        transform: translateY(-12px) scale(0.96);
+        pointer-events: none;
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    [data-theme="light"] .nav-main {
+        box-shadow: 0 12px 40px rgba(26, 23, 20, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    }
+
+    .nav-main.nav-open {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        pointer-events: auto;
+    }
+
+    .nav-main a {
+        width: 100% !important;
+        justify-content: flex-start !important;
+        padding: 10px 16px !important;
+        margin-right: 0 !important;
+        font-size: 13.5px !important;
+        border-radius: 10px !important;
+        background: transparent !important;
+        white-space: nowrap !important;
+    }
+
+    .nav-main a:hover {
+        background: var(--bg-tertiary) !important;
+        transform: none;
+    }
+
+    .nav-main a.active {
+        color: var(--accent);
+        background: var(--accent-dim) !important;
+        border: 1px solid var(--border-accent);
+        font-weight: 600;
+    }
+
+    .nav-main a.active::after {
+        display: none;
+    }
+
     .nav-main .nav-icon {
-        width: 15px;
-        height: 15px;
+        width: 14px;
+        height: 14px;
         opacity: 1;
         flex-shrink: 0;
     }
