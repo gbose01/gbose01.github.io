@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0A0A0F">
+    <meta name="description" content="What a model card is, how it's structured, what it's for, and a walkthrough of Hugging Face's Laya card as a worked example.">
+    <title>How to Read a Model Card (With a Real Example) | Gaurab Bose</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/sidebar.css">
+    <script src="../js/theme.js"></script>
+    <script src="../js/analytics.js"></script>
+</head>
+<body>
+    <div class="post-container">
+        <a href="../blog.html" class="post-back">← Writing</a>
+
+        <header class="post-header">
+            <h1>How to Read a Model Card (With a Real Example)</h1>
+            <p class="post-date">September 28, 2026</p>
+        </header>
+
+        <div class="post-body">
+
+        <p>Every week another model drops with a leaderboard number and a sleek landing page. The useful artifact is usually quieter: the <strong>model card</strong>. It is the structured document that says what the model is, how it was built, what it is for, and where it fails — so you can decide whether to use it without reverse-engineering the repo.</p>
+
+        <p>Mitchell et al. coined the format in 2019. Hugging Face made it ambient by putting the card in every model README. Closed labs publish “system cards” or “model reports” that cover the same ground under different names. The skeleton is shared even when the depth is not.</p>
+
+        <h2>What a model card is for</h2>
+
+        <p>A model card is not marketing copy and not a paper. It sits between them.</p>
+
+        <p>For a product person, it answers: <em>Should I put this in a user-facing path?</em> For an engineer: <em>What do I need to host, fine-tune, or monitor?</em> For a researcher: <em>What was measured, on what data, and what was left out?</em> For anyone shipping agents: <em>Can I trust the confidence numbers, and when should a human still be in the loop?</em></p>
+
+        <p>If a card only lists wins, treat it as incomplete. The useful ones spend real space on limits.</p>
+
+        <h2>How it is usually structured</h2>
+
+        <p>Names vary by org, but most cards cover some version of these sections:</p>
+
+        <ol>
+            <li><strong>Model details</strong> — name, version, developers, architecture family, parameter count, license, where the weights live.</li>
+            <li><strong>Intended use</strong> — primary jobs, intended users, and out-of-scope uses you should not stretch it into.</li>
+            <li><strong>Factors</strong> — demographic, language, domain, or environmental variables that change performance.</li>
+            <li><strong>Metrics</strong> — what was measured and why those measures were chosen (accuracy, F1, ECE, latency, toxicity, preference win rate).</li>
+            <li><strong>Evaluation data</strong> — which benchmarks or held-out sets, how they were chosen, known gaps vs. deployment.</li>
+            <li><strong>Training data</strong> — sources, filtering, labeling, known biases. Often the thinnest section for frontier models.</li>
+            <li><strong>Quantitative results</strong> — headline numbers, ideally disaggregated by the factors above, not a single average.</li>
+            <li><strong>Ethical considerations</strong> — misuse risks, sensitive domains, fairness findings, privacy, mitigations.</li>
+            <li><strong>Caveats and recommendations</strong> — failure modes, fragile inputs, when not to trust outputs, practical deploy guidance.</li>
+        </ol>
+
+        <p>Optional extras show up more often now: inference hardware, quantization notes, carbon/compute for training, changelogs, and links to sibling checkpoints in a model family.</p>
+
+        <h2>A worked example: Laya</h2>
+
+        <p>I picked a random open card that is <em>not</em> another chat LLM, because those tend to blur into each other: <a href="https://huggingface.co/convaiinnovations/laya" target="_blank" rel="noopener noreferrer">convaiinnovations/laya</a> on Hugging Face.</p>
+
+        <p>Laya is a <strong>non-autoregressive “System 1” decision model</strong>. You pass it a state (email, ticket, JSON) and typed questions — choice, score, yes/no-style <code>noul</code> — and it returns typed answers with probabilities in a single forward pass, roughly 33–40 ms on a T4. It does not generate free text, so there is nothing to parse and nothing to hallucinate into prose.</p>
+
+        <h3>Model details</h3>
+
+        <p>Apache 2.0. About 0.4B parameters. The hub page is a family of three checkpoints:</p>
+
+        <ul>
+            <li><strong>laya</strong> (repo root) — ModernBERT-large, 421M, 512 context, English.</li>
+            <li><strong>laya-multilingual</strong> — mmBERT-base, 322M, 1024 context (up to 8k), 100+ languages.</li>
+            <li><strong>laya-typed-decisions</strong> — same English backbone, fine-tuned for four decision workflows.</li>
+        </ul>
+
+        <p>Architecture-wise it is a bidirectional encoder plus a decision head: two transformer layers, an option-marker scorer, and an act/escalate head. Options are scored at their own <code>[MASK]</code> tokens and softmaxed per question, so the answer schema is defined at request time without retraining.</p>
+
+        <h3>Intended use</h3>
+
+        <p>Routing, triage, guardrails, moderation-shaped decisions. The card leans hard into production plumbing: a <code>Router</code> that picks the right checkpoint by language/script, a Jev-compatible HTTP server, LangChain/LangGraph hooks, ONNX, MCP. Commercial use is explicit under Apache 2.0.</p>
+
+        <p>This is a specialist tool, not a general assistant. That clarity alone makes the card more useful than many frontier READMEs.</p>
+
+        <h3>Factors that matter</h3>
+
+        <p>Language and script dominate. The English checkpoint collapses on non-Latin text — they cite Khmer scoring 0.000 accuracy at 0.952 confidence. Confidence gating cannot save you when the model is confidently wrong. That is why the <code>Router</code> exists: detect script/language in under a millisecond before the forward pass.</p>
+
+        <p>Document length is the other factor. Multilingual supports long context only if you raise <code>max_len</code>; leave the default and long tickets get truncated.</p>
+
+        <h3>Training and metrics</h3>
+
+        <p>Training uses <strong>RLCD</strong> — reinforcement learning against strictly proper scoring rules, so honest probabilities maximize expected reward. Updates look like REINFORCE with a group-mean baseline.</p>
+
+        <p>They report more than accuracy: latency by batch size, ECE, Brier, soft accuracy, and a head-to-head with TypeSafe Jev on several benches. Base English is weak zero-shot on their typed-decisions suite (0.362). The fine-tuned checkpoint hits 0.766. That framing — base as a fast substrate to specialize, not a magic zero-shot brain — is the product insight buried in the numbers.</p>
+
+        <h3>Honest Limits (the section to steal)</h3>
+
+        <p>Most cards bury caveats. Laya puts them in a section titled exactly that:</p>
+
+        <ul>
+            <li>Base checkpoints sit near chance on typed-decisions without fine-tuning.</li>
+            <li>High-cardinality choices (&gt;~20–50 options) starve the token budget per label.</li>
+            <li><code>score</code> is the weakest question type.</li>
+            <li><code>noul</code> can latch onto true/false labels instead of the state.</li>
+            <li><code>act_probability</code> is currently useless; gate on <code>confidence</code> instead.</li>
+            <li>The model ships over-confident until you refit temperatures on your own data.</li>
+            <li>The root checkpoint is English-only.</li>
+        </ul>
+
+        <p>That is what a good caveats section looks like: specific enough that a deployer can write monitoring rules from it.</p>
+
+        <h3>What is still thin</h3>
+
+        <p>Relative to a classic Mitchell card, training-data provenance is light: little on source mix, labeling process, or privacy filtering. Competitive Jev numbers are partly third-party and not fully re-run under identical conditions — which they disclose. Ethical considerations beyond calibration and misuse-via-overconfidence are shorter than you would want for a moderation-adjacent tool.</p>
+
+        <p>None of that makes the card bad. It makes clear what you still have to validate yourself.</p>
+
+        <h2>How I read cards now</h2>
+
+        <p>When a new model ships, I skim in this order:</p>
+
+        <ol>
+            <li><strong>Intended use and out-of-scope</strong> — does this job match mine?</li>
+            <li><strong>Caveats / limitations</strong> — will any of these bite in production?</li>
+            <li><strong>Eval + disaggregation</strong> — was it measured on anything like my distribution?</li>
+            <li><strong>Architecture and serving knobs</strong> — cost, latency, context, quantization.</li>
+            <li><strong>Training data</strong> — last, because it is often vague, but still note the gaps.</li>
+        </ol>
+
+        <p>Leaderboard rank is a single number. A model card is the decision brief. Laya’s card is a good template for specialist models: clear job, concrete architecture, real latency, and limits written like engineering notes instead of legal filler.</p>
+
+        <p>If you build or fine-tune models for agents, write the Honest Limits section first. Everything else is easier once you know what you are willing to admit.</p>
+
+        </div>
+    </div>
+</body>
+</html>
